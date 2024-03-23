@@ -41,5 +41,8 @@ module.exports = {
     'comma-dangle': 0,
     'react-hooks/exhaustive-deps': 0,
     'react/no-array-index-key': 0,
+    'import/prefer-default-export': 0,
+    'import/extensions': 0,
+    'import/no-unresolved': 0,
   },
 }
