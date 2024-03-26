@@ -44,5 +44,6 @@ module.exports = {
     'import/prefer-default-export': 0,
     'import/extensions': 0,
     'import/no-unresolved': 0,
+    'jsx-a11y/heading-has-content': 0,
   },
 }

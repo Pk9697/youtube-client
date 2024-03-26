@@ -73,4 +73,8 @@
   body {
     @apply bg-background text-foreground;
   }
+  .app{
+    @apply min-h-screen;
+  }
 }
+

@@ -1,7 +1,13 @@
-import { Button } from './components/ui/button'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 function App() {
-  return <Button variant="destructive">Shadcn button</Button>
+  return (
+    <div className="app">
+      <Login />
+      {/* <Register /> */}
+    </div>
+  )
 }
 
 export default App
