@@ -7,7 +7,7 @@ import {
   createRoutesFromElements,
 } from 'react-router-dom'
 import './index.css'
-import * as ROUTES from '@/constants/routes'
+import { ROUTES } from './data/constants'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 
