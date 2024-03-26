@@ -1,5 +1,4 @@
-import Container from '@/features/authentication/components/Container'
-import Form from '@/features/authentication/components/Form'
+import { Container, Form } from '@/features/authentication'
 
 function Login() {
   return (
