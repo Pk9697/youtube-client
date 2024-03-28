@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { login } from './actions'
+import { login } from './asyncThunkActions'
 
 const initialState = {
   user: {},
@@ -47,7 +47,9 @@ const authSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-
 // export const {} = authSlice.actions
+
+// async thunk actions
+export { login }
 
 export default authSlice.reducer
