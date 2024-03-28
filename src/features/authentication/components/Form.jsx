@@ -10,10 +10,10 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
-function Form({ children, className, ...restProps }) {
+function Form({ children, className, onSubmit, ...restProps }) {
   return (
     <Card className={twMerge('max-w-sm" mx-auto', className)} {...restProps}>
-      {children}
+      <form onSubmit={onSubmit}>{children}</form>
     </Card>
   )
 }

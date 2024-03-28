@@ -1,9 +1,24 @@
-import { Container, Form } from '@/features/authentication'
+import { Navigate } from 'react-router-dom'
+import { ROUTES } from '@/data/constants'
+import { Container, Form, useLogin } from '@/features/authentication'
 
 function Login() {
+  const {
+    email,
+    password,
+    inProgress,
+    isLoggedIn,
+    handleChange,
+    handleSubmit,
+  } = useLogin()
+
+  if (isLoggedIn) {
+    return <Navigate to={ROUTES.HOME} />
+  }
+
   return (
     <Container>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Header>
           <Form.Title>Login</Form.Title>
           <Form.Description>
@@ -15,6 +30,9 @@ function Login() {
             <Form.InputContainer>
               <Form.Label htmlFor="email">Email</Form.Label>
               <Form.Input
+                value={email}
+                onChange={handleChange}
+                name="email"
                 id="email"
                 type="email"
                 placeholder="m@example.com"
@@ -26,9 +44,18 @@ function Login() {
                 <Form.Label htmlFor="password">Password</Form.Label>
                 <Form.Link>Forgot your password?</Form.Link>
               </Form.FlexRow>
-              <Form.Input id="password" type="password" />
+              <Form.Input
+                value={password}
+                onChange={handleChange}
+                name="password"
+                id="password"
+                type="password"
+                required
+              />
             </Form.InputContainer>
-            <Form.Button type="submit">Login</Form.Button>
+            <Form.Button disabled={inProgress} type="submit">
+              Login
+            </Form.Button>
             <Form.Button variant="outline">Login with Google</Form.Button>
           </Form.GridGroup>
           <Form.Text>
