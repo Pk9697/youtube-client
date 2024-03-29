@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import { login } from './asyncThunkActions'
+import { toast } from '@/components/ui/use-toast'
 
 const initialState = {
   user: {},
@@ -35,13 +36,24 @@ const authSlice = createSlice({
           state.isLoggedIn = true
           state.user = action.payload.data?.user
           state.accessToken = action.payload.data?.accessToken
+          toast({
+            title: action.payload?.message || 'Logged in successfully!',
+          })
         } else {
           state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
         }
       })
       .addCase(login.rejected, (state, action) => {
         state.inProgress = false
         state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
       })
   },
 })
