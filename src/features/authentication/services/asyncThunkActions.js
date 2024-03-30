@@ -12,4 +12,14 @@ const login = createAsyncThunk('auth/login', async (formFields) => {
   }
 })
 
-export { login }
+const register = createAsyncThunk('auth/register', async (formFields) => {
+  try {
+    const url = APIUrls.register()
+    const response = await axios.post(url, formFields)
+    return response.data
+  } catch (err) {
+    return err.response?.data
+  }
+})
+
+export { login, register }

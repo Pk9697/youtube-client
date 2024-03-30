@@ -1,17 +1,13 @@
-import { Navigate } from 'react-router-dom'
-import { ThreeDots } from 'react-loader-spinner'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { ROUTES } from '@/data/constants'
 import { Container, Form, useLogin } from '@/features/authentication'
+import Loader from '@/components/Loader'
 
 function Login() {
-  const {
-    email,
-    password,
-    inProgress,
-    isLoggedIn,
-    handleChange,
-    handleSubmit,
-  } = useLogin()
+  const { email, password, handleChange, handleSubmit } = useLogin()
+  const { inProgress, isLoggedIn } = useSelector((state) => state.auth)
+  const navigate = useNavigate()
 
   if (isLoggedIn) {
     return <Navigate to={ROUTES.HOME} />
@@ -19,18 +15,7 @@ function Login() {
 
   return (
     <Container>
-      {inProgress ? (
-        <ThreeDots
-          visible
-          height="80"
-          width="80"
-          color="#4fa94d"
-          radius="9"
-          ariaLabel="three-dots-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
-      ) : (
+      <Loader inProgress={inProgress}>
         <Form onSubmit={handleSubmit}>
           <Form.Header>
             <Form.Title>Login</Form.Title>
@@ -48,6 +33,7 @@ function Login() {
                   name="email"
                   id="email"
                   type="email"
+                  autoComplete="email"
                   placeholder="m@example.com"
                   required
                 />
@@ -63,20 +49,26 @@ function Login() {
                   name="password"
                   id="password"
                   type="password"
+                  autoComplete="password"
                   required
                 />
               </Form.InputContainer>
               <Form.Button disabled={inProgress} type="submit">
                 Login
               </Form.Button>
-              <Form.Button variant="outline">Login with Google</Form.Button>
+              <Form.Button disabled={inProgress} variant="outline">
+                Login with Google
+              </Form.Button>
             </Form.GridGroup>
             <Form.Text>
-              Don&apos;t have an account? <Form.Link>Register</Form.Link>
+              Don&apos;t have an account?{' '}
+              <Form.Link onClick={() => navigate(ROUTES.REGISTER)}>
+                Register
+              </Form.Link>
             </Form.Text>
           </Form.Content>
         </Form>
-      )}
+      </Loader>
     </Container>
   )
 }

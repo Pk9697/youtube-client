@@ -1,11 +1,11 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { login } from './asyncThunkActions'
+import { login, register } from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
 const initialState = {
-  user: {},
+  user: null,
   accessToken: null,
   error: null,
   isLoggedIn: false,
@@ -24,7 +24,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
-        state.user = {}
+        state.user = null
         state.accessToken = null
         state.error = null
         state.isLoggedIn = false
@@ -55,6 +55,36 @@ const authSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(register.pending, (state) => {
+        state.user = null
+        state.accessToken = null
+        state.error = null
+        state.isLoggedIn = false
+        state.inProgress = true
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          state.user = action.payload.data
+          toast({
+            title: 'Registered successfully! Now please Log in',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -62,6 +92,6 @@ const authSlice = createSlice({
 // export const {} = authSlice.actions
 
 // async thunk actions
-export { login }
+export { login, register }
 
 export default authSlice.reducer

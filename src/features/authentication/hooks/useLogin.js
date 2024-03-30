@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../services/asyncThunkActions'
+import { useDispatch } from 'react-redux'
+import { login } from '../services/authSlice'
 
 function useLogin() {
   const [formFields, setFormFields] = useState({
@@ -8,7 +8,6 @@ function useLogin() {
     password: '',
   })
   const dispatch = useDispatch()
-  const { inProgress, isLoggedIn } = useSelector((state) => state.auth)
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -31,7 +30,7 @@ function useLogin() {
     })
   }
 
-  return { ...formFields, inProgress, isLoggedIn, handleChange, handleSubmit }
+  return { ...formFields, handleChange, handleSubmit }
 }
 
 export default useLogin

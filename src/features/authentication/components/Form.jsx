@@ -10,10 +10,12 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
-function Form({ children, className, onSubmit, ...restProps }) {
+function Form({ children, className, onSubmit, encType, ...restProps }) {
   return (
     <Card className={twMerge('max-w-sm" mx-auto', className)} {...restProps}>
-      <form onSubmit={onSubmit}>{children}</form>
+      <form encType={encType} onSubmit={onSubmit}>
+        {children}
+      </form>
     </Card>
   )
 }
@@ -101,7 +103,10 @@ Form.FlexRow = function FormFlexRow({ children, className, ...restProps }) {
 Form.Link = function FormLink({ children, className, ...restProps }) {
   return (
     <div
-      className={twMerge('inline-block text-sm underline', className)}
+      className={twMerge(
+        'inline-block cursor-pointer text-sm underline',
+        className
+      )}
       {...restProps}
     >
       {children}
