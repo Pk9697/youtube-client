@@ -14,11 +14,15 @@ import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import { persistor, store } from '@/app/store'
 import { Toaster } from '@/components/ui/toaster'
+import Home from '@/pages/Home'
+import Layout from '@/layouts/Layout'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path={ROUTES.HOME} element={<div>Home</div>} />
+      <Route path={ROUTES.HOME} element={<Layout />}>
+        <Route path="" element={<Home />} />
+      </Route>
       <Route path={ROUTES.LOGIN} element={<Login />} />
       <Route path={ROUTES.REGISTER} element={<Register />} />
     </>
