@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 function Sidebar({ className, children, ...restProps }) {
   return (
     <div
-      className={twMerge('flex h-full max-h-screen flex-col', className)}
+      className={twMerge('flex h-full flex-col overflow-auto', className)}
       {...restProps}
     >
       {children}
@@ -18,7 +18,7 @@ Sidebar.Header = function SidebarHeader({ className, children, ...restProps }) {
   return (
     <div
       className={twMerge(
-        'flex h-14 items-center px-4 lg:h-[60px] lg:px-6',
+        'sticky top-0 z-10 flex h-14 items-center bg-background px-4 py-4 lg:h-[60px] lg:px-6',
         className,
         { ...restProps }
       )}

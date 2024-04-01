@@ -45,5 +45,6 @@ module.exports = {
     'import/extensions': 0,
     'import/no-unresolved': 0,
     'jsx-a11y/heading-has-content': 0,
+    'no-underscore-dangle': 0,
   },
 }

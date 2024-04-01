@@ -1,5 +1,7 @@
+import { VideoContainer } from '@/features/videos'
+
 function Home() {
-  return null
+  return <VideoContainer />
 }
 
 export default Home
