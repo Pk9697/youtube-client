@@ -6,7 +6,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 function Sidebar({ className, children, ...restProps }) {
   return (
     <div
-      className={twMerge('flex h-full flex-col overflow-auto', className)}
+      className={twMerge(
+        'flex h-full max-h-screen flex-col overflow-auto',
+        className
+      )}
       {...restProps}
     >
       {children}

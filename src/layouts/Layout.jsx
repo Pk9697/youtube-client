@@ -5,7 +5,7 @@ import NavbarContainer from './NavbarContainer'
 
 function Layout() {
   return (
-    <div className="grid max-h-screen w-full overflow-auto md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    <div className="grid h-screen w-full flex-grow overflow-auto md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="sticky top-0 z-10 hidden max-h-screen overflow-auto border-r bg-muted/40 md:block">
         <SidebarContainer />
       </div>

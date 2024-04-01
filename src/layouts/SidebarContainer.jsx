@@ -43,7 +43,6 @@ function SidebarContainer() {
           <Sidebar.Icon>
             <SquareUserRoundIcon className="h-4 w-4" />
           </Sidebar.Icon>
-
           <Sidebar.Text>Your Channel</Sidebar.Text>
         </Sidebar.NavLink>
         <Sidebar.NavLink>
