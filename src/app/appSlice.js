@@ -12,9 +12,12 @@ const appSlice = createSlice({
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen
     },
+    updateSidebar: (state, action) => {
+      state.isSidebarOpen = action.payload
+    },
   },
 })
 
-export const { toggleSidebar } = appSlice.actions
+export const { toggleSidebar, updateSidebar } = appSlice.actions
 
 export default appSlice.reducer
