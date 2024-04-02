@@ -1,11 +1,16 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import Navbar from './Navbar'
 import SidebarContainer from './SidebarContainer'
+import { toggleSidebar } from '@/app/appSlice'
 
 function NavbarContainer() {
   const isLightMode = true
+  const dispatch = useDispatch()
+
   return (
     <Navbar>
+      <Navbar.SidebarTriggerMenu onClick={() => dispatch(toggleSidebar())} />
       <Navbar.SidebarContent>
         <SidebarContainer />
       </Navbar.SidebarContent>

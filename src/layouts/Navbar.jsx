@@ -33,6 +33,26 @@ function Navbar({ children, className, ...restProps }) {
   )
 }
 
+Navbar.SidebarTriggerMenu = function NavbarSidebarTriggerMenu({
+  className,
+  ...restProps
+}) {
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      className={twMerge(
+        'hidden shrink-0 md:flex md:items-center md:justify-center',
+        className
+      )}
+      {...restProps}
+    >
+      <MenuIcon className="h-5 w-5" />
+      <span className="sr-only">Toggle navigation menu</span>
+    </Button>
+  )
+}
+
 Navbar.SidebarContent = function NavbarSidebarContent({
   children,
   className,
