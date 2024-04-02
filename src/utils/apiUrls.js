@@ -6,4 +6,5 @@ export const API_ROOT =
 export const APIUrls = {
   login: () => `${API_ROOT}/users/login`,
   register: () => `${API_ROOT}/users/register`,
+  fetchVideos: () => `${API_ROOT}/videos`,
 }

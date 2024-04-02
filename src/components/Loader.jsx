@@ -11,7 +11,7 @@ function Loader({ children, inProgress = false }) {
       radius="9"
       ariaLabel="three-dots-loading"
       wrapperStyle={{}}
-      wrapperClass=""
+      wrapperClass="flex justify-center items-center"
     />
   ) : (
     children

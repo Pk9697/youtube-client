@@ -1,14 +1,13 @@
 import React from 'react'
 import Video from '../components/Video'
-import videos from '@/data/videos'
 import { formatDuration } from '@/utils/formatDuration'
 import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 
-function VideoContainer() {
+function VideoContainer({ videosList = [] }) {
   return (
     <Video.Group>
-      {videos?.map(
+      {videosList?.map(
         ({
           _id,
           thumbnail,
