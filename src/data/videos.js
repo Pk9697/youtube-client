@@ -16,7 +16,7 @@ export default [
     title: 'title5122',
     description: 'description5122',
     duration: 15.32,
-    views: 4,
+    views: 4612,
     isPublished: true,
     createdAt: '2024-03-18T17:31:45.790Z',
     updatedAt: '2024-03-19T16:03:09.551Z',

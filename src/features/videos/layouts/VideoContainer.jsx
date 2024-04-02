@@ -1,6 +1,9 @@
 import React from 'react'
 import Video from '../components/Video'
 import videos from '@/data/videos'
+import { formatDuration } from '@/utils/formatDuration'
+import { formatViews } from '@/utils/formatViews'
+import { formatTimeAgo } from '@/utils/formatTimeAgo'
 
 function VideoContainer() {
   return (
@@ -18,7 +21,7 @@ function VideoContainer() {
           <Video key={_id}>
             <Video.ImageContainerLink to="/view/:videoId">
               <Video.Image src={thumbnail} />
-              <Video.Duration>{duration}</Video.Duration>
+              <Video.Duration>{formatDuration(duration)}</Video.Duration>
             </Video.ImageContainerLink>
             <Video.Details>
               <Video.AvatarLink src={avatar} to="/:channelId" />
@@ -26,7 +29,7 @@ function VideoContainer() {
                 <Video.TitleLink to="/view/:videoId">{title}</Video.TitleLink>
                 <Video.TextLink to="/:channelId">{fullName}</Video.TextLink>
                 <Video.Text>
-                  {views} views . {createdAt}
+                  {formatViews(views)} views · {formatTimeAgo(createdAt)}
                 </Video.Text>
               </Video.Meta>
             </Video.Details>
