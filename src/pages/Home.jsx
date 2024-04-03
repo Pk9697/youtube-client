@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { VideoContainer, fetchVideos } from '@/features/videos'
-import Loader from '@/components/Loader'
 
 function Home() {
   const dispatch = useDispatch()
@@ -13,9 +12,9 @@ function Home() {
   }, [])
 
   return (
-    <Loader inProgress={inProgress}>
-      <VideoContainer videosList={videosList} />
-    </Loader>
+    <div className="p-4">
+      <VideoContainer videosList={videosList} inProgress={inProgress} />
+    </div>
   )
 }
 

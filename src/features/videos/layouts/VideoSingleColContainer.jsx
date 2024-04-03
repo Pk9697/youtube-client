@@ -5,10 +5,10 @@ import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import Loader from '@/components/Loader'
 
-function VideoContainer({ videosList = [], inProgress = false }) {
+function VideoSingleColContainer({ videosList, inProgress = false }) {
   return (
     <Loader inProgress={inProgress}>
-      <Video.Group>
+      <Video.Group className="grid-cols-1">
         {videosList?.map(
           ({
             _id,
@@ -17,27 +17,27 @@ function VideoContainer({ videosList = [], inProgress = false }) {
             duration,
             views,
             createdAt,
-            owner: { fullName, avatar },
+            owner: { fullName },
           }) => (
-            <Video key={_id}>
+            <Video
+              key={_id}
+              className="grid-cols-[2fr_7fr] lg:grid-cols-[2fr_3fr]"
+            >
               <Video.ImageContainerLink to="videos/view/:videoId">
                 <Video.Image src={thumbnail} />
                 <Video.Duration>{formatDuration(duration)}</Video.Duration>
               </Video.ImageContainerLink>
               <Video.Details>
-                <Video.Row>
-                  <Video.AvatarLink src={avatar} to="/:channelId" />
-                  <Video.Meta>
-                    <Video.TitleLink to="videos/view/:videoId">
-                      {title}
-                    </Video.TitleLink>
-                    <Video.TextLink to="/:channelId">{fullName}</Video.TextLink>
-                    <Video.Text>
-                      {formatViews(views)} views · {formatTimeAgo(createdAt)}
-                    </Video.Text>
-                  </Video.Meta>
-                </Video.Row>
-                <Video.Row className="">
+                <Video.Meta>
+                  <Video.TitleLink to="videos/view/:videoId">
+                    {title}
+                  </Video.TitleLink>
+                  <Video.TextLink to="/:channelId">{fullName}</Video.TextLink>
+                  <Video.Text>
+                    {formatViews(views)} views · {formatTimeAgo(createdAt)}
+                  </Video.Text>
+                </Video.Meta>
+                <Video.Row className="ml-auto">
                   <Video.DropdownMenu />
                 </Video.Row>
               </Video.Details>
@@ -49,4 +49,4 @@ function VideoContainer({ videosList = [], inProgress = false }) {
   )
 }
 
-export default VideoContainer
+export default VideoSingleColContainer

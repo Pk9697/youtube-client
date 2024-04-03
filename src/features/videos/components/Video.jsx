@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import {
   CircleUserIcon,
   ClockIcon,
@@ -13,10 +14,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 function Video({ children, className, ...restProps }) {
   return (
-    <div className={twMerge('flex flex-col gap-2', className)} {...restProps}>
+    <div className={twMerge('grid gap-2', className)} {...restProps}>
       {children}
     </div>
   )
@@ -26,7 +34,7 @@ Video.Group = function VideoGroup({ children, className, ...restProps }) {
   return (
     <div
       className={twMerge(
-        'grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 overflow-y-auto p-4',
+        'grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 overflow-y-auto',
         className
       )}
       {...restProps}
@@ -79,31 +87,48 @@ Video.Duration = function VideoDuration({ children, className, ...restProps }) {
 
 Video.Details = function VideoDetails({ children, className, ...restProps }) {
   return (
+    <div className={twMerge('flex gap-2', className)} {...restProps}>
+      {children}
+    </div>
+  )
+}
+
+Video.Row = function VideoRow({ children, className, ...restProps }) {
+  return (
     <div
-      className={twMerge('flex items-start gap-2', className)}
+      className={twMerge('flex items-center gap-2', className)}
       {...restProps}
     >
       {children}
-      <DropdownMenu asChild>
-        <DropdownMenuTrigger className="ml-auto">
-          <EllipsisVerticalIcon />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem>
-            <div className="flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary">
-              <ListPlusIcon className="h-4 w-4" />
-              Save to playlist
-            </div>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <div className="flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary">
-              <ClockIcon className="h-4 w-4" />
-              Save to Watch Later
-            </div>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
     </div>
+  )
+}
+
+Video.DropdownMenu = function VideoDropdownMenu({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenu asChild>
+      <DropdownMenuTrigger className={twMerge('', className)} {...restProps}>
+        <EllipsisVerticalIcon />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>
+          <div className="flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary">
+            <ListPlusIcon className="h-4 w-4" />
+            Save to playlist
+          </div>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <div className="flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary">
+            <ClockIcon className="h-4 w-4" />
+            Save to Watch Later
+          </div>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
 
@@ -149,6 +174,14 @@ Video.TitleLink = function VideoTitleLink({
   )
 }
 
+Video.Title = function VideoTitle({ children, className, ...restProps }) {
+  return (
+    <div className={twMerge('text-xl font-bold', className)} {...restProps}>
+      {children}
+    </div>
+  )
+}
+
 // LOOK up text-secondary-foreground
 Video.TextLink = function VideoTextLink({ children, className, ...restProps }) {
   return (
@@ -175,42 +208,6 @@ Video.Text = function VideoText({ children, className, ...restProps }) {
   )
 }
 
-Video.DropdownMenu = function VideoDropdownMenu({
-  children,
-  className,
-  ...restProps
-}) {
-  return (
-    <div className={twMerge('', className)} {...restProps}>
-      {children}
-    </div>
-  )
-}
-
-Video.DropdownMenuContent = function VideoDropdownMenuContent({
-  children,
-  className,
-  ...restProps
-}) {
-  return (
-    <div className={twMerge('', className)} {...restProps}>
-      {children}
-    </div>
-  )
-}
-
-Video.DropdownMenuItem = function VideoDropdownMenuItem({
-  children,
-  className,
-  ...restProps
-}) {
-  return (
-    <div className={twMerge('', className)} {...restProps}>
-      {children}
-    </div>
-  )
-}
-
 Video.Icon = function VideoIcon({ children, className, ...restProps }) {
   return (
     <div className={twMerge('', className)} {...restProps}>
@@ -219,15 +216,93 @@ Video.Icon = function VideoIcon({ children, className, ...restProps }) {
   )
 }
 
-Video.DropdownMenuText = function VideoDropdownMenuText({
+Video.PlayerContainer = function VideoPlayerContainer({
   children,
   className,
   ...restProps
 }) {
   return (
-    <div className={twMerge('', className)} {...restProps}>
+    <div className={twMerge('flex flex-col gap-2', className)} {...restProps}>
       {children}
     </div>
+  )
+}
+Video.Player = function VideoPlayer({
+  src = 'https://docs.material-tailwind.com/demo.mp4',
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <video
+      controls
+      autoPlay
+      className={twMerge('aspect-video w-full rounded-lg', className)}
+      {...restProps}
+    >
+      <source src={src} type="video/mp4" />
+      {children}
+    </video>
+  )
+}
+Video.Button = function VideoButton({ children, className, ...restProps }) {
+  return (
+    <Button
+      className={twMerge('flex items-center gap-2', className)}
+      {...restProps}
+    >
+      {children}
+    </Button>
+  )
+}
+
+Video.Card = function VideoCard({ children, className, ...restProps }) {
+  return (
+    <Card className={twMerge('', className)} {...restProps}>
+      {children}
+    </Card>
+  )
+}
+
+Video.CardHeader = function VideoCardHeader({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <CardHeader className={twMerge('', className)} {...restProps}>
+      {children}
+    </CardHeader>
+  )
+}
+
+Video.CardTitle = function VideoCardTitle({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <CardTitle className={twMerge('', className)} {...restProps}>
+      {children}
+    </CardTitle>
+  )
+}
+
+Video.CardDescription = function VideoCardDescription({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <CardDescription
+      className={twMerge(
+        'max-w-64 hyphens-auto break-words sm:max-w-lg md:max-w-xl',
+        className
+      )}
+      {...restProps}
+    >
+      {children}
+    </CardDescription>
   )
 }
 
