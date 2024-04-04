@@ -1,13 +1,17 @@
-import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { ThumbsDownIcon, ThumbsUpIcon } from 'lucide-react'
 import Video from '../components/Video'
 import Loader from '@/components/Loader'
 import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
+import { toggleDislikeVideo, toggleLikeVideo } from '../services/videoSlice'
 
 function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
+  const dispatch = useDispatch()
+  const { accessToken } = useSelector((state) => state.auth)
   if (!videoDetails) return null
   const {
+    _id,
     videoFile,
     title,
     description,
@@ -43,11 +47,19 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
             )}
           </Video.Row>
           <Video.Row className="ml-auto">
-            <Video.Button>
+            <Video.Button
+              onClick={() =>
+                dispatch(toggleLikeVideo({ accessToken, videoId: _id }))
+              }
+            >
               {isLiked ? <ThumbsUpIcon fill="skyblue" /> : <ThumbsUpIcon />}
               {formatViews(likesCount)}
             </Video.Button>
-            <Video.Button>
+            <Video.Button
+              onClick={() =>
+                dispatch(toggleDislikeVideo({ accessToken, videoId: _id }))
+              }
+            >
               {isDisliked ? <ThumbsDownIcon fill="red" /> : <ThumbsDownIcon />}
               {formatViews(dislikesCount)}
             </Video.Button>

@@ -40,4 +40,46 @@ const fetchVideo = createAsyncThunk(
   }
 )
 
-export { fetchVideos, fetchVideo }
+const toggleLikeVideo = createAsyncThunk(
+  'video/toggleLikeVideo',
+  async ({ accessToken, videoId }) => {
+    try {
+      const url = APIUrls.toggleLikeVideo(videoId)
+      const response = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+const toggleDislikeVideo = createAsyncThunk(
+  'video/toggleDislikeVideo',
+  async ({ accessToken, videoId }) => {
+    try {
+      const url = APIUrls.toggleDislikeVideo(videoId)
+      const response = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+export { fetchVideos, fetchVideo, toggleLikeVideo, toggleDislikeVideo }

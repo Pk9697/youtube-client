@@ -1,7 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import { toast } from '@/components/ui/use-toast'
-import { fetchVideo } from './asyncThunkActions'
+import {
+  fetchVideo,
+  toggleDislikeVideo,
+  toggleLikeVideo,
+} from './asyncThunkActions'
 
 const initialState = {
   videoDetails: null,
@@ -43,9 +47,63 @@ const videoSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(toggleLikeVideo.pending, (state) => {
+        state.error = null
+      })
+      .addCase(toggleLikeVideo.fulfilled, (state, action) => {
+        if (action.payload?.success) {
+          state.videoDetails.likesCount = action.payload.data.likesCount
+          state.videoDetails.isLiked = action.payload.data.isLiked
+          state.videoDetails.dislikesCount = action.payload.data.dislikesCount
+          state.videoDetails.isDisliked = action.payload.data.isDisliked
+          toast({
+            title: action.payload?.message || 'Like toggled successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(toggleLikeVideo.rejected, (state, action) => {
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
+      .addCase(toggleDislikeVideo.pending, (state) => {
+        state.error = null
+      })
+      .addCase(toggleDislikeVideo.fulfilled, (state, action) => {
+        if (action.payload?.success) {
+          state.videoDetails.likesCount = action.payload.data.likesCount
+          state.videoDetails.isLiked = action.payload.data.isLiked
+          state.videoDetails.dislikesCount = action.payload.data.dislikesCount
+          state.videoDetails.isDisliked = action.payload.data.isDisliked
+          toast({
+            title: action.payload?.message || 'Like toggled successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(toggleDislikeVideo.rejected, (state, action) => {
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
-export { fetchVideo }
+export { fetchVideo, toggleLikeVideo, toggleDislikeVideo }
 
 export default videoSlice.reducer

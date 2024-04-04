@@ -9,4 +9,7 @@ export const APIUrls = {
   fetchVideos: () => `${API_ROOT}/videos`,
   fetchVideo: (videoId) => `${API_ROOT}/videos/view/${videoId}`,
   logout: () => `${API_ROOT}/users/logout`,
+  toggleLikeVideo: (videoId) => `${API_ROOT}/likes/toggle/video/${videoId}`,
+  toggleDislikeVideo: (videoId) =>
+    `${API_ROOT}/dislikes/toggle/video/${videoId}`,
 }
