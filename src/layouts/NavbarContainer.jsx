@@ -8,7 +8,10 @@ import { logout } from '@/features/authentication'
 function NavbarContainer() {
   const isLightMode = true
   const dispatch = useDispatch()
-  const { accessToken } = useSelector((state) => state.auth)
+  const {
+    accessToken,
+    user: { fullName, avatar },
+  } = useSelector((state) => state.auth)
 
   return (
     <Navbar>
@@ -19,9 +22,9 @@ function NavbarContainer() {
       <Navbar.SearchInput type="search" placeholder="Search..." />
       <Navbar.Mode isLightMode={isLightMode} />
       <Navbar.DropdownMenu>
-        <Navbar.Avatar src />
+        <Navbar.Avatar src={avatar} />
         <Navbar.DropdownMenuContent>
-          <Navbar.DropdownMenuLabel>My Account</Navbar.DropdownMenuLabel>
+          <Navbar.DropdownMenuLabel>{fullName}</Navbar.DropdownMenuLabel>
           <Navbar.DropdownMenuSeparator />
           <Navbar.DropdownMenuItem>Settings</Navbar.DropdownMenuItem>
           <Navbar.DropdownMenuSeparator />
