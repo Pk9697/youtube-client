@@ -23,4 +23,21 @@ const fetchVideos = createAsyncThunk(
   }
 )
 
-export { fetchVideos }
+const fetchVideo = createAsyncThunk(
+  'video/fetchVideo',
+  async ({ accessToken, videoId }) => {
+    try {
+      const url = APIUrls.fetchVideo(videoId)
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+export { fetchVideos, fetchVideo }

@@ -23,13 +23,13 @@ function VideoSingleColContainer({ videosList, inProgress = false }) {
               key={_id}
               className="grid-cols-[2fr_7fr] lg:grid-cols-[2fr_3fr]"
             >
-              <Video.ImageContainerLink to="videos/view/:videoId">
+              <Video.ImageContainerLink to={`/videos/view/${_id}`}>
                 <Video.Image src={thumbnail} />
                 <Video.Duration>{formatDuration(duration)}</Video.Duration>
               </Video.ImageContainerLink>
               <Video.Details>
                 <Video.Meta>
-                  <Video.TitleLink to="videos/view/:videoId">
+                  <Video.TitleLink to={`/videos/view/${_id}`}>
                     {title}
                   </Video.TitleLink>
                   <Video.TextLink to="/:channelId">{fullName}</Video.TextLink>

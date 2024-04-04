@@ -20,7 +20,7 @@ function VideoContainer({ videosList = [], inProgress = false }) {
             owner: { fullName, avatar },
           }) => (
             <Video key={_id}>
-              <Video.ImageContainerLink to="videos/view/:videoId">
+              <Video.ImageContainerLink to={`/videos/view/${_id}`}>
                 <Video.Image src={thumbnail} />
                 <Video.Duration>{formatDuration(duration)}</Video.Duration>
               </Video.ImageContainerLink>
@@ -28,7 +28,7 @@ function VideoContainer({ videosList = [], inProgress = false }) {
                 <Video.Row>
                   <Video.AvatarLink src={avatar} to="/:channelId" />
                   <Video.Meta>
-                    <Video.TitleLink to="videos/view/:videoId">
+                    <Video.TitleLink to={`/videos/view/${_id}`}>
                       {title}
                     </Video.TitleLink>
                     <Video.TextLink to="/:channelId">{fullName}</Video.TextLink>

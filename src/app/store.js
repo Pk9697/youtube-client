@@ -3,13 +3,14 @@ import storage from 'redux-persist/lib/storage'
 import persistReducer from 'redux-persist/es/persistReducer'
 import persistStore from 'redux-persist/es/persistStore'
 import { authReducer } from '@/features/authentication'
-import { videosReducer } from '@/features/videos'
+import { videosReducer, videoReducer } from '@/features/videos'
 import appReducer from './appSlice'
 
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
   videos: videosReducer,
+  video: videoReducer,
 })
 
 const persistConfig = {
