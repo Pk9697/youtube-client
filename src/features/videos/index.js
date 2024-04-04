@@ -4,6 +4,7 @@ import videoReducer, {
   fetchVideo,
   toggleLikeVideo,
   toggleDislikeVideo,
+  toggleSubscriptionFromVideoOwner,
 } from './services/videoSlice'
 
 export {
@@ -14,4 +15,5 @@ export {
   fetchVideo,
   toggleLikeVideo,
   toggleDislikeVideo,
+  toggleSubscriptionFromVideoOwner,
 }

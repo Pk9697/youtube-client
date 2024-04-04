@@ -4,7 +4,11 @@ import Video from '../components/Video'
 import Loader from '@/components/Loader'
 import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
-import { toggleDislikeVideo, toggleLikeVideo } from '../services/videoSlice'
+import {
+  toggleDislikeVideo,
+  toggleLikeVideo,
+  toggleSubscriptionFromVideoOwner,
+} from '../services/videoSlice'
 
 function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
   const dispatch = useDispatch()
@@ -21,7 +25,7 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
     isLiked,
     dislikesCount,
     isDisliked,
-    owner: { fullName, avatar, subscribersCount, isSubscribed },
+    owner: { _id: userId, fullName, avatar, subscribersCount, isSubscribed },
   } = videoDetails || {}
 
   return (
@@ -41,9 +45,26 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
               </Video.Text>
             </Video.Meta>
             {isSubscribed ? (
-              <Video.Button variant="destructive">Unsubscribe</Video.Button>
+              <Video.Button
+                onClick={() =>
+                  dispatch(
+                    toggleSubscriptionFromVideoOwner({ accessToken, userId })
+                  )
+                }
+                variant="destructive"
+              >
+                Unsubscribe
+              </Video.Button>
             ) : (
-              <Video.Button>Subscribe</Video.Button>
+              <Video.Button
+                onClick={() =>
+                  dispatch(
+                    toggleSubscriptionFromVideoOwner({ accessToken, userId })
+                  )
+                }
+              >
+                Subscribe
+              </Video.Button>
             )}
           </Video.Row>
           <Video.Row className="ml-auto">

@@ -12,4 +12,5 @@ export const APIUrls = {
   toggleLikeVideo: (videoId) => `${API_ROOT}/likes/toggle/video/${videoId}`,
   toggleDislikeVideo: (videoId) =>
     `${API_ROOT}/dislikes/toggle/video/${videoId}`,
+  toggleSubscription: (userId) => `${API_ROOT}/subscriptions/toggle/${userId}`,
 }

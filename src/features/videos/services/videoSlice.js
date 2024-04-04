@@ -5,6 +5,7 @@ import {
   fetchVideo,
   toggleDislikeVideo,
   toggleLikeVideo,
+  toggleSubscriptionFromVideoOwner,
 } from './asyncThunkActions'
 
 const initialState = {
@@ -84,7 +85,7 @@ const videoSlice = createSlice({
           state.videoDetails.dislikesCount = action.payload.data.dislikesCount
           state.videoDetails.isDisliked = action.payload.data.isDisliked
           toast({
-            title: action.payload?.message || 'Like toggled successfully!',
+            title: action.payload?.message || 'Dislike toggled successfully!',
           })
         } else {
           state.error = action.payload?.message || 'server error'
@@ -101,9 +102,43 @@ const videoSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(toggleSubscriptionFromVideoOwner.pending, (state) => {
+        state.error = null
+      })
+      .addCase(toggleSubscriptionFromVideoOwner.fulfilled, (state, action) => {
+        if (action.payload?.success) {
+          const { isSubscribed, subscribersCount } = state.videoDetails.owner
+          state.videoDetails.owner.subscribersCount = isSubscribed
+            ? subscribersCount - 1
+            : subscribersCount + 1
+          state.videoDetails.owner.isSubscribed = !isSubscribed
+          toast({
+            title:
+              action.payload?.message || 'Subscription toggled successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(toggleSubscriptionFromVideoOwner.rejected, (state, action) => {
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
-export { fetchVideo, toggleLikeVideo, toggleDislikeVideo }
+export {
+  fetchVideo,
+  toggleLikeVideo,
+  toggleDislikeVideo,
+  toggleSubscriptionFromVideoOwner,
+}
 
 export default videoSlice.reducer
