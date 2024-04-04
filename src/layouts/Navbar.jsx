@@ -174,7 +174,10 @@ Navbar.DropdownMenuItem = function NavbarDropdownMenuItem({
   ...restProps
 }) {
   return (
-    <DropdownMenuItem className={twMerge('', className)} {...restProps}>
+    <DropdownMenuItem
+      className={twMerge('cursor-pointer', className)}
+      {...restProps}
+    >
       {children}
     </DropdownMenuItem>
   )

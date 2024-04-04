@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { login, register } from './asyncThunkActions'
+import { login, register, logout } from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
 const initialState = {
@@ -85,6 +85,39 @@ const authSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(logout.pending, (state) => {
+        state.user = null
+        state.accessToken = null
+        state.error = null
+        state.isLoggedIn = false
+        state.inProgress = true
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          state.user = null
+          state.accessToken = null
+          state.error = null
+          state.isLoggedIn = false
+          toast({
+            title: 'Logged out successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -92,6 +125,6 @@ const authSlice = createSlice({
 // export const {} = authSlice.actions
 
 // async thunk actions
-export { login, register }
+export { login, register, logout }
 
 export default authSlice.reducer

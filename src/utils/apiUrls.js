@@ -8,4 +8,5 @@ export const APIUrls = {
   register: () => `${API_ROOT}/users/register`,
   fetchVideos: () => `${API_ROOT}/videos`,
   fetchVideo: (videoId) => `${API_ROOT}/videos/view/${videoId}`,
+  logout: () => `${API_ROOT}/users/logout`,
 }

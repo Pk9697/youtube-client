@@ -1,12 +1,14 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Navbar from './Navbar'
 import SidebarContainer from './SidebarContainer'
 import { toggleSidebar } from '@/app/appSlice'
+import { logout } from '@/features/authentication'
 
 function NavbarContainer() {
   const isLightMode = true
   const dispatch = useDispatch()
+  const { accessToken } = useSelector((state) => state.auth)
 
   return (
     <Navbar>
@@ -22,9 +24,12 @@ function NavbarContainer() {
           <Navbar.DropdownMenuLabel>My Account</Navbar.DropdownMenuLabel>
           <Navbar.DropdownMenuSeparator />
           <Navbar.DropdownMenuItem>Settings</Navbar.DropdownMenuItem>
-          <Navbar.DropdownMenuItem>Support</Navbar.DropdownMenuItem>
           <Navbar.DropdownMenuSeparator />
-          <Navbar.DropdownMenuItem>Logout</Navbar.DropdownMenuItem>
+          <Navbar.DropdownMenuItem
+            onClick={() => dispatch(logout({ accessToken }))}
+          >
+            Logout
+          </Navbar.DropdownMenuItem>
         </Navbar.DropdownMenuContent>
       </Navbar.DropdownMenu>
     </Navbar>

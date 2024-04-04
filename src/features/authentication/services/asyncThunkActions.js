@@ -22,4 +22,21 @@ const register = createAsyncThunk('auth/register', async (formFields) => {
   }
 })
 
-export { login, register }
+const logout = createAsyncThunk('auth/logout', async ({ accessToken }) => {
+  try {
+    const url = APIUrls.logout()
+    const response = await axios.post(
+      url,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    return response.data
+  } catch (err) {
+    return err.response?.data
+  }
+})
+export { login, register, logout }
