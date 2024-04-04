@@ -37,7 +37,7 @@ function VideoContainer({ videosList = [], inProgress = false }) {
                     </Video.Text>
                   </Video.Meta>
                 </Video.Row>
-                <Video.Row className="">
+                <Video.Row className="ml-auto">
                   <Video.DropdownMenu />
                 </Video.Row>
               </Video.Details>

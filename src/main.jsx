@@ -17,13 +17,16 @@ import { Toaster } from '@/components/ui/toaster'
 import Home from '@/pages/Home'
 import Layout from '@/layouts/Layout'
 import View from './pages/View'
+import PrivateRoute from '@/components/PrivateRoute'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path={ROUTES.HOME} element={<Layout />}>
-        <Route path="" element={<Home />} />
-        <Route path="videos/view/:videoId" element={<View />} />
+      <Route element={<PrivateRoute />}>
+        <Route path={ROUTES.HOME} element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="videos/view/:videoId" element={<View />} />
+        </Route>
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />} />
       <Route path={ROUTES.REGISTER} element={<Register />} />
