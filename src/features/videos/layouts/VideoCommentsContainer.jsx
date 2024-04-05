@@ -3,10 +3,9 @@ import {
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from 'lucide-react'
-import React from 'react'
-import Comment from '../components/Comment'
+import Comment from '@/components/Comment'
 
-function CommentContainer() {
+function VideoCommentsContainer() {
   return (
     <Comment.Group>
       <Comment.Title>48 comments</Comment.Title>
@@ -60,4 +59,4 @@ function CommentContainer() {
   )
 }
 
-export default CommentContainer
+export default VideoCommentsContainer

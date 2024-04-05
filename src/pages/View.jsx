@@ -3,11 +3,13 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { updateSidebar } from '@/app/appSlice'
-import VideoPlayerContainer from '@/features/videos/layouts/VideoPlayerContainer'
-import VideoSingleColContainer from '@/features/videos/layouts/VideoSingleColContainer'
-import { fetchVideo } from '@/features/videos'
+import {
+  VideoCommentsContainer,
+  VideoPlayerContainer,
+  VideoSingleColContainer,
+  fetchVideo,
+} from '@/features/videos'
 import Loader from '@/components/Loader'
-import { CommentContainer } from '@/features/comments'
 
 function View() {
   const { videoId } = useParams()
@@ -36,7 +38,7 @@ function View() {
             videoDetails={videoDetails}
             inProgress={inProgressVideoFetching}
           />
-          <CommentContainer />
+          <VideoCommentsContainer />
         </div>
         <VideoSingleColContainer
           videosList={videosList}
