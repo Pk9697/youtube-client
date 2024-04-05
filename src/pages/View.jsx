@@ -7,6 +7,7 @@ import VideoPlayerContainer from '@/features/videos/layouts/VideoPlayerContainer
 import VideoSingleColContainer from '@/features/videos/layouts/VideoSingleColContainer'
 import { fetchVideo } from '@/features/videos'
 import Loader from '@/components/Loader'
+import { CommentContainer } from '@/features/comments'
 
 function View() {
   const { videoId } = useParams()
@@ -30,10 +31,13 @@ function View() {
   return (
     <Loader inProgress={inProgressVideoFetching || inProgressVideosFetching}>
       <div className="grid w-full items-start gap-4 p-4 lg:grid-cols-[6fr_3fr]">
-        <VideoPlayerContainer
-          videoDetails={videoDetails}
-          inProgress={inProgressVideoFetching}
-        />
+        <div className="flex flex-col gap-4">
+          <VideoPlayerContainer
+            videoDetails={videoDetails}
+            inProgress={inProgressVideoFetching}
+          />
+          <CommentContainer />
+        </div>
         <VideoSingleColContainer
           videosList={videosList}
           inProgress={inProgressVideosFetching}

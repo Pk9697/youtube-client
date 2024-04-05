@@ -282,7 +282,7 @@ Video.CardTitle = function VideoCardTitle({
   ...restProps
 }) {
   return (
-    <CardTitle className={twMerge('', className)} {...restProps}>
+    <CardTitle className={twMerge('text-sm', className)} {...restProps}>
       {children}
     </CardTitle>
   )
@@ -296,7 +296,7 @@ Video.CardDescription = function VideoCardDescription({
   return (
     <CardDescription
       className={twMerge(
-        'max-w-64 hyphens-auto break-words sm:max-w-lg md:max-w-xl',
+        'max-w-64 hyphens-auto break-words text-primary sm:max-w-lg md:max-w-xl',
         className
       )}
       {...restProps}
