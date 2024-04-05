@@ -8,6 +8,7 @@ import {
   VideoPlayerContainer,
   VideoSingleColContainer,
   fetchVideo,
+  fetchVideoComments,
 } from '@/features/videos'
 import Loader from '@/components/Loader'
 
@@ -18,9 +19,11 @@ function View() {
   const { videosList, inProgress: inProgressVideosFetching } = useSelector(
     (state) => state.videos
   )
-  const { videoDetails, inProgress: inProgressVideoFetching } = useSelector(
-    (state) => state.video
-  )
+  const {
+    videoDetails,
+    comments,
+    inProgress: inProgressVideoFetching,
+  } = useSelector((state) => state.video)
 
   useEffect(() => {
     dispatch(updateSidebar(false))
@@ -28,6 +31,7 @@ function View() {
 
   useEffect(() => {
     dispatch(fetchVideo({ accessToken, videoId }))
+    dispatch(fetchVideoComments({ accessToken, videoId }))
   }, [videoId])
 
   return (
@@ -38,7 +42,7 @@ function View() {
             videoDetails={videoDetails}
             inProgress={inProgressVideoFetching}
           />
-          <VideoCommentsContainer />
+          <VideoCommentsContainer comments={comments} />
         </div>
         <VideoSingleColContainer
           videosList={videosList}
