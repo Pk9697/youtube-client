@@ -120,6 +120,23 @@ const fetchVideoComments = createAsyncThunk(
   }
 )
 
+const addComment = createAsyncThunk(
+  'video/addComment',
+  async ({ accessToken, formFields, videoId }) => {
+    try {
+      const url = APIUrls.addComment(videoId)
+      const response = await axios.post(url, formFields, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchVideos,
   fetchVideo,
@@ -127,4 +144,5 @@ export {
   toggleDislikeVideo,
   toggleSubscriptionFromVideoOwner,
   fetchVideoComments,
+  addComment,
 }

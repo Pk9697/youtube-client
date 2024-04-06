@@ -3,17 +3,34 @@ import {
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from 'lucide-react'
+import { useSelector } from 'react-redux'
 import Comment from '@/components/Comment'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
+import useComment from '../hooks/useComment'
 
-function VideoCommentsContainer({ comments = [] }) {
+function VideoCommentsContainer({ videoId, comments = [] }) {
+  const {
+    accessToken,
+    user: { avatar: loggedInUserAvatar },
+  } = useSelector((state) => state.auth)
+  const {
+    content: commentInput,
+    handleChange,
+    handleSubmit,
+  } = useComment({ videoId, accessToken })
+
   return (
     <Comment.Group>
       <Comment.Title>{comments.length} comments</Comment.Title>
-      <Comment.Form>
-        <Comment.AvatarLink src to />
-        <Comment.TextArea />
-        <Comment.Button size="icon">
+      <Comment.Form onSubmit={handleSubmit}>
+        <Comment.AvatarLink src={loggedInUserAvatar} to />
+        <Comment.TextArea
+          onChange={handleChange}
+          name="content"
+          value={commentInput}
+          required
+        />
+        <Comment.Button type="submit" size="icon">
           <MessageSquarePlusIcon />
         </Comment.Button>
       </Comment.Form>
@@ -24,10 +41,10 @@ function VideoCommentsContainer({ comments = [] }) {
           content,
           createdAt,
           owner: { userName, avatar },
-          likesCount,
-          isLiked,
-          dislikesCount,
-          isDisliked,
+          likesCount = 0,
+          isLiked = false,
+          dislikesCount = 0,
+          isDisliked = false,
         }) => (
           <Comment key={_id}>
             <Comment.AvatarLink src={avatar} to />

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { register } from '../services/authSlice'
 
 function useRegister() {
+  const dispatch = useDispatch()
   const [formFields, setFormFields] = useState({
     fullName: '',
     email: '',
@@ -11,7 +12,6 @@ function useRegister() {
     avatar: null,
     coverImage: null,
   })
-  const dispatch = useDispatch()
 
   //   TODO: Clear image selected name after form submission
   function handleChange(e) {

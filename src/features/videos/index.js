@@ -9,6 +9,7 @@ import videoReducer, {
   toggleDislikeVideo,
   toggleSubscriptionFromVideoOwner,
   fetchVideoComments,
+  addComment,
 } from './services/videoSlice'
 
 export {
@@ -24,4 +25,5 @@ export {
   VideoPlayerContainer,
   VideoCommentsContainer,
   fetchVideoComments,
+  addComment,
 }

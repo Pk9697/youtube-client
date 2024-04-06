@@ -1,8 +1,8 @@
 import {
   CircleUserIcon,
-  ClockIcon,
   EllipsisVerticalIcon,
-  ListPlusIcon,
+  PencilIcon,
+  Trash2Icon,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
@@ -170,14 +170,14 @@ Comment.DropdownMenu = function CommentDropdownMenu({
       <DropdownMenuContent>
         <DropdownMenuItem>
           <div className="flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary">
-            <ListPlusIcon className="h-4 w-4" />
-            Save to playlist
+            <PencilIcon className="h-4 w-4" />
+            Edit
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <div className="flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary">
-            <ClockIcon className="h-4 w-4" />
-            Save to Watch Later
+            <Trash2Icon className="h-4 w-4" />
+            Delete
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

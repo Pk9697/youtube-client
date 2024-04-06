@@ -2,6 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { toast } from '@/components/ui/use-toast'
 import {
+  addComment,
   fetchVideo,
   fetchVideoComments,
   toggleDislikeVideo,
@@ -162,6 +163,31 @@ const videoSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(addComment.pending, (state) => {
+        state.error = null
+      })
+      .addCase(addComment.fulfilled, (state, action) => {
+        if (action.payload?.success) {
+          // state.comments = [action.payload.data, ...state.comments]
+          state.comments.unshift(action.payload.data)
+          toast({
+            title: 'Video comment added!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(addComment.rejected, (state, action) => {
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -171,6 +197,7 @@ export {
   toggleDislikeVideo,
   toggleSubscriptionFromVideoOwner,
   fetchVideoComments,
+  addComment,
 }
 
 export default videoSlice.reducer

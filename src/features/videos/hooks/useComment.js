@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { login } from '../services/authSlice'
+import { addComment } from '../services/asyncThunkActions'
 
-function useLogin() {
+function useComment({ videoId, accessToken }) {
   const dispatch = useDispatch()
   const [formFields, setFormFields] = useState({
-    email: '',
-    password: '',
+    content: '',
   })
 
   function handleChange(e) {
@@ -21,11 +20,11 @@ function useLogin() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    dispatch(login(formFields))
+    dispatch(addComment({ accessToken, formFields, videoId }))
+    // console.log(formFields.content)
     setFormFields(() => {
       return {
-        email: '',
-        password: '',
+        content: '',
       }
     })
   }
@@ -33,4 +32,4 @@ function useLogin() {
   return { ...formFields, handleChange, handleSubmit }
 }
 
-export default useLogin
+export default useComment
