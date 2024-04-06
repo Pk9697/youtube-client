@@ -42,7 +42,11 @@ function View() {
             videoDetails={videoDetails}
             inProgress={inProgressVideoFetching}
           />
-          <VideoCommentsContainer videoId={videoId} comments={comments} />
+          <VideoCommentsContainer
+            videoOwnerId={videoDetails?.owner?._id}
+            videoId={videoId}
+            comments={comments}
+          />
         </div>
         <VideoSingleColContainer
           videosList={videosList}

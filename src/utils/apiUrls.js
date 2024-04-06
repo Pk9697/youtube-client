@@ -19,4 +19,5 @@ export const APIUrls = {
     `${API_ROOT}/likes/toggle/comment/${commentId}`,
   toggleDislikeComment: (commentId) =>
     `${API_ROOT}/dislikes/toggle/comment/${commentId}`,
+  deleteComment: (commentId) => `${API_ROOT}/comments/delete/${commentId}`,
 }

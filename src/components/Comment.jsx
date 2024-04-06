@@ -1,9 +1,4 @@
-import {
-  CircleUserIcon,
-  EllipsisVerticalIcon,
-  PencilIcon,
-  Trash2Icon,
-} from 'lucide-react'
+import { CircleUserIcon, EllipsisVerticalIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -167,21 +162,38 @@ Comment.DropdownMenu = function CommentDropdownMenu({
       >
         <EllipsisVerticalIcon />
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem>
-          <div className="flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary">
-            <PencilIcon className="h-4 w-4" />
-            Edit
-          </div>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <div className="flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary">
-            <Trash2Icon className="h-4 w-4" />
-            Delete
-          </div>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+      {children}
     </DropdownMenu>
+  )
+}
+
+Comment.DropdownMenuContent = function CommentDropdownMenuContent({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenuContent className={twMerge('', className)} {...restProps}>
+      {children}
+    </DropdownMenuContent>
+  )
+}
+
+Comment.DropdownMenuItem = function CommentDropdownMenuItem({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenuItem
+      className={twMerge(
+        'className="flex hover:text-primary" cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all',
+        className
+      )}
+      {...restProps}
+    >
+      {children}
+    </DropdownMenuItem>
   )
 }
 

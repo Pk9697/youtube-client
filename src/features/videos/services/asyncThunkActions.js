@@ -179,6 +179,23 @@ const toggleDislikeComment = createAsyncThunk(
   }
 )
 
+const deleteComment = createAsyncThunk(
+  'video/deleteComment',
+  async ({ accessToken, commentId }) => {
+    try {
+      const url = APIUrls.deleteComment(commentId)
+      const response = await axios.delete(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchVideos,
   fetchVideo,
@@ -189,4 +206,5 @@ export {
   addComment,
   toggleLikeComment,
   toggleDislikeComment,
+  deleteComment,
 }

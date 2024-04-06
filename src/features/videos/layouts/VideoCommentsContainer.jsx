@@ -1,22 +1,26 @@
 import {
+  FlagIcon,
   MessageSquarePlusIcon,
+  PencilIcon,
   ThumbsDownIcon,
   ThumbsUpIcon,
+  Trash2Icon,
 } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
 import Comment from '@/components/Comment'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import useComment from '../hooks/useComment'
 import {
+  deleteComment,
   toggleDislikeComment,
   toggleLikeComment,
 } from '../services/asyncThunkActions'
 
-function VideoCommentsContainer({ videoId, comments = [] }) {
+function VideoCommentsContainer({ videoOwnerId, videoId, comments = [] }) {
   const dispatch = useDispatch()
   const {
     accessToken,
-    user: { avatar: loggedInUserAvatar },
+    user: { avatar: loggedInUserAvatar, _id: loggedInUserId },
   } = useSelector((state) => state.auth)
   const {
     content: commentInput,
@@ -45,7 +49,7 @@ function VideoCommentsContainer({ videoId, comments = [] }) {
           _id: commentId,
           content,
           createdAt,
-          owner: { userName, avatar },
+          owner: { _id: commentOwnerId, userName, avatar },
           likesCount = 0,
           isLiked = false,
           dislikesCount = 0,
@@ -90,7 +94,31 @@ function VideoCommentsContainer({ videoId, comments = [] }) {
                 </Comment.Button>
               </Comment.Row>
             </Comment.Meta>
-            <Comment.DropdownMenu />
+            <Comment.DropdownMenu>
+              <Comment.DropdownMenuContent>
+                {loggedInUserId === commentOwnerId && (
+                  <Comment.DropdownMenuItem>
+                    <PencilIcon className="h-4 w-4" />
+                    Edit
+                  </Comment.DropdownMenuItem>
+                )}
+                {(loggedInUserId === videoOwnerId ||
+                  loggedInUserId === commentOwnerId) && (
+                  <Comment.DropdownMenuItem
+                    onClick={() =>
+                      dispatch(deleteComment({ accessToken, commentId }))
+                    }
+                  >
+                    <Trash2Icon className="h-4 w-4" />
+                    Delete
+                  </Comment.DropdownMenuItem>
+                )}
+                <Comment.DropdownMenuItem>
+                  <FlagIcon className="h-4 w-4" />
+                  Report
+                </Comment.DropdownMenuItem>
+              </Comment.DropdownMenuContent>
+            </Comment.DropdownMenu>
           </Comment>
         )
       )}

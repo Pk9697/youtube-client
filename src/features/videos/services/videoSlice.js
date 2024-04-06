@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { toast } from '@/components/ui/use-toast'
 import {
   addComment,
+  deleteComment,
   fetchVideo,
   fetchVideoComments,
   toggleDislikeComment,
@@ -189,7 +190,8 @@ const videoSlice = createSlice({
       })
       .addCase(toggleLikeComment.fulfilled, (state, action) => {
         if (action.payload?.success) {
-          const commentId = action.payload.data?._id
+          const { commentId } = action.meta.arg
+
           state.comments = state.comments.map((comment) =>
             comment._id === commentId
               ? { ...comment, ...action.payload.data }
@@ -218,7 +220,8 @@ const videoSlice = createSlice({
       })
       .addCase(toggleDislikeComment.fulfilled, (state, action) => {
         if (action.payload?.success) {
-          const commentId = action.payload.data?._id
+          const { commentId } = action.meta.arg
+
           state.comments = state.comments.map((comment) =>
             comment._id === commentId
               ? { ...comment, ...action.payload.data }
@@ -242,6 +245,35 @@ const videoSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(deleteComment.pending, (state) => {
+        state.error = null
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
+        if (action.payload?.success) {
+          // * Recieved commentId after dispatching deleteComment action from it's arguments provided
+          const { commentId } = action.meta.arg
+
+          state.comments = state.comments.filter(
+            (comment) => comment._id !== commentId
+          )
+          toast({
+            title: 'Deleted Video Comment!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(deleteComment.rejected, (state, action) => {
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -254,6 +286,7 @@ export {
   addComment,
   toggleLikeComment,
   toggleDislikeComment,
+  deleteComment,
 }
 
 export default videoSlice.reducer

@@ -12,6 +12,7 @@ import videoReducer, {
   addComment,
   toggleLikeComment,
   toggleDislikeComment,
+  deleteComment,
 } from './services/videoSlice'
 
 export {
@@ -30,4 +31,5 @@ export {
   addComment,
   toggleLikeComment,
   toggleDislikeComment,
+  deleteComment,
 }
