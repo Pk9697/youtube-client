@@ -3,12 +3,17 @@ import {
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from 'lucide-react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Comment from '@/components/Comment'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import useComment from '../hooks/useComment'
+import {
+  toggleDislikeComment,
+  toggleLikeComment,
+} from '../services/asyncThunkActions'
 
 function VideoCommentsContainer({ videoId, comments = [] }) {
+  const dispatch = useDispatch()
   const {
     accessToken,
     user: { avatar: loggedInUserAvatar },
@@ -37,7 +42,7 @@ function VideoCommentsContainer({ videoId, comments = [] }) {
 
       {comments.map(
         ({
-          _id,
+          _id: commentId,
           content,
           createdAt,
           owner: { userName, avatar },
@@ -46,7 +51,7 @@ function VideoCommentsContainer({ videoId, comments = [] }) {
           dislikesCount = 0,
           isDisliked = false,
         }) => (
-          <Comment key={_id}>
+          <Comment key={commentId}>
             <Comment.AvatarLink src={avatar} to />
             <Comment.Meta>
               <Comment.Row>
@@ -57,7 +62,12 @@ function VideoCommentsContainer({ videoId, comments = [] }) {
               </Comment.Row>
               <Comment.Text>{content}</Comment.Text>
               <Comment.Row>
-                <Comment.Button size="sm">
+                <Comment.Button
+                  onClick={() =>
+                    dispatch(toggleLikeComment({ accessToken, commentId }))
+                  }
+                  size="sm"
+                >
                   {isLiked ? (
                     <ThumbsUpIcon fill="skyblue" className="h-4 w-4" />
                   ) : (
@@ -65,7 +75,12 @@ function VideoCommentsContainer({ videoId, comments = [] }) {
                   )}
                   {likesCount}
                 </Comment.Button>
-                <Comment.Button size="sm">
+                <Comment.Button
+                  onClick={() =>
+                    dispatch(toggleDislikeComment({ accessToken, commentId }))
+                  }
+                  size="sm"
+                >
                   {isDisliked ? (
                     <ThumbsDownIcon fill="red" className="h-4 w-4" />
                   ) : (

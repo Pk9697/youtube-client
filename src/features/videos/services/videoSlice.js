@@ -5,7 +5,9 @@ import {
   addComment,
   fetchVideo,
   fetchVideoComments,
+  toggleDislikeComment,
   toggleDislikeVideo,
+  toggleLikeComment,
   toggleLikeVideo,
   toggleSubscriptionFromVideoOwner,
 } from './asyncThunkActions'
@@ -188,6 +190,72 @@ const videoSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(toggleLikeComment.pending, (state) => {
+        state.error = null
+      })
+      .addCase(toggleLikeComment.fulfilled, (state, action) => {
+        if (action.payload?.success) {
+          // state.videoDetails.likesCount = action.payload.data.likesCount
+          // state.videoDetails.isLiked = action.payload.data.isLiked
+          // state.videoDetails.dislikesCount = action.payload.data.dislikesCount
+          // state.videoDetails.isDisliked = action.payload.data.isDisliked
+          const commentId = action.payload.data?._id
+          state.comments = state.comments.map((comment) =>
+            comment._id === commentId
+              ? { ...comment, ...action.payload.data }
+              : comment
+          )
+          toast({
+            title: 'Comment Like toggled successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(toggleLikeComment.rejected, (state, action) => {
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
+      .addCase(toggleDislikeComment.pending, (state) => {
+        state.error = null
+      })
+      .addCase(toggleDislikeComment.fulfilled, (state, action) => {
+        if (action.payload?.success) {
+          // state.videoDetails.likesCount = action.payload.data.likesCount
+          // state.videoDetails.isLiked = action.payload.data.isLiked
+          // state.videoDetails.dislikesCount = action.payload.data.dislikesCount
+          // state.videoDetails.isDisliked = action.payload.data.isDisliked
+          const commentId = action.payload.data?._id
+          state.comments = state.comments.map((comment) =>
+            comment._id === commentId
+              ? { ...comment, ...action.payload.data }
+              : comment
+          )
+          toast({
+            title: 'Comment Dislike toggled successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(toggleDislikeComment.rejected, (state, action) => {
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -198,6 +266,8 @@ export {
   toggleSubscriptionFromVideoOwner,
   fetchVideoComments,
   addComment,
+  toggleLikeComment,
+  toggleDislikeComment,
 }
 
 export default videoSlice.reducer
