@@ -59,10 +59,7 @@ const videoSlice = createSlice({
       })
       .addCase(toggleLikeVideo.fulfilled, (state, action) => {
         if (action.payload?.success) {
-          state.videoDetails.likesCount = action.payload.data.likesCount
-          state.videoDetails.isLiked = action.payload.data.isLiked
-          state.videoDetails.dislikesCount = action.payload.data.dislikesCount
-          state.videoDetails.isDisliked = action.payload.data.isDisliked
+          state.videoDetails = { ...state.videoDetails, ...action.payload.data }
           toast({
             title: action.payload?.message || 'Like toggled successfully!',
           })
@@ -86,10 +83,7 @@ const videoSlice = createSlice({
       })
       .addCase(toggleDislikeVideo.fulfilled, (state, action) => {
         if (action.payload?.success) {
-          state.videoDetails.likesCount = action.payload.data.likesCount
-          state.videoDetails.isLiked = action.payload.data.isLiked
-          state.videoDetails.dislikesCount = action.payload.data.dislikesCount
-          state.videoDetails.isDisliked = action.payload.data.isDisliked
+          state.videoDetails = { ...state.videoDetails, ...action.payload.data }
           toast({
             title: action.payload?.message || 'Dislike toggled successfully!',
           })
@@ -195,10 +189,6 @@ const videoSlice = createSlice({
       })
       .addCase(toggleLikeComment.fulfilled, (state, action) => {
         if (action.payload?.success) {
-          // state.videoDetails.likesCount = action.payload.data.likesCount
-          // state.videoDetails.isLiked = action.payload.data.isLiked
-          // state.videoDetails.dislikesCount = action.payload.data.dislikesCount
-          // state.videoDetails.isDisliked = action.payload.data.isDisliked
           const commentId = action.payload.data?._id
           state.comments = state.comments.map((comment) =>
             comment._id === commentId
@@ -228,10 +218,6 @@ const videoSlice = createSlice({
       })
       .addCase(toggleDislikeComment.fulfilled, (state, action) => {
         if (action.payload?.success) {
-          // state.videoDetails.likesCount = action.payload.data.likesCount
-          // state.videoDetails.isLiked = action.payload.data.isLiked
-          // state.videoDetails.dislikesCount = action.payload.data.dislikesCount
-          // state.videoDetails.isDisliked = action.payload.data.isDisliked
           const commentId = action.payload.data?._id
           state.comments = state.comments.map((comment) =>
             comment._id === commentId
