@@ -5,7 +5,9 @@ import { VideoContainer, fetchVideos } from '@/features/videos'
 function Home() {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
-  const { videosList, inProgress } = useSelector((state) => state.videos)
+  const { videosList: allVideos, inProgress } = useSelector(
+    (state) => state.videos
+  )
 
   useEffect(() => {
     dispatch(fetchVideos({ accessToken }))
@@ -13,7 +15,7 @@ function Home() {
 
   return (
     <div className="p-4">
-      <VideoContainer videosList={videosList} inProgress={inProgress} />
+      <VideoContainer videosList={allVideos} inProgress={inProgress} />
     </div>
   )
 }

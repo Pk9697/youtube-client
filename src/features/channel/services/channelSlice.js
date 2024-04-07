@@ -4,7 +4,7 @@ import { toast } from '@/components/ui/use-toast'
 import { fetchChannel } from './asyncThunkActions'
 
 const initialState = {
-  currentChannel: null,
+  channelInfo: null,
   error: null,
   inProgress: false,
 }
@@ -16,14 +16,14 @@ const channelSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannel.pending, (state) => {
-        state.currentChannel = null
+        state.channelInfo = null
         state.error = null
         state.inProgress = true
       })
       .addCase(fetchChannel.fulfilled, (state, action) => {
         state.inProgress = false
         if (action.payload?.success) {
-          state.currentChannel = action.payload.data
+          state.channelInfo = action.payload.data
           toast({
             title: 'User Channel Fetched!',
           })

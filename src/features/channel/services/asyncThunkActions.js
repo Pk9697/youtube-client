@@ -3,7 +3,7 @@ import axios from 'axios'
 import { APIUrls } from '@/utils/apiUrls'
 
 const fetchChannel = createAsyncThunk(
-  'video/fetchChannel',
+  'channel/fetchChannel',
   async ({ accessToken, userName }) => {
     try {
       const url = APIUrls.fetchChannel(userName)

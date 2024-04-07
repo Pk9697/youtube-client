@@ -196,6 +196,27 @@ const deleteComment = createAsyncThunk(
   }
 )
 
+const fetchChannelVideos = createAsyncThunk(
+  'videos/fetchChannelVideos',
+  async ({ accessToken, userName }) => {
+    try {
+      const url = APIUrls.fetchChannelVideos(userName)
+      const response = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchVideos,
   fetchVideo,
@@ -207,4 +228,5 @@ export {
   toggleLikeComment,
   toggleDislikeComment,
   deleteComment,
+  fetchChannelVideos,
 }

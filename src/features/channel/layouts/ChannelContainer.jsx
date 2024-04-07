@@ -2,8 +2,8 @@ import { UserRoundMinusIcon, UserRoundPlusIcon } from 'lucide-react'
 import Channel from '../components/Channel'
 import { formatViews } from '@/utils/formatViews'
 
-function ChannelContainer({ currentChannel }) {
-  if (!currentChannel) return null
+function ChannelContainer({ channelInfo }) {
+  if (!channelInfo) return null
 
   const {
     userName,
@@ -13,7 +13,7 @@ function ChannelContainer({ currentChannel }) {
     subscribersCount,
     subscribedToCount,
     isSubscribed,
-  } = currentChannel
+  } = channelInfo
 
   return (
     <Channel>

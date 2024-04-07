@@ -21,4 +21,5 @@ export const APIUrls = {
     `${API_ROOT}/dislikes/toggle/comment/${commentId}`,
   deleteComment: (commentId) => `${API_ROOT}/comments/delete/${commentId}`,
   fetchChannel: (userName) => `${API_ROOT}/users/profile/${userName}`,
+  fetchChannelVideos: (userName) => `${API_ROOT}/videos/?userName=${userName}`,
 }
