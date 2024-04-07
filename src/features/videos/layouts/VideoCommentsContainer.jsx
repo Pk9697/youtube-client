@@ -15,12 +15,17 @@ import {
   toggleDislikeComment,
   toggleLikeComment,
 } from '../services/asyncThunkActions'
+import { ROUTES } from '@/data/constants'
 
 function VideoCommentsContainer({ videoOwnerId, videoId, comments = [] }) {
   const dispatch = useDispatch()
   const {
     accessToken,
-    user: { avatar: loggedInUserAvatar, _id: loggedInUserId },
+    user: {
+      avatar: loggedInUserAvatar,
+      _id: loggedInUserId,
+      userName: loggedInUserName,
+    },
   } = useSelector((state) => state.auth)
   const {
     content: commentInput,
@@ -32,7 +37,10 @@ function VideoCommentsContainer({ videoOwnerId, videoId, comments = [] }) {
     <Comment.Group>
       <Comment.Title>{comments.length} comments</Comment.Title>
       <Comment.Form onSubmit={handleSubmit}>
-        <Comment.AvatarLink src={loggedInUserAvatar} to />
+        <Comment.AvatarLink
+          src={loggedInUserAvatar}
+          to={`${ROUTES.PROFILE}/${loggedInUserName}`}
+        />
         <Comment.TextArea
           onChange={handleChange}
           name="content"
@@ -49,17 +57,28 @@ function VideoCommentsContainer({ videoOwnerId, videoId, comments = [] }) {
           _id: commentId,
           content,
           createdAt,
-          owner: { _id: commentOwnerId, userName, avatar },
+          owner: {
+            _id: commentOwnerId,
+            userName: commentOwnerUserName,
+            avatar,
+          },
           likesCount = 0,
           isLiked = false,
           dislikesCount = 0,
           isDisliked = false,
         }) => (
           <Comment key={commentId}>
-            <Comment.AvatarLink src={avatar} to />
+            <Comment.AvatarLink
+              src={avatar}
+              to={`${ROUTES.PROFILE}/${commentOwnerUserName}`}
+            />
             <Comment.Meta>
               <Comment.Row>
-                <Comment.TextLink to>@{userName}</Comment.TextLink>
+                <Comment.TextLink
+                  to={`${ROUTES.PROFILE}/${commentOwnerUserName}`}
+                >
+                  @{commentOwnerUserName}
+                </Comment.TextLink>
                 <Comment.TextSmall>
                   {formatTimeAgo(createdAt)}
                 </Comment.TextSmall>

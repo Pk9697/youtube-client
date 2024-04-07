@@ -4,6 +4,7 @@ import { formatDuration } from '@/utils/formatDuration'
 import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import Loader from '@/components/Loader'
+import { ROUTES } from '@/data/constants'
 
 function VideoContainer({ videosList = [], inProgress = false }) {
   return (
@@ -20,7 +21,7 @@ function VideoContainer({ videosList = [], inProgress = false }) {
             owner: { fullName, avatar, userName },
           }) => (
             <Video key={_id}>
-              <Video.ImageContainerLink to={`/videos/view/${_id}`}>
+              <Video.ImageContainerLink to={`${ROUTES.VIEW}/${_id}`}>
                 <Video.Image src={thumbnail} />
                 <Video.Duration>{formatDuration(duration)}</Video.Duration>
               </Video.ImageContainerLink>
@@ -28,13 +29,13 @@ function VideoContainer({ videosList = [], inProgress = false }) {
                 <Video.Row>
                   <Video.AvatarLink
                     src={avatar}
-                    to={`/users/profile/${userName}`}
+                    to={`${ROUTES.PROFILE}/${userName}`}
                   />
                   <Video.Meta>
-                    <Video.TitleLink to={`/videos/view/${_id}`}>
+                    <Video.TitleLink to={`${ROUTES.VIEW}/${_id}`}>
                       {title}
                     </Video.TitleLink>
-                    <Video.TextLink to={`/users/profile/${userName}`}>
+                    <Video.TextLink to={`${ROUTES.PROFILE}/${userName}`}>
                       {fullName}
                     </Video.TextLink>
                     <Video.Text>

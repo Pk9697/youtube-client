@@ -4,6 +4,7 @@ import { formatDuration } from '@/utils/formatDuration'
 import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import Loader from '@/components/Loader'
+import { ROUTES } from '@/data/constants'
 
 function VideoSingleColContainer({ videosList, inProgress = false }) {
   return (
@@ -17,22 +18,24 @@ function VideoSingleColContainer({ videosList, inProgress = false }) {
             duration,
             views,
             createdAt,
-            owner: { fullName },
+            owner: { fullName, userName },
           }) => (
             <Video
               key={_id}
               className="grid-cols-[2fr_7fr] lg:grid-cols-[2fr_3fr]"
             >
-              <Video.ImageContainerLink to={`/videos/view/${_id}`}>
+              <Video.ImageContainerLink to={`${ROUTES.VIEW}/${_id}`}>
                 <Video.Image src={thumbnail} />
                 <Video.Duration>{formatDuration(duration)}</Video.Duration>
               </Video.ImageContainerLink>
               <Video.Details>
                 <Video.Meta>
-                  <Video.TitleLink to={`/videos/view/${_id}`}>
+                  <Video.TitleLink to={`${ROUTES.VIEW}/${_id}`}>
                     {title}
                   </Video.TitleLink>
-                  <Video.TextLink to="/:channelId">{fullName}</Video.TextLink>
+                  <Video.TextLink to={`${ROUTES.PROFILE}/${userName}`}>
+                    {fullName}
+                  </Video.TextLink>
                   <Video.Text>
                     {formatViews(views)} views • {formatTimeAgo(createdAt)}
                   </Video.Text>

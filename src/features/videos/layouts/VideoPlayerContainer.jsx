@@ -9,6 +9,7 @@ import {
   toggleLikeVideo,
   toggleSubscriptionFromVideoOwner,
 } from '../services/videoSlice'
+import { ROUTES } from '@/data/constants'
 
 function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
   const dispatch = useDispatch()
@@ -25,7 +26,14 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
     isLiked,
     dislikesCount,
     isDisliked,
-    owner: { _id: userId, fullName, avatar, subscribersCount, isSubscribed },
+    owner: {
+      _id: userId,
+      userName,
+      fullName,
+      avatar,
+      subscribersCount,
+      isSubscribed,
+    },
   } = videoDetails || {}
 
   return (
@@ -37,9 +45,14 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
         <Video.Title>{title}</Video.Title>
         <Video.Details className="flex-wrap">
           <Video.Row>
-            <Video.AvatarLink src={avatar} />
+            <Video.AvatarLink
+              src={avatar}
+              to={`${ROUTES.PROFILE}/${userName}`}
+            />
             <Video.Meta>
-              <Video.TitleLink>{fullName}</Video.TitleLink>
+              <Video.TitleLink to={`${ROUTES.PROFILE}/${userName}`}>
+                {fullName}
+              </Video.TitleLink>
               <Video.Text>
                 {formatViews(subscribersCount)} Subscribers
               </Video.Text>
@@ -53,7 +66,7 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
                 }
                 variant="destructive"
               >
-                Unsubsscribe
+                Unsubscribe
               </Video.Button>
             ) : (
               <Video.Button
