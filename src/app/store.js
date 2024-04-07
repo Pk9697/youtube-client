@@ -4,6 +4,7 @@ import persistReducer from 'redux-persist/es/persistReducer'
 import persistStore from 'redux-persist/es/persistStore'
 import { authReducer } from '@/features/authentication'
 import { videosReducer, videoReducer } from '@/features/videos'
+import { channelReducer } from '@/features/channel'
 import appReducer from './appSlice'
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   videos: videosReducer,
   video: videoReducer,
+  channel: channelReducer,
 })
 
 const persistConfig = {

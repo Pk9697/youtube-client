@@ -53,7 +53,7 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
                 }
                 variant="destructive"
               >
-                Unsubscribe
+                Unsubsscribe
               </Video.Button>
             ) : (
               <Video.Button
@@ -90,7 +90,7 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
         <Video.Card>
           <Video.CardHeader>
             <Video.CardTitle>
-              {formatViews(views)} views , {formatTimeAgo(createdAt)}
+              {formatViews(views)} views • {formatTimeAgo(createdAt)}
             </Video.CardTitle>
             <Video.CardDescription>{description}</Video.CardDescription>
           </Video.CardHeader>

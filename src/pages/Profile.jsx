@@ -1,13 +1,24 @@
-import { useSelector } from 'react-redux'
-import { ChannelContainer } from '@/features/channel'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { ChannelContainer, fetchChannel } from '@/features/channel'
 import Channel from '@/features/channel/components/Channel'
 import { VideoContainer } from '@/features/videos'
 
 function Profile() {
+  const dispatch = useDispatch()
+  const { userName } = useParams()
+  const { accessToken } = useSelector((state) => state.auth)
+  const { currentChannel } = useSelector((state) => state.channel)
+
+  useEffect(() => {
+    dispatch(fetchChannel({ accessToken, userName }))
+  }, [userName])
+
   const { videosList, inProgress } = useSelector((state) => state.videos)
   return (
     <div className="flex flex-col gap-4">
-      <ChannelContainer />
+      <ChannelContainer currentChannel={currentChannel} />
       <Channel.Tabs defaultValue="videos">
         <Channel.TabsList>
           <Channel.TabsTrigger value="videos">Videos</Channel.TabsTrigger>

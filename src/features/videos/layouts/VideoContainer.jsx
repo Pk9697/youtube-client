@@ -38,7 +38,7 @@ function VideoContainer({ videosList = [], inProgress = false }) {
                       {fullName}
                     </Video.TextLink>
                     <Video.Text>
-                      {formatViews(views)} views · {formatTimeAgo(createdAt)}
+                      {formatViews(views)} views • {formatTimeAgo(createdAt)}
                     </Video.Text>
                   </Video.Meta>
                 </Video.Row>

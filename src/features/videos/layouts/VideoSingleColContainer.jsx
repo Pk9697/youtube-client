@@ -34,7 +34,7 @@ function VideoSingleColContainer({ videosList, inProgress = false }) {
                   </Video.TitleLink>
                   <Video.TextLink to="/:channelId">{fullName}</Video.TextLink>
                   <Video.Text>
-                    {formatViews(views)} views · {formatTimeAgo(createdAt)}
+                    {formatViews(views)} views • {formatTimeAgo(createdAt)}
                   </Video.Text>
                 </Video.Meta>
                 <Video.Row className="ml-auto">
