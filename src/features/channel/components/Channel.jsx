@@ -3,10 +3,11 @@ import { CircleUserIcon } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function Channel({ children, className, ...restProps }) {
   return (
-    <div className={twMerge('flex flex-col', className)} {...restProps}>
+    <div className={twMerge('flex flex-col gap-4', className)} {...restProps}>
       {children}
     </div>
   )
@@ -39,7 +40,7 @@ Channel.Details = function ChannelDetails({
   return (
     <div
       className={twMerge(
-        '-mt-24 flex flex-col items-start gap-4 p-4 sm:-mt-10 sm:flex-row sm:items-end',
+        '-mt-24 flex flex-col items-start gap-4 px-4 sm:-mt-10 sm:flex-row sm:items-end',
         className
       )}
       {...restProps}
@@ -99,6 +100,50 @@ Channel.Button = function ChannelButton({ children, className, ...restProps }) {
     >
       {children}
     </Button>
+  )
+}
+
+Channel.Tabs = function ChannelTabs({ children, className, ...restProps }) {
+  return (
+    <Tabs className={twMerge('px-4', className)} {...restProps}>
+      {children}
+    </Tabs>
+  )
+}
+
+Channel.TabsList = function ChannelTabsList({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <TabsList className={twMerge('', className)} {...restProps}>
+      {children}
+    </TabsList>
+  )
+}
+
+Channel.TabsTrigger = function ChannelTabsTrigger({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <TabsTrigger className={twMerge('', className)} {...restProps}>
+      {children}
+    </TabsTrigger>
+  )
+}
+
+Channel.TabsContent = function ChannelTabsContent({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <TabsContent className={twMerge('', className)} {...restProps}>
+      {children}
+    </TabsContent>
   )
 }
 
