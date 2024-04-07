@@ -10,14 +10,11 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import '@/index.css'
 import { ROUTES } from '@/data/constants'
-import Login from '@/pages/Login'
-import Register from '@/pages/Register'
 import { persistor, store } from '@/app/store'
 import { Toaster } from '@/components/ui/toaster'
-import Home from '@/pages/Home'
 import Layout from '@/layouts/Layout'
-import View from './pages/View'
 import PrivateRoute from '@/components/PrivateRoute'
+import { Home, Login, Register, View, Profile } from '@/pages'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +23,7 @@ const router = createBrowserRouter(
         <Route path={ROUTES.HOME} element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="videos/view/:videoId" element={<View />} />
+          <Route path="users/profile/:userName" element={<Profile />} />
         </Route>
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />} />
