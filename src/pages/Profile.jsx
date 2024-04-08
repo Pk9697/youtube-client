@@ -6,6 +6,7 @@ import Channel from '@/features/channel/components/Channel'
 import { VideoContainer, fetchChannelVideos } from '@/features/videos'
 import Loader from '@/components/Loader'
 import { TweetsContainer, fetchChannelTweets } from '@/features/tweets'
+import UserContainer from '@/layouts/UserContainer'
 
 function Profile() {
   const dispatch = useDispatch()
@@ -56,7 +57,7 @@ function Profile() {
             </Loader>
           </Channel.TabsContent>
           <Channel.TabsContent value="subscribedTo">
-            Subscribed To
+            <UserContainer />
           </Channel.TabsContent>
         </Channel.Tabs>
       </div>

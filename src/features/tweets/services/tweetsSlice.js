@@ -134,7 +134,6 @@ const tweetsSlice = createSlice({
       })
       .addCase(deleteTweet.fulfilled, (state, action) => {
         if (action.payload?.success) {
-          // * Recieved commentId after dispatching deleteTweet action from it's arguments provided
           const { tweetId } = action.meta.arg
 
           state.tweetsList = state.tweetsList.filter(
