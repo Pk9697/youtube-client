@@ -5,6 +5,7 @@ import { ChannelContainer, fetchChannel } from '@/features/channel'
 import Channel from '@/features/channel/components/Channel'
 import { VideoContainer, fetchChannelVideos } from '@/features/videos'
 import Loader from '@/components/Loader'
+import { TweetsContainer, fetchChannelTweets } from '@/features/tweets'
 
 function Profile() {
   const dispatch = useDispatch()
@@ -15,10 +16,13 @@ function Profile() {
   )
   const { videosList: channelVideos, inProgress: inProgressVideosFetching } =
     useSelector((state) => state.videos)
+  const { tweetsList: channelTweets, inProgress: inProgressTweetsFetching } =
+    useSelector((state) => state.tweets)
 
   useEffect(() => {
     dispatch(fetchChannel({ accessToken, userName }))
     dispatch(fetchChannelVideos({ accessToken, userName }))
+    dispatch(fetchChannelTweets({ accessToken, userName }))
   }, [userName])
 
   return (
@@ -36,14 +40,21 @@ function Profile() {
               Subscribed To
             </Channel.TabsTrigger>
           </Channel.TabsList>
-          <Channel.TabsContent value="videos">
+          <Channel.TabsContent value="videos" className="mt-4">
             <VideoContainer
               videosList={channelVideos}
               inProgress={inProgressVideosFetching}
             />
           </Channel.TabsContent>
           <Channel.TabsContent value="playlists">Playlists</Channel.TabsContent>
-          <Channel.TabsContent value="tweets">Tweets</Channel.TabsContent>
+          <Channel.TabsContent value="tweets" className="mt-4">
+            <Loader inProgress={inProgressTweetsFetching}>
+              <TweetsContainer
+                currentProfileUserName={userName}
+                tweetsList={channelTweets}
+              />
+            </Loader>
+          </Channel.TabsContent>
           <Channel.TabsContent value="subscribedTo">
             Subscribed To
           </Channel.TabsContent>

@@ -22,4 +22,11 @@ export const APIUrls = {
   deleteComment: (commentId) => `${API_ROOT}/comments/delete/${commentId}`,
   fetchChannel: (userName) => `${API_ROOT}/users/profile/${userName}`,
   fetchChannelVideos: (userName) => `${API_ROOT}/videos/?userName=${userName}`,
+  fetchChannelTweets: (userName) =>
+    `${API_ROOT}/tweets/users/?userName=${userName}`,
+  addTweet: () => `${API_ROOT}/tweets/create`,
+  toggleLikeTweet: (tweetId) => `${API_ROOT}/likes/toggle/tweet/${tweetId}`,
+  toggleDislikeTweet: (tweetId) =>
+    `${API_ROOT}/dislikes/toggle/tweet/${tweetId}`,
+  deleteTweet: (tweetId) => `${API_ROOT}/tweets/delete/${tweetId}`,
 }

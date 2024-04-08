@@ -10,6 +10,7 @@ function VideoContainer({ videosList = [], inProgress = false }) {
   return (
     <Loader inProgress={inProgress}>
       <Video.Group>
+        {!videosList.length && <Video.Title>0 videos</Video.Title>}
         {videosList?.map(
           ({
             _id,

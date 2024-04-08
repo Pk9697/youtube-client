@@ -141,7 +141,7 @@ Channel.TabsContent = function ChannelTabsContent({
   ...restProps
 }) {
   return (
-    <TabsContent className={twMerge('', className)} {...restProps}>
+    <TabsContent className={twMerge('mt-4', className)} {...restProps}>
       {children}
     </TabsContent>
   )

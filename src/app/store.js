@@ -6,6 +6,7 @@ import { authReducer } from '@/features/authentication'
 import { videosReducer, videoReducer } from '@/features/videos'
 import { channelReducer } from '@/features/channel'
 import appReducer from './appSlice'
+import { tweetsReducer } from '@/features/tweets'
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   videos: videosReducer,
   video: videoReducer,
   channel: channelReducer,
+  tweets: tweetsReducer,
 })
 
 const persistConfig = {
