@@ -29,4 +29,6 @@ export const APIUrls = {
   toggleDislikeTweet: (tweetId) =>
     `${API_ROOT}/dislikes/toggle/tweet/${tweetId}`,
   deleteTweet: (tweetId) => `${API_ROOT}/tweets/delete/${tweetId}`,
+  fetchUserSubscribedToChannels: (userName) =>
+    `${API_ROOT}/subscriptions/channels/?subscriberUserName=${userName}`,
 }

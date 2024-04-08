@@ -1,7 +1,11 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { ChannelContainer, fetchChannel } from '@/features/channel'
+import {
+  ChannelContainer,
+  fetchChannel,
+  fetchUserSubscribedToChannels,
+} from '@/features/channel'
 import Channel from '@/features/channel/components/Channel'
 import { VideoContainer, fetchChannelVideos } from '@/features/videos'
 import Loader from '@/components/Loader'
@@ -12,9 +16,11 @@ function Profile() {
   const dispatch = useDispatch()
   const { userName } = useParams()
   const { accessToken } = useSelector((state) => state.auth)
-  const { channelInfo, inProgress: inProgressChannelFetching } = useSelector(
-    (state) => state.channel
-  )
+  const {
+    channelInfo,
+    inProgress: inProgressChannelFetching,
+    subscribedToChannelsList,
+  } = useSelector((state) => state.channel)
   const { videosList: channelVideos, inProgress: inProgressVideosFetching } =
     useSelector((state) => state.videos)
   const { tweetsList: channelTweets, inProgress: inProgressTweetsFetching } =
@@ -24,6 +30,7 @@ function Profile() {
     dispatch(fetchChannel({ accessToken, userName }))
     dispatch(fetchChannelVideos({ accessToken, userName }))
     dispatch(fetchChannelTweets({ accessToken, userName }))
+    dispatch(fetchUserSubscribedToChannels({ accessToken, userName }))
   }, [userName])
 
   return (
@@ -57,7 +64,7 @@ function Profile() {
             </Loader>
           </Channel.TabsContent>
           <Channel.TabsContent value="subscribedTo">
-            <UserContainer />
+            <UserContainer usersList={subscribedToChannelsList} />
           </Channel.TabsContent>
         </Channel.Tabs>
       </div>

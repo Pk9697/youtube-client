@@ -19,4 +19,21 @@ const fetchChannel = createAsyncThunk(
   }
 )
 
-export { fetchChannel }
+const fetchUserSubscribedToChannels = createAsyncThunk(
+  'channel/fetchUserSubscribedToChannels',
+  async ({ accessToken, userName }) => {
+    try {
+      const url = APIUrls.fetchUserSubscribedToChannels(userName)
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+export { fetchChannel, fetchUserSubscribedToChannels }

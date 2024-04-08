@@ -78,6 +78,14 @@ User.Meta = function UserMeta({ className, children, ...restProps }) {
   )
 }
 
+User.Title = function UserTitle({ children, className, ...restProps }) {
+  return (
+    <div className={twMerge('text-xl font-bold', className)} {...restProps}>
+      {children}
+    </div>
+  )
+}
+
 User.TextLink = function UserTextLink({ children, className, ...restProps }) {
   return (
     <Link
