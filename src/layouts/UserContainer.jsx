@@ -4,7 +4,6 @@ import { ROUTES } from '@/data/constants'
 import { formatViews } from '@/utils/formatViews'
 
 function UserContainer({ usersList = [] }) {
-  console.log({ usersList })
   return (
     <User.Group>
       <User.SearchInput />
@@ -34,7 +33,7 @@ function UserContainer({ usersList = [] }) {
             {isSubscribed ? (
               <User.Button variant="destructive" className="sm:ml-auto">
                 <UserRoundMinusIcon className="size-5" />
-                Unsubcribe
+                Unsubscribe
               </User.Button>
             ) : (
               <User.Button className="sm:ml-auto">

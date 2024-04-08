@@ -32,7 +32,7 @@ function ChannelContainer({ channelInfo }) {
         {isSubscribed ? (
           <Channel.Button variant="destructive" className="sm:ml-auto">
             <UserRoundMinusIcon className="size-5" />
-            Unsubcribe
+            Unsubscribe
           </Channel.Button>
         ) : (
           <Channel.Button className="sm:ml-auto">

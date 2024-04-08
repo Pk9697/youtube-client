@@ -1,10 +1,24 @@
 import { Outlet } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 import SidebarContainer from './SidebarContainer'
 import NavbarContainer from './NavbarContainer'
+import { fetchLoggedInUserSubscribedToChannels } from '@/features/subscription'
 
 function Layout() {
+  const dispatch = useDispatch()
+  const {
+    accessToken,
+    user: { userName },
+  } = useSelector((state) => state.auth)
+  const { subscribedToChannelsList } = useSelector(
+    (state) => state.subscription
+  )
   const { isSidebarOpen } = useSelector((state) => state.app)
+
+  useEffect(() => {
+    dispatch(fetchLoggedInUserSubscribedToChannels({ accessToken, userName }))
+  }, [])
 
   return (
     <div
@@ -13,11 +27,11 @@ function Layout() {
       <div
         className={`sticky top-0 z-10 hidden max-h-screen overflow-auto border-r bg-muted/40 ${isSidebarOpen ? 'md:block' : ''}`}
       >
-        <SidebarContainer />
+        <SidebarContainer usersList={subscribedToChannelsList} />
       </div>
       <div>
         <div className="sticky top-0 z-10">
-          <NavbarContainer />
+          <NavbarContainer usersList={subscribedToChannelsList} />
         </div>
         <Outlet />
       </div>

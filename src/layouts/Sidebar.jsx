@@ -1,5 +1,5 @@
 import { CircleUser } from 'lucide-react'
-
+import { Link } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -33,18 +33,19 @@ Sidebar.Header = function SidebarHeader({ className, children, ...restProps }) {
 
 Sidebar.HeaderLink = function SidebarHeaderLink({
   className,
+  to,
   children,
   ...restProps
 }) {
   return (
-    <a
-      href="/"
+    <Link
+      to={to}
       className={twMerge('flex items-center gap-2 font-semibold', className, {
         ...restProps,
       })}
     >
       {children}
-    </a>
+    </Link>
   )
 }
 
@@ -90,12 +91,13 @@ Sidebar.NavTitle = function SidebarNavTitle({
 
 Sidebar.NavLink = function SidebarNavLink({
   className,
+  to = '/',
   children,
   ...restProps
 }) {
   return (
-    <a
-      href="/"
+    <Link
+      to={to}
       className={twMerge(
         'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
         className,
@@ -103,7 +105,7 @@ Sidebar.NavLink = function SidebarNavLink({
       )}
     >
       {children}
-    </a>
+    </Link>
   )
 }
 

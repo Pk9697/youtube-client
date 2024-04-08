@@ -9,12 +9,13 @@ import {
   Youtube,
 } from 'lucide-react'
 import Sidebar from './Sidebar'
+import { ROUTES } from '@/data/constants'
 
-function SidebarContainer() {
+function SidebarContainer({ usersList = [] }) {
   return (
     <Sidebar>
       <Sidebar.Header>
-        <Sidebar.HeaderLink>
+        <Sidebar.HeaderLink to={ROUTES.HOME}>
           <Sidebar.Icon>
             <Youtube color="red" className="h-6 w-6" />
           </Sidebar.Icon>
@@ -67,14 +68,13 @@ function SidebarContainer() {
 
       <Sidebar.Nav>
         <Sidebar.NavTitle>Subscriptions</Sidebar.NavTitle>
-        <Sidebar.NavLink>
-          <Sidebar.Avatar src />
-          <Sidebar.Text>Name 1</Sidebar.Text>
-        </Sidebar.NavLink>
-        <Sidebar.NavLink>
-          <Sidebar.Avatar />
-          <Sidebar.Text>Name 2</Sidebar.Text>
-        </Sidebar.NavLink>
+
+        {usersList.map(({ channel: { _id, avatar, userName, fullName } }) => (
+          <Sidebar.NavLink key={_id} to={`${ROUTES.PROFILE}/${userName}`}>
+            <Sidebar.Avatar src={avatar} />
+            <Sidebar.Text>{fullName}</Sidebar.Text>
+          </Sidebar.NavLink>
+        ))}
       </Sidebar.Nav>
 
       <Sidebar.Nav className="mt-auto">
