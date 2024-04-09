@@ -11,6 +11,7 @@ import { VideoContainer, fetchChannelVideos } from '@/features/videos'
 import Loader from '@/components/Loader'
 import { TweetsContainer, fetchChannelTweets } from '@/features/tweets'
 import UserContainer from '@/layouts/UserContainer'
+import { PlaylistContainer } from '@/features/playlist'
 
 function Profile() {
   const dispatch = useDispatch()
@@ -57,7 +58,9 @@ function Profile() {
               inProgress={inProgressVideosFetching}
             />
           </Channel.TabsContent>
-          <Channel.TabsContent value="playlists">Playlists</Channel.TabsContent>
+          <Channel.TabsContent value="playlists">
+            <PlaylistContainer />
+          </Channel.TabsContent>
           <Channel.TabsContent value="tweets" className="mt-4">
             <Loader inProgress={inProgressTweetsFetching}>
               <TweetsContainer
