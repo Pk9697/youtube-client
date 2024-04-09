@@ -8,6 +8,7 @@ import { channelReducer } from '@/features/channel'
 import appReducer from './appSlice'
 import { tweetsReducer } from '@/features/tweets'
 import { subscriptionReducer } from '@/features/subscription'
+import { playlistReducer } from '@/features/playlist'
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   channel: channelReducer,
   tweets: tweetsReducer,
   subscription: subscriptionReducer,
+  playlist: playlistReducer,
 })
 
 const persistConfig = {

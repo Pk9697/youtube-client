@@ -1,3 +1,6 @@
 import PlaylistContainer from './layouts/PlaylistContainer'
+import playlistReducer, {
+  fetchChannelPlaylists,
+} from './services/playlistSlice'
 
-export { PlaylistContainer }
+export { PlaylistContainer, playlistReducer, fetchChannelPlaylists }

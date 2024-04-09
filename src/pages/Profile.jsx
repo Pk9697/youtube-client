@@ -11,7 +11,7 @@ import { VideoContainer, fetchChannelVideos } from '@/features/videos'
 import Loader from '@/components/Loader'
 import { TweetsContainer, fetchChannelTweets } from '@/features/tweets'
 import UserContainer from '@/layouts/UserContainer'
-import { PlaylistContainer } from '@/features/playlist'
+import { PlaylistContainer, fetchChannelPlaylists } from '@/features/playlist'
 
 function Profile() {
   const dispatch = useDispatch()
@@ -29,12 +29,15 @@ function Profile() {
   const { inProgress: inProgressSubscription } = useSelector(
     (state) => state.subscription
   )
+  const { channelPlaylists } = useSelector((state) => state.playlist)
+  console.log({ channelPlaylists })
 
   useEffect(() => {
     dispatch(fetchChannel({ accessToken, userName }))
     dispatch(fetchChannelVideos({ accessToken, userName }))
     dispatch(fetchChannelTweets({ accessToken, userName }))
     dispatch(fetchUserSubscribedToChannels({ accessToken, userName }))
+    dispatch(fetchChannelPlaylists({ accessToken, userName }))
   }, [userName])
 
   return (
@@ -59,7 +62,7 @@ function Profile() {
             />
           </Channel.TabsContent>
           <Channel.TabsContent value="playlists">
-            <PlaylistContainer />
+            <PlaylistContainer playlists={channelPlaylists} />
           </Channel.TabsContent>
           <Channel.TabsContent value="tweets" className="mt-4">
             <Loader inProgress={inProgressTweetsFetching}>
