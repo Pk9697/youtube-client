@@ -1,11 +1,18 @@
 import { UserRoundMinusIcon, UserRoundPlusIcon } from 'lucide-react'
+import { useDispatch, useSelector } from 'react-redux'
 import Channel from '../components/Channel'
 import { formatViews } from '@/utils/formatViews'
+import { toggleSubscriptionFromChannelProfile } from '../services/channelSlice'
+import { toggleSubscription } from '@/features/subscription'
 
-function ChannelContainer({ channelInfo }) {
+function ChannelContainer({ channelInfo, inProgressSubscription = false }) {
+  const dispatch = useDispatch()
+  const { accessToken } = useSelector((state) => state.auth)
+
   if (!channelInfo) return null
 
   const {
+    _id: userId,
     userName,
     fullName,
     avatar,
@@ -14,6 +21,11 @@ function ChannelContainer({ channelInfo }) {
     subscribedToCount,
     isSubscribed,
   } = channelInfo
+
+  const handleToggleSubscription = () => {
+    dispatch(toggleSubscriptionFromChannelProfile())
+    dispatch(toggleSubscription({ accessToken, userId }))
+  }
 
   return (
     <Channel>
@@ -30,12 +42,21 @@ function ChannelContainer({ channelInfo }) {
         </Channel.Meta>
 
         {isSubscribed ? (
-          <Channel.Button variant="destructive" className="sm:ml-auto">
+          <Channel.Button
+            disabled={inProgressSubscription}
+            variant="destructive"
+            className="sm:ml-auto"
+            onClick={handleToggleSubscription}
+          >
             <UserRoundMinusIcon className="size-5" />
             Unsubscribe
           </Channel.Button>
         ) : (
-          <Channel.Button className="sm:ml-auto">
+          <Channel.Button
+            disabled={inProgressSubscription}
+            className="sm:ml-auto"
+            onClick={handleToggleSubscription}
+          >
             <UserRoundPlusIcon className="size-5" />
             Subscribe
           </Channel.Button>

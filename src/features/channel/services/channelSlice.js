@@ -16,7 +16,56 @@ const initialState = {
 const channelSlice = createSlice({
   name: 'channel',
   initialState,
-  reducers: {},
+  reducers: {
+    toggleSubscriptionFromChannelProfile: (state) => {
+      const { isSubscribed, subscribersCount } = state.channelInfo
+      state.channelInfo.subscribersCount = isSubscribed
+        ? subscribersCount - 1
+        : subscribersCount + 1
+      state.channelInfo.isSubscribed = !isSubscribed
+
+      const existingUserIndex = state.subscribedToChannelsList.findIndex(
+        (user) => user.channel?._id === state.channelInfo?._id
+      )
+
+      if (existingUserIndex !== -1) {
+        state.subscribedToChannelsList[
+          existingUserIndex
+        ].channel.subscribersCount = isSubscribed
+          ? subscribersCount - 1
+          : subscribersCount + 1
+
+        state.subscribedToChannelsList[existingUserIndex].channel.isSubscribed =
+          !isSubscribed
+      }
+    },
+    toggleSubscriptionFromChannelList: (state, action) => {
+      const existingUserIndex = state.subscribedToChannelsList.findIndex(
+        (user) => user.channel?._id === action.payload?.userId
+      )
+      if (existingUserIndex !== -1) {
+        const { isSubscribed, subscribersCount } =
+          state.subscribedToChannelsList[existingUserIndex].channel
+
+        state.subscribedToChannelsList[
+          existingUserIndex
+        ].channel.subscribersCount = isSubscribed
+          ? subscribersCount - 1
+          : subscribersCount + 1
+
+        state.subscribedToChannelsList[existingUserIndex].channel.isSubscribed =
+          !isSubscribed
+      }
+
+      if (state.channelInfo?._id === action.payload.userId) {
+        const { isSubscribed, subscribersCount } = state.channelInfo
+        state.channelInfo.subscribersCount = isSubscribed
+          ? subscribersCount - 1
+          : subscribersCount + 1
+        state.channelInfo.isSubscribed = !isSubscribed
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannel.pending, (state) => {
@@ -76,6 +125,11 @@ const channelSlice = createSlice({
       })
   },
 })
+
+export const {
+  toggleSubscriptionFromChannelProfile,
+  toggleSubscriptionFromChannelList,
+} = channelSlice.actions
 
 export { fetchChannel, fetchUserSubscribedToChannels }
 

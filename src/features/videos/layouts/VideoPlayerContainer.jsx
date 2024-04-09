@@ -10,8 +10,13 @@ import {
   toggleSubscriptionFromVideoOwner,
 } from '../services/videoSlice'
 import { ROUTES } from '@/data/constants'
+import { toggleSubscription } from '@/features/subscription'
 
-function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
+function VideoPlayerContainer({
+  videoDetails = {},
+  inProgress = false,
+  inProgressSubscription = false,
+}) {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   if (!videoDetails) return null
@@ -36,6 +41,11 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
     },
   } = videoDetails || {}
 
+  const handleToggleSubscription = () => {
+    dispatch(toggleSubscriptionFromVideoOwner())
+    dispatch(toggleSubscription({ accessToken, userId }))
+  }
+
   return (
     <Loader inProgress={inProgress}>
       <Video.PlayerContainer>
@@ -59,22 +69,16 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
             </Video.Meta>
             {isSubscribed ? (
               <Video.Button
-                onClick={() =>
-                  dispatch(
-                    toggleSubscriptionFromVideoOwner({ accessToken, userId })
-                  )
-                }
+                disabled={inProgressSubscription}
+                onClick={handleToggleSubscription}
                 variant="destructive"
               >
                 Unsubscribe
               </Video.Button>
             ) : (
               <Video.Button
-                onClick={() =>
-                  dispatch(
-                    toggleSubscriptionFromVideoOwner({ accessToken, userId })
-                  )
-                }
+                disabled={inProgressSubscription}
+                onClick={handleToggleSubscription}
               >
                 Subscribe
               </Video.Button>

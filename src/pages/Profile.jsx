@@ -25,6 +25,9 @@ function Profile() {
     useSelector((state) => state.videos)
   const { tweetsList: channelTweets, inProgress: inProgressTweetsFetching } =
     useSelector((state) => state.tweets)
+  const { inProgress: inProgressSubscription } = useSelector(
+    (state) => state.subscription
+  )
 
   useEffect(() => {
     dispatch(fetchChannel({ accessToken, userName }))
@@ -64,7 +67,10 @@ function Profile() {
             </Loader>
           </Channel.TabsContent>
           <Channel.TabsContent value="subscribedTo">
-            <UserContainer usersList={subscribedToChannelsList} />
+            <UserContainer
+              usersList={subscribedToChannelsList}
+              inProgressSubscription={inProgressSubscription}
+            />
           </Channel.TabsContent>
         </Channel.Tabs>
       </div>

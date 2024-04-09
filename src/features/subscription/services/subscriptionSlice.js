@@ -1,6 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchLoggedInUserSubscribedToChannels } from './asyncThunkActions'
+import {
+  fetchLoggedInUserSubscribedToChannels,
+  toggleSubscription,
+} from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
 const initialState = {
@@ -48,9 +51,45 @@ const subscriptionSlice = createSlice({
           })
         }
       )
+      .addCase(toggleSubscription.pending, (state) => {
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(toggleSubscription.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          const { userId } = action.meta.arg
+          if (action.payload.data?.channel) {
+            state.subscribedToChannelsList.unshift(action.payload.data)
+          } else {
+            state.subscribedToChannelsList =
+              state.subscribedToChannelsList.filter(
+                (user) => user.channel._id !== userId
+              )
+          }
+          toast({
+            title:
+              action.payload?.message || 'Subscription toggled successfully!',
+          })
+        } else {
+          state.inProgress = false
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(toggleSubscription.rejected, (state, action) => {
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
-export { fetchLoggedInUserSubscribedToChannels }
+export { fetchLoggedInUserSubscribedToChannels, toggleSubscription }
 
 export default subscriptionSlice.reducer

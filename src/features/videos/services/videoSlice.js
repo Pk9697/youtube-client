@@ -10,7 +10,7 @@ import {
   toggleDislikeVideo,
   toggleLikeComment,
   toggleLikeVideo,
-  toggleSubscriptionFromVideoOwner,
+  // toggleSubscriptionFromVideoOwner,
 } from './asyncThunkActions'
 
 const initialState = {
@@ -23,7 +23,15 @@ const initialState = {
 const videoSlice = createSlice({
   name: 'video',
   initialState,
-  reducers: {},
+  reducers: {
+    toggleSubscriptionFromVideoOwner: (state) => {
+      const { isSubscribed, subscribersCount } = state.videoDetails.owner
+      state.videoDetails.owner.subscribersCount = isSubscribed
+        ? subscribersCount - 1
+        : subscribersCount + 1
+      state.videoDetails.owner.isSubscribed = !isSubscribed
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchVideo.pending, (state) => {
@@ -97,35 +105,6 @@ const videoSlice = createSlice({
         }
       })
       .addCase(toggleDislikeVideo.rejected, (state, action) => {
-        state.error = action.payload?.message || 'server error'
-        toast({
-          variant: 'destructive',
-          title: state.error,
-        })
-      })
-      .addCase(toggleSubscriptionFromVideoOwner.pending, (state) => {
-        state.error = null
-      })
-      .addCase(toggleSubscriptionFromVideoOwner.fulfilled, (state, action) => {
-        if (action.payload?.success) {
-          const { isSubscribed, subscribersCount } = state.videoDetails.owner
-          state.videoDetails.owner.subscribersCount = isSubscribed
-            ? subscribersCount - 1
-            : subscribersCount + 1
-          state.videoDetails.owner.isSubscribed = !isSubscribed
-          toast({
-            title:
-              action.payload?.message || 'Subscription toggled successfully!',
-          })
-        } else {
-          state.error = action.payload?.message || 'server error'
-          toast({
-            variant: 'destructive',
-            title: state.error,
-          })
-        }
-      })
-      .addCase(toggleSubscriptionFromVideoOwner.rejected, (state, action) => {
         state.error = action.payload?.message || 'server error'
         toast({
           variant: 'destructive',
@@ -277,11 +256,12 @@ const videoSlice = createSlice({
   },
 })
 
+export const { toggleSubscriptionFromVideoOwner } = videoSlice.actions
+
 export {
   fetchVideo,
   toggleLikeVideo,
   toggleDislikeVideo,
-  toggleSubscriptionFromVideoOwner,
   fetchVideoComments,
   addComment,
   toggleLikeComment,

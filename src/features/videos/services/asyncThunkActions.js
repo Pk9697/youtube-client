@@ -82,27 +82,6 @@ const toggleDislikeVideo = createAsyncThunk(
   }
 )
 
-const toggleSubscriptionFromVideoOwner = createAsyncThunk(
-  'video/toggleSubscriptionFromVideoOwner',
-  async ({ accessToken, userId }) => {
-    try {
-      const url = APIUrls.toggleSubscription(userId)
-      const response = await axios.post(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
-  }
-)
-
 const fetchVideoComments = createAsyncThunk(
   'video/fetchVideoComments',
   async ({ accessToken, videoId }) => {
@@ -222,7 +201,6 @@ export {
   fetchVideo,
   toggleLikeVideo,
   toggleDislikeVideo,
-  toggleSubscriptionFromVideoOwner,
   fetchVideoComments,
   addComment,
   toggleLikeComment,

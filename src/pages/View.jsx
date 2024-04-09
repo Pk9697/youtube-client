@@ -25,6 +25,10 @@ function View() {
     inProgress: inProgressVideoFetching,
   } = useSelector((state) => state.video)
 
+  const { inProgress: inProgressSubscription } = useSelector(
+    (state) => state.subscription
+  )
+
   useEffect(() => {
     dispatch(updateSidebar(false))
   }, [])
@@ -41,6 +45,7 @@ function View() {
           <VideoPlayerContainer
             videoDetails={videoDetails}
             inProgress={inProgressVideoFetching}
+            inProgressSubscription={inProgressSubscription}
           />
           <VideoCommentsContainer
             videoOwnerId={videoDetails?.owner?._id}

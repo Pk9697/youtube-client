@@ -2,6 +2,8 @@ import ChannelContainer from './layouts/ChannelContainer'
 import channelReducer, {
   fetchChannel,
   fetchUserSubscribedToChannels,
+  toggleSubscriptionFromChannelProfile,
+  toggleSubscriptionFromChannelList,
 } from './services/channelSlice'
 
 export {
@@ -9,4 +11,6 @@ export {
   channelReducer,
   fetchChannel,
   fetchUserSubscribedToChannels,
+  toggleSubscriptionFromChannelProfile,
+  toggleSubscriptionFromChannelList,
 }
