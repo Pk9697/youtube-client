@@ -1,4 +1,3 @@
-/* eslint-disable no-unneeded-ternary */
 import { CircleUserIcon } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -21,7 +20,7 @@ Channel.CoverImage = function ChannelCoverImage({
 }) {
   return (
     <img
-      src={src ? src : fallbackSrc}
+      src={src || fallbackSrc}
       className={twMerge(
         'aspect-video max-h-48 rounded-md bg-muted object-cover',
         className

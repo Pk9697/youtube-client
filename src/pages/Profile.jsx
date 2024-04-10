@@ -30,7 +30,6 @@ function Profile() {
     (state) => state.subscription
   )
   const { channelPlaylists } = useSelector((state) => state.playlist)
-  console.log({ channelPlaylists })
 
   useEffect(() => {
     dispatch(fetchChannel({ accessToken, userName }))

@@ -40,13 +40,19 @@ Playlist.ImageContainerLink = function PlaylistImageContainerLink({
   )
 }
 
-Playlist.Image = function PlaylistImage({ className, ...restProps }) {
+Playlist.Image = function PlaylistImage({
+  src,
+  fallbackSrc = 'https://kingdomfellowship.org/wp-content/uploads/2009/08/no-video-available-image.jpg',
+  className,
+  ...restProps
+}) {
   return (
     <img
       className={twMerge(
         'block h-full w-full rounded-xl bg-muted object-cover hover:brightness-50',
         className
       )}
+      src={src || fallbackSrc}
       alt="Video 1 Thumbnail"
       {...restProps}
     />
