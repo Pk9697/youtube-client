@@ -17,6 +17,7 @@ import {
 import { Button } from '@/components/ui/button'
 import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -60,7 +61,7 @@ Video.Image = function VideoImage({ className, ...restProps }) {
   return (
     <img
       className={twMerge(
-        'block h-full w-full rounded-xl object-cover',
+        'block h-full w-full rounded-xl bg-muted object-cover',
         className
       )}
       alt="Video Thumbnail"
@@ -303,6 +304,18 @@ Video.CardDescription = function VideoCardDescription({
     >
       {children}
     </CardDescription>
+  )
+}
+
+Video.CardContent = function VideoCardContent({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <CardContent className={twMerge('', className)} {...restProps}>
+      {children}
+    </CardContent>
   )
 }
 

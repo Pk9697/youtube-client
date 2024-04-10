@@ -22,8 +22,8 @@ const router = createBrowserRouter(
       <Route element={<PrivateRoute />}>
         <Route path={ROUTES.HOME} element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="videos/view/:videoId" element={<View />} />
-          <Route path="users/profile/:userName" element={<Profile />} />
+          <Route path={ROUTES.VIEW} element={<View />} />
+          <Route path={`${ROUTES.PROFILE}/:userName`} element={<Profile />} />
         </Route>
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />} />

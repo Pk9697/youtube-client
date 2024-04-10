@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { updateSidebar } from '@/app/appSlice'
 import {
   VideoCommentsContainer,
   VideoPlayerContainer,
+  VideoPlaylistContainer,
   VideoSingleColContainer,
   fetchVideo,
   fetchVideoComments,
@@ -13,7 +14,12 @@ import {
 import Loader from '@/components/Loader'
 
 function View() {
-  const { videoId } = useParams()
+  const [searchParams] = useSearchParams()
+  const videoId = searchParams.get('videoId')
+  const playlistId = searchParams.get('playlistId')
+
+  console.log({ videoId, playlistId })
+
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   const { videosList, inProgress: inProgressVideosFetching } = useSelector(
@@ -53,10 +59,13 @@ function View() {
             comments={comments}
           />
         </div>
-        <VideoSingleColContainer
-          videosList={videosList}
-          inProgress={inProgressVideosFetching}
-        />
+        <div className="flex flex-col gap-4">
+          {playlistId && <VideoPlaylistContainer />}
+          <VideoSingleColContainer
+            videosList={videosList}
+            inProgress={inProgressVideosFetching}
+          />
+        </div>
       </div>
     </Loader>
   )

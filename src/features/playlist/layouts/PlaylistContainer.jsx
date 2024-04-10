@@ -15,7 +15,9 @@ function PlaylistContainer({ playlists = [] }) {
           createdAt,
         }) => (
           <Playlist key={_id}>
-            <Playlist.ImageContainerLink>
+            <Playlist.ImageContainerLink
+              to={`${ROUTES.VIEW}?videoId=${videos[0]?._id}&playlistId=${_id}`}
+            >
               <Playlist.Image src={videos[0]?.thumbnail} />
               <Playlist.Length>{videos.length} videos</Playlist.Length>
             </Playlist.ImageContainerLink>
@@ -25,7 +27,11 @@ function PlaylistContainer({ playlists = [] }) {
                 to={`${ROUTES.PROFILE}/${userName}`}
               />
               <Playlist.Meta>
-                <Playlist.TitleLink>{name}</Playlist.TitleLink>
+                <Playlist.TitleLink
+                  to={`${ROUTES.VIEW}?videoId=${videos[0]?._id}&playlistId=${_id}`}
+                >
+                  {name}
+                </Playlist.TitleLink>
                 <Playlist.Text>{description}</Playlist.Text>
                 <Playlist.TextLink to={`${ROUTES.PROFILE}/${userName}`}>
                   {fullName}

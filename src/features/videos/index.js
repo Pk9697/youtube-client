@@ -2,6 +2,7 @@ import VideoContainer from './layouts/VideoContainer'
 import VideoCommentsContainer from './layouts/VideoCommentsContainer'
 import VideoPlayerContainer from './layouts/VideoPlayerContainer'
 import VideoSingleColContainer from './layouts/VideoSingleColContainer'
+import VideoPlaylistContainer from './layouts/VideoPlaylistContainer'
 import videosReducer, {
   fetchVideos,
   fetchChannelVideos,
@@ -36,4 +37,5 @@ export {
   toggleDislikeComment,
   deleteComment,
   fetchChannelVideos,
+  VideoPlaylistContainer,
 }
