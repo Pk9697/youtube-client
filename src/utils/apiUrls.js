@@ -33,4 +33,5 @@ export const APIUrls = {
     `${API_ROOT}/subscriptions/channels/?subscriberUserName=${userName}`,
   fetchChannelPlaylists: (userName) =>
     `${API_ROOT}/playlists/user/?userName=${userName}`,
+  fetchCurrentPlaylist: (playlistId) => `${API_ROOT}/playlists/${playlistId}`,
 }
