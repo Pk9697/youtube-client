@@ -2,6 +2,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
+import { twMerge } from 'tailwind-merge'
 import { updateSidebar } from '@/app/appSlice'
 import {
   VideoCommentsContainer,
@@ -35,6 +36,8 @@ function View() {
   )
 
   const { currentPlaylist } = useSelector((state) => state.playlist)
+
+  const { isSidebarOpen } = useSelector((state) => state.app)
   useEffect(() => {
     dispatch(updateSidebar(false))
   }, [])
@@ -50,7 +53,12 @@ function View() {
 
   return (
     <Loader inProgress={inProgressVideoFetching || inProgressVideosFetching}>
-      <div className="grid w-full items-start gap-4 p-4 lg:grid-cols-[6fr_3fr]">
+      <div
+        className={twMerge(
+          'grid w-full items-start gap-4 p-4',
+          isSidebarOpen ? 'xl:grid-cols-[6fr_3fr]' : 'lg:grid-cols-[6fr_3fr]'
+        )}
+      >
         <div className="flex flex-col gap-4">
           <VideoPlayerContainer
             videoDetails={videoDetails}
