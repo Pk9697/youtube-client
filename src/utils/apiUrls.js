@@ -34,4 +34,5 @@ export const APIUrls = {
   fetchChannelPlaylists: (userName) =>
     `${API_ROOT}/playlists/user/?userName=${userName}`,
   fetchCurrentPlaylist: (playlistId) => `${API_ROOT}/playlists/${playlistId}`,
+  fetchVideosByQuery: (query) => `${API_ROOT}/videos/?query=${query}`,
 }

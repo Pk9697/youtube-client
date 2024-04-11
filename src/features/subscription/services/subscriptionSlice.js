@@ -21,10 +21,12 @@ const subscriptionSlice = createSlice({
       .addCase(fetchLoggedInUserSubscribedToChannels.pending, (state) => {
         state.subscribedToChannelsList = []
         state.error = null
+        state.inProgress = true
       })
       .addCase(
         fetchLoggedInUserSubscribedToChannels.fulfilled,
         (state, action) => {
+          state.inProgress = false
           if (action.payload?.success) {
             state.subscribedToChannelsList = action.payload.data
             toast({

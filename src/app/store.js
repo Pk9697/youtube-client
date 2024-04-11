@@ -9,6 +9,7 @@ import appReducer from './appSlice'
 import { tweetsReducer } from '@/features/tweets'
 import { subscriptionReducer } from '@/features/subscription'
 import { playlistReducer } from '@/features/playlist'
+import { searchReducer } from '@/features/search'
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   tweets: tweetsReducer,
   subscription: subscriptionReducer,
   playlist: playlistReducer,
+  search: searchReducer,
 })
 
 const persistConfig = {
