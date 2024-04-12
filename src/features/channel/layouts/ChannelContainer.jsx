@@ -4,6 +4,7 @@ import Channel from '../components/Channel'
 import { formatViews } from '@/utils/formatViews'
 import { toggleSubscriptionFromChannelProfile } from '../services/channelSlice'
 import { toggleSubscription } from '@/features/subscription'
+import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function ChannelContainer({ channelInfo, inProgressSubscription = false }) {
   const dispatch = useDispatch()
@@ -29,9 +30,9 @@ function ChannelContainer({ channelInfo, inProgressSubscription = false }) {
 
   return (
     <Channel>
-      <Channel.CoverImage src={coverImage} />
+      <Channel.CoverImage src={getPublicUrl(coverImage)} />
       <Channel.Details>
-        <Channel.Avatar src={avatar} />
+        <Channel.Avatar src={getPublicUrl(avatar)} />
         <Channel.Meta>
           <Channel.Title>{fullName}</Channel.Title>
           <Channel.Text>@{userName}</Channel.Text>

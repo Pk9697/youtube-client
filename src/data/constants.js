@@ -4,4 +4,5 @@ export const ROUTES = {
   REGISTER: '/register',
   VIEW: '/videos/view',
   PROFILE: '/users/profile',
+  SEARCH: '/search',
 }

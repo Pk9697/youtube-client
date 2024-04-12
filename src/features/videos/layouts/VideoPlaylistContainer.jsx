@@ -2,6 +2,7 @@ import { twMerge } from 'tailwind-merge'
 import { ROUTES } from '@/data/constants'
 import Video from '../components/Video'
 import { formatDuration } from '@/utils/formatDuration'
+import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function VideoPlaylistContainer({ currentPlaylist = {}, currentVideoId }) {
   const {
@@ -44,7 +45,7 @@ function VideoPlaylistContainer({ currentPlaylist = {}, currentVideoId }) {
                 <Video.ImageContainerLink
                   to={`${ROUTES.VIEW}?videoId=${videoId}&playlistId=${playlistId}`}
                 >
-                  <Video.Image src={thumbnail} />
+                  <Video.Image src={getPublicUrl(thumbnail)} />
                   <Video.Duration>{formatDuration(duration)}</Video.Duration>
                 </Video.ImageContainerLink>
                 <Video.Details>

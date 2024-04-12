@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import Sidebar from './Sidebar'
 import { ROUTES } from '@/data/constants'
+import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function SidebarContainer({ usersList = [] }) {
   return (
@@ -71,7 +72,7 @@ function SidebarContainer({ usersList = [] }) {
 
         {usersList.map(({ channel: { _id, avatar, userName, fullName } }) => (
           <Sidebar.NavLink key={_id} to={`${ROUTES.PROFILE}/${userName}`}>
-            <Sidebar.Avatar src={avatar} />
+            <Sidebar.Avatar src={getPublicUrl(avatar)} />
             <Sidebar.Text>{fullName}</Sidebar.Text>
           </Sidebar.NavLink>
         ))}

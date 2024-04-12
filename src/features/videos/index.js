@@ -3,6 +3,7 @@ import VideoCommentsContainer from './layouts/VideoCommentsContainer'
 import VideoPlayerContainer from './layouts/VideoPlayerContainer'
 import VideoSingleColContainer from './layouts/VideoSingleColContainer'
 import VideoPlaylistContainer from './layouts/VideoPlaylistContainer'
+import VideoSearchResultsContainer from './layouts/VideoSearchResultsContainer'
 import videosReducer, {
   fetchVideos,
   fetchChannelVideos,
@@ -38,4 +39,5 @@ export {
   deleteComment,
   fetchChannelVideos,
   VideoPlaylistContainer,
+  VideoSearchResultsContainer,
 }

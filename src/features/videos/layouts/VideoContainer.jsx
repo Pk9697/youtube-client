@@ -5,6 +5,7 @@ import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import Loader from '@/components/Loader'
 import { ROUTES } from '@/data/constants'
+import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function VideoContainer({ videosList = [], inProgress = false }) {
   return (
@@ -23,13 +24,13 @@ function VideoContainer({ videosList = [], inProgress = false }) {
           }) => (
             <Video key={_id}>
               <Video.ImageContainerLink to={`${ROUTES.VIEW}?videoId=${_id}`}>
-                <Video.Image src={thumbnail} />
+                <Video.Image src={getPublicUrl(thumbnail)} />
                 <Video.Duration>{formatDuration(duration)}</Video.Duration>
               </Video.ImageContainerLink>
               <Video.Details>
                 <Video.Row>
                   <Video.AvatarLink
-                    src={avatar}
+                    src={getPublicUrl(avatar)}
                     to={`${ROUTES.PROFILE}/${userName}`}
                   />
                   <Video.Meta>

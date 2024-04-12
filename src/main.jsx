@@ -14,7 +14,7 @@ import { persistor, store } from '@/app/store'
 import { Toaster } from '@/components/ui/toaster'
 import Layout from '@/layouts/Layout'
 import PrivateRoute from '@/components/PrivateRoute'
-import { Home, Login, Register, View, Profile } from '@/pages'
+import { Home, Login, Register, View, Profile, SearchResults } from '@/pages'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +24,7 @@ const router = createBrowserRouter(
           <Route index element={<Home />} />
           <Route path={ROUTES.VIEW} element={<View />} />
           <Route path={`${ROUTES.PROFILE}/:userName`} element={<Profile />} />
+          <Route path={`${ROUTES.SEARCH}/:query`} element={<SearchResults />} />
         </Route>
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />} />

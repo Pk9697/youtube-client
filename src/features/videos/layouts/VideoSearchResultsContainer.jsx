@@ -1,13 +1,12 @@
-import React from 'react'
+import Loader from '@/components/Loader'
 import Video from '../components/Video'
 import { formatDuration } from '@/utils/formatDuration'
+import { ROUTES } from '@/data/constants'
 import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
-import Loader from '@/components/Loader'
-import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 
-function VideoSingleColContainer({ videosList, inProgress = false }) {
+function VideoSearchResultsContainer({ videosList, inProgress = false }) {
   return (
     <Loader inProgress={inProgress}>
       <Video.Group className="grid-cols-1">
@@ -16,20 +15,22 @@ function VideoSingleColContainer({ videosList, inProgress = false }) {
             _id,
             thumbnail,
             title,
+            description,
             duration,
             views,
             createdAt,
-            owner: { fullName, userName },
+            owner: { fullName, userName, avatar },
           }) => (
-            <Video
-              key={_id}
-              className="grid-cols-[2fr_7fr] lg:grid-cols-[2fr_3fr]"
-            >
+            <Video key={_id} className="sm:grid-cols-[2fr_3fr]">
               <Video.ImageContainerLink to={`${ROUTES.VIEW}?videoId=${_id}`}>
                 <Video.Image src={getPublicUrl(thumbnail)} />
                 <Video.Duration>{formatDuration(duration)}</Video.Duration>
               </Video.ImageContainerLink>
               <Video.Details>
+                <Video.AvatarLink
+                  src={getPublicUrl(avatar)}
+                  to={`${ROUTES.PROFILE}/${userName}`}
+                />
                 <Video.Meta>
                   <Video.TitleLink to={`${ROUTES.VIEW}?videoId=${_id}`}>
                     {title}
@@ -39,6 +40,9 @@ function VideoSingleColContainer({ videosList, inProgress = false }) {
                   </Video.TextLink>
                   <Video.Text>
                     {formatViews(views)} views • {formatTimeAgo(createdAt)}
+                  </Video.Text>
+                  <Video.Text className="hidden sm:block">
+                    {description}
                   </Video.Text>
                 </Video.Meta>
                 <Video.Row className="ml-auto items-start">
@@ -53,4 +57,4 @@ function VideoSingleColContainer({ videosList, inProgress = false }) {
   )
 }
 
-export default VideoSingleColContainer
+export default VideoSearchResultsContainer

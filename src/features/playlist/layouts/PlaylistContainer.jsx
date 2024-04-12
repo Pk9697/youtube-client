@@ -1,6 +1,7 @@
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import Playlist from '../components/Playlist'
 import { ROUTES } from '@/data/constants'
+import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function PlaylistContainer({ playlists = [] }) {
   return (
@@ -18,12 +19,12 @@ function PlaylistContainer({ playlists = [] }) {
             <Playlist.ImageContainerLink
               to={`${ROUTES.VIEW}?videoId=${videos[0]?._id}&playlistId=${_id}`}
             >
-              <Playlist.Image src={videos[0]?.thumbnail} />
+              <Playlist.Image src={getPublicUrl(videos[0]?.thumbnail)} />
               <Playlist.Length>{videos.length} videos</Playlist.Length>
             </Playlist.ImageContainerLink>
             <Playlist.Details>
               <Playlist.AvatarLink
-                src={avatar}
+                src={getPublicUrl(avatar)}
                 to={`${ROUTES.PROFILE}/${userName}`}
               />
               <Playlist.Meta>

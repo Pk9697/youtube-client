@@ -16,6 +16,7 @@ import {
   toggleDislikeTweet,
   toggleLikeTweet,
 } from '../services/asyncThunkActions'
+import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function TweetsContainer({ currentProfileUserName, tweetsList = [] }) {
   const dispatch = useDispatch()
@@ -40,7 +41,7 @@ function TweetsContainer({ currentProfileUserName, tweetsList = [] }) {
       {loggedInUserName === currentProfileUserName && (
         <Comment.Form onSubmit={handleSubmit}>
           <Comment.AvatarLink
-            src={loggedInUserAvatar}
+            src={getPublicUrl(loggedInUserAvatar)}
             to={`${ROUTES.PROFILE}/${loggedInUserName}`}
           />
           <Comment.TextArea
@@ -68,7 +69,7 @@ function TweetsContainer({ currentProfileUserName, tweetsList = [] }) {
         }) => (
           <Comment key={tweetId}>
             <Comment.AvatarLink
-              src={avatar}
+              src={getPublicUrl(avatar)}
               to={`${ROUTES.PROFILE}/${tweetOwnerUserName}`}
             />
             <Comment.Meta>

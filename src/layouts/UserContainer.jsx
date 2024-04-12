@@ -5,6 +5,7 @@ import { ROUTES } from '@/data/constants'
 import { formatViews } from '@/utils/formatViews'
 import { toggleSubscriptionFromChannelList } from '@/features/channel'
 import { toggleSubscription } from '@/features/subscription'
+import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function UserContainer({ usersList = [], inProgressSubscription = false }) {
   const dispatch = useDispatch()
@@ -32,7 +33,7 @@ function UserContainer({ usersList = [], inProgressSubscription = false }) {
         }) => (
           <User key={userId}>
             <User.AvatarLink
-              src={avatar}
+              src={getPublicUrl(avatar)}
               to={`${ROUTES.PROFILE}/${userName}`}
             />
             <User.Meta>

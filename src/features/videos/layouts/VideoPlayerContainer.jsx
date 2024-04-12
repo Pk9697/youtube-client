@@ -11,6 +11,7 @@ import {
 } from '../services/videoSlice'
 import { ROUTES } from '@/data/constants'
 import { toggleSubscription } from '@/features/subscription'
+import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function VideoPlayerContainer({
   videoDetails = {},
@@ -49,14 +50,14 @@ function VideoPlayerContainer({
   return (
     <Loader inProgress={inProgress}>
       <Video.PlayerContainer>
-        <Video.Player src={videoFile}>
+        <Video.Player src={getPublicUrl(videoFile)}>
           Your browser does not support the video tag.
         </Video.Player>
         <Video.Title>{title}</Video.Title>
         <Video.Details className="flex-wrap">
           <Video.Row>
             <Video.AvatarLink
-              src={avatar}
+              src={getPublicUrl(avatar)}
               to={`${ROUTES.PROFILE}/${userName}`}
             />
             <Video.Meta>

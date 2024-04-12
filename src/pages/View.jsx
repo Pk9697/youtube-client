@@ -43,12 +43,16 @@ function View() {
   }, [])
 
   useEffect(() => {
-    dispatch(fetchVideo({ accessToken, videoId }))
-    dispatch(fetchVideoComments({ accessToken, videoId }))
+    if (videoId) {
+      dispatch(fetchVideo({ accessToken, videoId }))
+      dispatch(fetchVideoComments({ accessToken, videoId }))
+    }
   }, [videoId])
 
   useEffect(() => {
-    dispatch(fetchCurrentPlaylist({ accessToken, playlistId }))
+    if (playlistId) {
+      dispatch(fetchCurrentPlaylist({ accessToken, playlistId }))
+    }
   }, [playlistId])
 
   return (

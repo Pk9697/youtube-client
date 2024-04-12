@@ -16,6 +16,7 @@ import {
   toggleLikeComment,
 } from '../services/asyncThunkActions'
 import { ROUTES } from '@/data/constants'
+import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function VideoCommentsContainer({ videoOwnerId, videoId, comments = [] }) {
   const dispatch = useDispatch()
@@ -38,7 +39,7 @@ function VideoCommentsContainer({ videoOwnerId, videoId, comments = [] }) {
       <Comment.Title>{comments.length} comments</Comment.Title>
       <Comment.Form onSubmit={handleSubmit}>
         <Comment.AvatarLink
-          src={loggedInUserAvatar}
+          src={getPublicUrl(loggedInUserAvatar)}
           to={`${ROUTES.PROFILE}/${loggedInUserName}`}
         />
         <Comment.TextArea
@@ -69,7 +70,7 @@ function VideoCommentsContainer({ videoOwnerId, videoId, comments = [] }) {
         }) => (
           <Comment key={commentId}>
             <Comment.AvatarLink
-              src={avatar}
+              src={getPublicUrl(avatar)}
               to={`${ROUTES.PROFILE}/${commentOwnerUserName}`}
             />
             <Comment.Meta>
