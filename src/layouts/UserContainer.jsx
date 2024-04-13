@@ -1,5 +1,6 @@
 import { UserRoundMinusIcon, UserRoundPlusIcon } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
 import User from '@/components/User'
 import { ROUTES } from '@/data/constants'
 import { formatViews } from '@/utils/formatViews'
@@ -10,6 +11,18 @@ import { getPublicUrl } from '@/utils/getPublicUrl'
 function UserContainer({ usersList = [], inProgressSubscription = false }) {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
+  const [query, setQuery] = useState('')
+  const filteredUsersList = query
+    ? usersList.filter(
+        (user) =>
+          user.channel.userName.toLowerCase().includes(query.toLowerCase()) ||
+          user.channel.fullName.toLowerCase().includes(query.toLowerCase())
+      )
+    : usersList
+
+  const handleSearchInputChange = (e) => {
+    setQuery(e.target.value)
+  }
 
   const handleToggleSubscription = (userId) => {
     dispatch(toggleSubscriptionFromChannelList({ userId }))
@@ -18,9 +31,13 @@ function UserContainer({ usersList = [], inProgressSubscription = false }) {
 
   return (
     <User.Group>
-      <User.SearchInput />
-      {!usersList.length && <User.Title>0 users</User.Title>}
-      {usersList.map(
+      <User.SearchInput
+        onChange={handleSearchInputChange}
+        name="query"
+        value={query}
+      />
+      {!filteredUsersList.length && <User.Title>0 users</User.Title>}
+      {filteredUsersList.map(
         ({
           channel: {
             _id: userId,
