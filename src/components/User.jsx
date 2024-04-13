@@ -32,12 +32,12 @@ User.SearchInput = function UserSearchInput({ className, ...restProps }) {
     <div className="w-full flex-1">
       <form>
         <div className="relative">
-          <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <SearchIcon className="absolute left-4 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
             placeholder="Search users..."
             className={twMerge(
-              'w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3',
+              'ml-1 mt-1 w-full appearance-none bg-background pl-9 shadow-none md:w-2/3 lg:w-1/3',
               className
             )}
             {...restProps}

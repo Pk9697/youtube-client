@@ -83,7 +83,7 @@ Comment.Button = function CommentButton({ children, className, ...restProps }) {
 }
 
 Comment.TextArea = function CommentTextArea({ className, ...restProps }) {
-  return <Textarea className={twMerge('', className)} {...restProps} />
+  return <Textarea className={twMerge('mb-1', className)} {...restProps} />
 }
 
 Comment.Meta = function CommentMeta({ className, children, ...restProps }) {
