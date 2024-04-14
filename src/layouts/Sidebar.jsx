@@ -22,9 +22,9 @@ Sidebar.Header = function SidebarHeader({ className, children, ...restProps }) {
     <div
       className={twMerge(
         'sticky top-0 z-10 flex h-14 items-center bg-background px-4 py-4 lg:h-[60px] lg:px-6',
-        className,
-        { ...restProps }
+        className
       )}
+      {...restProps}
     >
       {children}
     </div>
@@ -40,9 +40,8 @@ Sidebar.HeaderLink = function SidebarHeaderLink({
   return (
     <Link
       to={to}
-      className={twMerge('flex items-center gap-2 font-semibold', className, {
-        ...restProps,
-      })}
+      className={twMerge('flex items-center gap-2 font-semibold', className)}
+      {...restProps}
     >
       {children}
     </Link>
@@ -51,13 +50,17 @@ Sidebar.HeaderLink = function SidebarHeaderLink({
 
 Sidebar.Icon = function SidebarIcon({ className, children, ...restProps }) {
   return (
-    <div className={twMerge('', className, { ...restProps })}>{children}</div>
+    <div className={twMerge('', className)} {...restProps}>
+      {children}
+    </div>
   )
 }
 
 Sidebar.Text = function SidebarText({ className, children, ...restProps }) {
   return (
-    <div className={twMerge('', className, { ...restProps })}>{children}</div>
+    <div className={twMerge('', className)} {...restProps}>
+      {children}
+    </div>
   )
 }
 
@@ -66,9 +69,9 @@ Sidebar.Nav = function SidebarNav({ className, children, ...restProps }) {
     <nav
       className={twMerge(
         'grid items-start border-b px-2 py-2 text-sm font-medium last-of-type:border-b-0 lg:px-4',
-        className,
-        { ...restProps }
+        className
       )}
+      {...restProps}
     >
       {children}
     </nav>
@@ -81,9 +84,7 @@ Sidebar.NavTitle = function SidebarNavTitle({
   ...restProps
 }) {
   return (
-    <div
-      className={twMerge('px-3 py-2 text-base', className, { ...restProps })}
-    >
+    <div className={twMerge('px-3 py-2 text-base', className)} {...restProps}>
       {children}
     </div>
   )
@@ -100,9 +101,9 @@ Sidebar.NavLink = function SidebarNavLink({
       to={to}
       className={twMerge(
         'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
-        className,
-        { ...restProps }
+        className
       )}
+      {...restProps}
     >
       {children}
     </Link>

@@ -1,6 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchChannelVideos, fetchVideos } from './asyncThunkActions'
+import {
+  fetchChannelVideos,
+  fetchSubscriptionsVideos,
+  fetchVideos,
+} from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
 const initialState = {
@@ -71,9 +75,37 @@ const videosSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(fetchSubscriptionsVideos.pending, (state) => {
+        state.videosList = []
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(fetchSubscriptionsVideos.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          state.videosList = action.payload.data
+          toast({
+            title: action.payload?.message || 'Videos fetched successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(fetchSubscriptionsVideos.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
-export { fetchVideos, fetchChannelVideos }
+export { fetchVideos, fetchChannelVideos, fetchSubscriptionsVideos }
 
 export default videosSlice.reducer

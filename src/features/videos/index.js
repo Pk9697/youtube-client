@@ -7,6 +7,7 @@ import VideoSearchResultsContainer from './layouts/VideoSearchResultsContainer'
 import videosReducer, {
   fetchVideos,
   fetchChannelVideos,
+  fetchSubscriptionsVideos,
 } from './services/videosSlice'
 import videoReducer, {
   fetchVideo,
@@ -40,4 +41,5 @@ export {
   fetchChannelVideos,
   VideoPlaylistContainer,
   VideoSearchResultsContainer,
+  fetchSubscriptionsVideos,
 }
