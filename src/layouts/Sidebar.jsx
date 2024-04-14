@@ -91,12 +91,14 @@ Sidebar.NavTitle = function SidebarNavTitle({
 }
 
 Sidebar.NavLink = function SidebarNavLink({
+  to = '/',
   className,
   children,
   ...restProps
 }) {
   return (
     <NavLink
+      to={to}
       className={({ isActive }) =>
         isActive
           ? twMerge(

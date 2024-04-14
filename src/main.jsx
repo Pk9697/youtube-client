@@ -14,8 +14,18 @@ import { persistor, store } from '@/app/store'
 import { Toaster } from '@/components/ui/toaster'
 import Layout from '@/layouts/Layout'
 import PrivateRoute from '@/components/PrivateRoute'
-import { Home, Login, Register, View, Profile, SearchResults } from '@/pages'
-import FeedSubscriptions from './pages/FeedSubscriptions'
+import {
+  Home,
+  Login,
+  Register,
+  View,
+  Profile,
+  SearchResults,
+  Subscriptions,
+  History,
+  Subscribers,
+  Settings,
+} from '@/pages'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +36,10 @@ const router = createBrowserRouter(
           <Route path={ROUTES.VIEW} element={<View />} />
           <Route path={`${ROUTES.PROFILE}/:userName`} element={<Profile />} />
           <Route path={`${ROUTES.SEARCH}/:query`} element={<SearchResults />} />
-          <Route path={ROUTES.FEED} element={<FeedSubscriptions />} />
+          <Route path={ROUTES.SUBSCRIPTIONS} element={<Subscriptions />} />
+          <Route path={ROUTES.HISTORY} element={<History />} />
+          <Route path={ROUTES.SUBSCRIBERS} element={<Subscribers />} />
+          <Route path={ROUTES.SETTINGS} element={<Settings />} />
         </Route>
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />} />

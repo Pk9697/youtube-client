@@ -8,11 +8,16 @@ import {
   UsersRoundIcon,
   Youtube,
 } from 'lucide-react'
+import { useSelector } from 'react-redux'
 import Sidebar from './Sidebar'
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function SidebarContainer({ usersList = [] }) {
+  const {
+    user: { userName: loggedInUserName },
+  } = useSelector((state) => state.auth)
+
   return (
     <Sidebar>
       <Sidebar.Header>
@@ -30,7 +35,7 @@ function SidebarContainer({ usersList = [] }) {
           </Sidebar.Icon>
           <Sidebar.Text>Home</Sidebar.Text>
         </Sidebar.NavLink>
-        <Sidebar.NavLink to="/feed/subscriptions">
+        <Sidebar.NavLink to={ROUTES.SUBSCRIPTIONS}>
           <Sidebar.Icon>
             <ListVideoIcon className="h-4 w-4" />
           </Sidebar.Icon>
@@ -40,25 +45,25 @@ function SidebarContainer({ usersList = [] }) {
 
       <Sidebar.Nav>
         <Sidebar.NavTitle>You</Sidebar.NavTitle>
-        <Sidebar.NavLink to="/channel">
+        <Sidebar.NavLink to={`${ROUTES.PROFILE}/${loggedInUserName}`}>
           <Sidebar.Icon>
             <SquareUserRoundIcon className="h-4 w-4" />
           </Sidebar.Icon>
           <Sidebar.Text>Your Channel</Sidebar.Text>
         </Sidebar.NavLink>
-        <Sidebar.NavLink to="/subscribers">
+        <Sidebar.NavLink to={ROUTES.SUBSCRIBERS}>
           <Sidebar.Icon>
             <UsersRoundIcon className="h-4 w-4" />
           </Sidebar.Icon>
           <Sidebar.Text>Subscribers</Sidebar.Text>
         </Sidebar.NavLink>
-        <Sidebar.NavLink to="/history">
+        <Sidebar.NavLink to={ROUTES.HISTORY}>
           <Sidebar.Icon>
             <HistoryIcon className="h-4 w-4" />
           </Sidebar.Icon>
           <Sidebar.Text>History</Sidebar.Text>
         </Sidebar.NavLink>
-        <Sidebar.NavLink to="/liked">
+        <Sidebar.NavLink to="/liked-videos">
           <Sidebar.Icon>
             <ThumbsUpIcon className="h-4 w-4" />
           </Sidebar.Icon>
@@ -78,7 +83,7 @@ function SidebarContainer({ usersList = [] }) {
       </Sidebar.Nav>
 
       <Sidebar.Nav className="mt-auto">
-        <Sidebar.NavLink>
+        <Sidebar.NavLink to={ROUTES.SETTINGS}>
           <Sidebar.Icon>
             <SettingsIcon className="h-4 w-4" />
           </Sidebar.Icon>

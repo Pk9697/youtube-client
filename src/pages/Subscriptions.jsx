@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { VideoContainer, fetchSubscriptionsVideos } from '@/features/videos'
 
-function FeedSubscriptions() {
+function Subscriptions() {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   const { videosList: allVideos, inProgress } = useSelector(
@@ -20,4 +20,4 @@ function FeedSubscriptions() {
   )
 }
 
-export default FeedSubscriptions
+export default Subscriptions
