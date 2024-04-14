@@ -15,6 +15,7 @@ import { Toaster } from '@/components/ui/toaster'
 import Layout from '@/layouts/Layout'
 import PrivateRoute from '@/components/PrivateRoute'
 import { Home, Login, Register, View, Profile, SearchResults } from '@/pages'
+import FeedSubscriptions from './pages/FeedSubscriptions'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
           <Route path={ROUTES.VIEW} element={<View />} />
           <Route path={`${ROUTES.PROFILE}/:userName`} element={<Profile />} />
           <Route path={`${ROUTES.SEARCH}/:query`} element={<SearchResults />} />
+          <Route path={ROUTES.FEED} element={<FeedSubscriptions />} />
         </Route>
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />} />
