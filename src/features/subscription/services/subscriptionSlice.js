@@ -2,12 +2,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   fetchLoggedInUserSubscribedToChannels,
+  fetchLoggedInUserSubscribersList,
   toggleSubscription,
 } from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
 const initialState = {
   subscribedToChannelsList: [],
+  subscribersList: [],
   error: null,
   inProgress: false,
 }
@@ -61,14 +63,29 @@ const subscriptionSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           const { userId } = action.meta.arg
-          if (action.payload.data?.channel) {
+          if (action.payload.data?._id) {
             state.subscribedToChannelsList.unshift(action.payload.data)
           } else {
             state.subscribedToChannelsList =
               state.subscribedToChannelsList.filter(
-                (user) => user.channel._id !== userId
+                (user) => user._id !== userId
               )
           }
+
+          const existingUserIndex = state.subscribersList.findIndex(
+            (user) => user?._id === userId
+          )
+          if (existingUserIndex !== -1) {
+            const { isSubscribed, subscribersCount } =
+              state.subscribersList[existingUserIndex]
+
+            state.subscribersList[existingUserIndex].subscribersCount =
+              isSubscribed ? subscribersCount - 1 : subscribersCount + 1
+
+            state.subscribersList[existingUserIndex].isSubscribed =
+              !isSubscribed
+          }
+
           toast({
             title:
               action.payload?.message || 'Subscription toggled successfully!',
@@ -89,9 +106,42 @@ const subscriptionSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(fetchLoggedInUserSubscribersList.pending, (state) => {
+        state.subscribersList = []
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(fetchLoggedInUserSubscribersList.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          state.subscribersList = action.payload.data
+          toast({
+            title:
+              'Logged In User Subscribed to Channels fetched successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(fetchLoggedInUserSubscribersList.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
-export { fetchLoggedInUserSubscribedToChannels, toggleSubscription }
+export {
+  fetchLoggedInUserSubscribedToChannels,
+  toggleSubscription,
+  fetchLoggedInUserSubscribersList,
+}
 
 export default subscriptionSlice.reducer

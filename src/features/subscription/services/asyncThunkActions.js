@@ -40,4 +40,25 @@ const toggleSubscription = createAsyncThunk(
   }
 )
 
-export { fetchLoggedInUserSubscribedToChannels, toggleSubscription }
+const fetchLoggedInUserSubscribersList = createAsyncThunk(
+  'subscription/fetchLoggedInUserSubscribersList',
+  async ({ accessToken, userId }) => {
+    try {
+      const url = APIUrls.fetchUserSubscribersList(userId)
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+export {
+  fetchLoggedInUserSubscribedToChannels,
+  toggleSubscription,
+  fetchLoggedInUserSubscribersList,
+}

@@ -74,7 +74,7 @@ function SidebarContainer({ usersList = [] }) {
       <Sidebar.Nav>
         <Sidebar.NavTitle>Subscriptions</Sidebar.NavTitle>
 
-        {usersList.map(({ channel: { _id, avatar, userName, fullName } }) => (
+        {usersList.map(({ _id, avatar, userName, fullName }) => (
           <Sidebar.NavLink key={_id} to={`${ROUTES.PROFILE}/${userName}`}>
             <Sidebar.Avatar src={getPublicUrl(avatar)} />
             <Sidebar.Text>{fullName}</Sidebar.Text>

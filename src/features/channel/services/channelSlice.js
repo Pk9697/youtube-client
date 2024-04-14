@@ -25,35 +25,29 @@ const channelSlice = createSlice({
       state.channelInfo.isSubscribed = !isSubscribed
 
       const existingUserIndex = state.subscribedToChannelsList.findIndex(
-        (user) => user.channel?._id === state.channelInfo?._id
+        (user) => user?._id === state.channelInfo?._id
       )
 
       if (existingUserIndex !== -1) {
-        state.subscribedToChannelsList[
-          existingUserIndex
-        ].channel.subscribersCount = isSubscribed
-          ? subscribersCount - 1
-          : subscribersCount + 1
+        state.subscribedToChannelsList[existingUserIndex].subscribersCount =
+          isSubscribed ? subscribersCount - 1 : subscribersCount + 1
 
-        state.subscribedToChannelsList[existingUserIndex].channel.isSubscribed =
+        state.subscribedToChannelsList[existingUserIndex].isSubscribed =
           !isSubscribed
       }
     },
     toggleSubscriptionFromChannelList: (state, action) => {
       const existingUserIndex = state.subscribedToChannelsList.findIndex(
-        (user) => user.channel?._id === action.payload?.userId
+        (user) => user?._id === action.payload?.userId
       )
       if (existingUserIndex !== -1) {
         const { isSubscribed, subscribersCount } =
-          state.subscribedToChannelsList[existingUserIndex].channel
+          state.subscribedToChannelsList[existingUserIndex]
 
-        state.subscribedToChannelsList[
-          existingUserIndex
-        ].channel.subscribersCount = isSubscribed
-          ? subscribersCount - 1
-          : subscribersCount + 1
+        state.subscribedToChannelsList[existingUserIndex].subscribersCount =
+          isSubscribed ? subscribersCount - 1 : subscribersCount + 1
 
-        state.subscribedToChannelsList[existingUserIndex].channel.isSubscribed =
+        state.subscribedToChannelsList[existingUserIndex].isSubscribed =
           !isSubscribed
       }
 

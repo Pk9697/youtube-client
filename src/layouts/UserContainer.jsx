@@ -15,8 +15,8 @@ function UserContainer({ usersList = [], inProgressSubscription = false }) {
   const filteredUsersList = query
     ? usersList.filter(
         (user) =>
-          user.channel.userName.toLowerCase().includes(query.toLowerCase()) ||
-          user.channel.fullName.toLowerCase().includes(query.toLowerCase())
+          user?.userName?.toLowerCase().includes(query.toLowerCase()) ||
+          user?.fullName?.toLowerCase().includes(query.toLowerCase())
       )
     : usersList
 
@@ -39,14 +39,12 @@ function UserContainer({ usersList = [], inProgressSubscription = false }) {
       {!filteredUsersList.length && <User.Title>0 users</User.Title>}
       {filteredUsersList.map(
         ({
-          channel: {
-            _id: userId,
-            userName,
-            avatar,
-            fullName,
-            subscribersCount = 0,
-            isSubscribed = false,
-          },
+          _id: userId,
+          userName,
+          avatar,
+          fullName,
+          subscribersCount = 0,
+          isSubscribed = false,
         }) => (
           <User key={userId}>
             <User.AvatarLink
