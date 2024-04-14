@@ -61,7 +61,7 @@ function UserContainer({ usersList = [], inProgressSubscription = false }) {
               <User.Button
                 disabled={inProgressSubscription}
                 variant="destructive"
-                className="sm:ml-auto"
+                className="ml-auto"
                 onClick={() => handleToggleSubscription(userId)}
               >
                 <UserRoundMinusIcon className="size-5" />
@@ -70,7 +70,7 @@ function UserContainer({ usersList = [], inProgressSubscription = false }) {
             ) : (
               <User.Button
                 disabled={inProgressSubscription}
-                className="sm:ml-auto"
+                className="ml-auto"
                 onClick={() => handleToggleSubscription(userId)}
               >
                 <UserRoundPlusIcon className="size-5" />
