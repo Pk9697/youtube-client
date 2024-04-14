@@ -26,7 +26,6 @@ function NavbarContainer({ usersList }) {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault()
-    console.log(query)
     navigate(`${ROUTES.SEARCH}/${query}`)
   }
 

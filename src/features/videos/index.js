@@ -1,7 +1,7 @@
 import VideoContainer from './layouts/VideoContainer'
 import VideoCommentsContainer from './layouts/VideoCommentsContainer'
 import VideoPlayerContainer from './layouts/VideoPlayerContainer'
-import VideoSingleColContainer from './layouts/VideoSingleColContainer'
+import VideoRecommendationsContainer from './layouts/VideoRecommendationsContainer'
 import VideoPlaylistContainer from './layouts/VideoPlaylistContainer'
 import VideoSearchResultsContainer from './layouts/VideoSearchResultsContainer'
 import videosReducer, {
@@ -29,7 +29,7 @@ export {
   toggleLikeVideo,
   toggleDislikeVideo,
   toggleSubscriptionFromVideoOwner,
-  VideoSingleColContainer,
+  VideoRecommendationsContainer,
   VideoPlayerContainer,
   VideoCommentsContainer,
   fetchVideoComments,

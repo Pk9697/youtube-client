@@ -8,12 +8,13 @@ import {
   VideoCommentsContainer,
   VideoPlayerContainer,
   VideoPlaylistContainer,
-  VideoSingleColContainer,
+  VideoRecommendationsContainer,
   fetchVideo,
   fetchVideoComments,
 } from '@/features/videos'
 import Loader from '@/components/Loader'
 import { fetchCurrentPlaylist } from '@/features/playlist'
+import { fetchVideosByQuery } from '@/features/search'
 
 function View() {
   const dispatch = useDispatch()
@@ -22,9 +23,7 @@ function View() {
   const playlistId = searchParams.get('playlistId')
 
   const { accessToken } = useSelector((state) => state.auth)
-  const { videosList, inProgress: inProgressVideosFetching } = useSelector(
-    (state) => state.videos
-  )
+
   const {
     videoDetails,
     comments,
@@ -38,6 +37,10 @@ function View() {
   const { currentPlaylist } = useSelector((state) => state.playlist)
 
   const { isSidebarOpen } = useSelector((state) => state.app)
+
+  const { searchResults, inProgress: inProgressSearchResultsFetching } =
+    useSelector((state) => state.search)
+
   useEffect(() => {
     dispatch(updateSidebar(false))
   }, [])
@@ -50,13 +53,24 @@ function View() {
   }, [videoId])
 
   useEffect(() => {
+    dispatch(
+      fetchVideosByQuery({
+        accessToken,
+        query: videoDetails?.title?.split(' ')[0],
+      })
+    )
+  }, [videoDetails?.title])
+
+  useEffect(() => {
     if (playlistId) {
       dispatch(fetchCurrentPlaylist({ accessToken, playlistId }))
     }
   }, [playlistId])
 
   return (
-    <Loader inProgress={inProgressVideoFetching || inProgressVideosFetching}>
+    <Loader
+      inProgress={inProgressVideoFetching || inProgressSearchResultsFetching}
+    >
       <div
         className={twMerge(
           'grid w-full items-start gap-4 p-4',
@@ -82,9 +96,9 @@ function View() {
               currentVideoId={videoId}
             />
           )}
-          <VideoSingleColContainer
-            videosList={videosList}
-            inProgress={inProgressVideosFetching}
+          <VideoRecommendationsContainer
+            videosList={searchResults}
+            inProgress={inProgressSearchResultsFetching}
           />
         </div>
       </div>

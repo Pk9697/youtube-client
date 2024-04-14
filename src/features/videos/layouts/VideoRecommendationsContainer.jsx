@@ -7,7 +7,7 @@ import Loader from '@/components/Loader'
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 
-function VideoSingleColContainer({ videosList, inProgress = false }) {
+function VideoRecommendationsContainer({ videosList, inProgress = false }) {
   return (
     <Loader inProgress={inProgress}>
       <Video.Group className="grid-cols-1">
@@ -53,4 +53,4 @@ function VideoSingleColContainer({ videosList, inProgress = false }) {
   )
 }
 
-export default VideoSingleColContainer
+export default VideoRecommendationsContainer

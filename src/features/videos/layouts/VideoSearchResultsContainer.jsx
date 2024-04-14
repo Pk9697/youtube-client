@@ -10,6 +10,7 @@ function VideoSearchResultsContainer({ videosList, inProgress = false }) {
   return (
     <Loader inProgress={inProgress}>
       <Video.Group className="grid-cols-1">
+        {!videosList.length && <Video.Title>No videos found</Video.Title>}
         {videosList?.map(
           ({
             _id,
