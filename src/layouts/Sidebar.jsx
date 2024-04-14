@@ -1,5 +1,5 @@
 import { CircleUser } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -92,21 +92,26 @@ Sidebar.NavTitle = function SidebarNavTitle({
 
 Sidebar.NavLink = function SidebarNavLink({
   className,
-  to = '/',
   children,
   ...restProps
 }) {
   return (
-    <Link
-      to={to}
-      className={twMerge(
-        'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
-        className
-      )}
+    <NavLink
+      className={({ isActive }) =>
+        isActive
+          ? twMerge(
+              'flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary',
+              className
+            )
+          : twMerge(
+              'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
+              className
+            )
+      }
       {...restProps}
     >
       {children}
-    </Link>
+    </NavLink>
   )
 }
 
