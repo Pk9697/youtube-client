@@ -9,7 +9,6 @@ function SearchResults() {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   const { searchResults } = useSelector((state) => state.search)
-  console.log({ searchResults })
 
   useEffect(() => {
     dispatch(fetchVideosByQuery({ accessToken, query }))

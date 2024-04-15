@@ -5,10 +5,9 @@ import { fetchLoggedInUserSubscribersList } from '@/features/subscription'
 
 function Subscribers() {
   const dispatch = useDispatch()
-  const {
-    accessToken,
-    user: { _id: userId },
-  } = useSelector((state) => state.auth)
+  const { accessToken, user: { _id: userId } = {} } = useSelector(
+    (state) => state.auth
+  )
   const { subscribersList, inProgress } = useSelector(
     (state) => state.subscription
   )

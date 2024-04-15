@@ -10,15 +10,18 @@ function VideoPlaylistContainer({ currentPlaylist = {}, currentVideoId }) {
     name,
     description,
     videos = [],
-    owner,
+    owner: {
+      userName: playlistOwnerUserName,
+      fullName: playlistOwnerFullName,
+    } = {},
   } = currentPlaylist
 
   return (
     <Video.Card>
       <Video.CardHeader>
         <Video.CardTitle className="text-xl font-bold">{name}</Video.CardTitle>
-        <Video.TextLink to={`${ROUTES.PROFILE}/${owner?.userName}`}>
-          {owner?.fullName}
+        <Video.TextLink to={`${ROUTES.PROFILE}/${playlistOwnerUserName}`}>
+          {playlistOwnerFullName}
         </Video.TextLink>
         <Video.CardDescription>{description}</Video.CardDescription>
       </Video.CardHeader>

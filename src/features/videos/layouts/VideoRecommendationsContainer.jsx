@@ -19,7 +19,7 @@ function VideoRecommendationsContainer({ videosList, inProgress = false }) {
             duration,
             views,
             createdAt,
-            owner: { fullName, userName },
+            owner: { fullName, userName } = {},
           }) => (
             <Video
               key={_id}

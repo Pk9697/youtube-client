@@ -12,7 +12,7 @@ function PlaylistContainer({ playlists = [] }) {
           name,
           description,
           videos = [],
-          owner: { fullName, userName, avatar },
+          owner: { fullName, userName, avatar } = {},
           createdAt,
         }) => (
           <Playlist key={_id}>

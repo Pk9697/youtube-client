@@ -213,6 +213,23 @@ const fetchSubscriptionsVideos = createAsyncThunk(
   }
 )
 
+const fetchLoggedInUserWatchHistory = createAsyncThunk(
+  'videos/fetchLoggedInUserWatchHistory',
+  async ({ accessToken }) => {
+    try {
+      const url = APIUrls.fetchLoggedInUserWatchHistory()
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchVideos,
   fetchVideo,
@@ -225,4 +242,5 @@ export {
   deleteComment,
   fetchChannelVideos,
   fetchSubscriptionsVideos,
+  fetchLoggedInUserWatchHistory,
 }

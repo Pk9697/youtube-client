@@ -20,7 +20,6 @@ function VideoPlayerContainer({
 }) {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
-  if (!videoDetails) return null
   const {
     _id,
     videoFile,
@@ -39,7 +38,7 @@ function VideoPlayerContainer({
       avatar,
       subscribersCount,
       isSubscribed,
-    },
+    } = {},
   } = videoDetails || {}
 
   const handleToggleSubscription = () => {

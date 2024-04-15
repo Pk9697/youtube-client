@@ -6,6 +6,7 @@ export const API_ROOT =
 export const APIUrls = {
   login: () => `${API_ROOT}/users/login`,
   register: () => `${API_ROOT}/users/register`,
+
   fetchVideos: () => `${API_ROOT}/videos`,
   fetchVideo: (videoId) => `${API_ROOT}/videos/view/${videoId}`,
   logout: () => `${API_ROOT}/users/logout`,
@@ -38,4 +39,5 @@ export const APIUrls = {
   fetchSubscriptionsVideos: () => `${API_ROOT}/subscriptions/channels/videos`,
   fetchUserSubscribersList: (userId) =>
     `${API_ROOT}/subscriptions/subscribers/${userId}`,
+  fetchLoggedInUserWatchHistory: () => `${API_ROOT}/users/watch-history`,
 }

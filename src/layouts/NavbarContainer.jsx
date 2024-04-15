@@ -12,10 +12,9 @@ function NavbarContainer({ usersList }) {
   const isLightMode = true
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const {
-    accessToken,
-    user: { fullName, avatar },
-  } = useSelector((state) => state.auth)
+  const { accessToken, user: { fullName, avatar } = {} } = useSelector(
+    (state) => state.auth
+  )
 
   // TODO: Add below logic in useSearchQuery custom hook
 

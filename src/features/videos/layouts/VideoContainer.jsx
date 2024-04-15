@@ -20,7 +20,7 @@ function VideoContainer({ videosList = [], inProgress = false }) {
             duration,
             views,
             createdAt,
-            owner: { fullName, avatar, userName },
+            owner: { fullName, avatar, userName } = {},
           }) => (
             <Video key={_id}>
               <Video.ImageContainerLink to={`${ROUTES.VIEW}?videoId=${_id}`}>

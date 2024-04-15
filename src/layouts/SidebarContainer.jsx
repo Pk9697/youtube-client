@@ -14,9 +14,9 @@ import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function SidebarContainer({ usersList = [] }) {
-  const {
-    user: { userName: loggedInUserName },
-  } = useSelector((state) => state.auth)
+  const { user: { userName: loggedInUserName } = {} } = useSelector(
+    (state) => state.auth
+  )
 
   return (
     <Sidebar>

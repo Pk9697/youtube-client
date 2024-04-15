@@ -2,6 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   fetchChannelVideos,
+  fetchLoggedInUserWatchHistory,
   fetchSubscriptionsVideos,
   fetchVideos,
 } from './asyncThunkActions'
@@ -103,9 +104,42 @@ const videosSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(fetchLoggedInUserWatchHistory.pending, (state) => {
+        state.videosList = []
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(fetchLoggedInUserWatchHistory.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          state.videosList = action.payload.data
+          toast({
+            title: action.payload?.message || 'Videos fetched successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(fetchLoggedInUserWatchHistory.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
-export { fetchVideos, fetchChannelVideos, fetchSubscriptionsVideos }
+export {
+  fetchVideos,
+  fetchChannelVideos,
+  fetchSubscriptionsVideos,
+  fetchLoggedInUserWatchHistory,
+}
 
 export default videosSlice.reducer

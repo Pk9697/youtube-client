@@ -26,7 +26,7 @@ function VideoCommentsContainer({ videoOwnerId, videoId, comments = [] }) {
       avatar: loggedInUserAvatar,
       _id: loggedInUserId,
       userName: loggedInUserName,
-    },
+    } = {},
   } = useSelector((state) => state.auth)
   const {
     content: commentInput,
@@ -62,7 +62,7 @@ function VideoCommentsContainer({ videoOwnerId, videoId, comments = [] }) {
             _id: commentOwnerId,
             userName: commentOwnerUserName,
             avatar,
-          },
+          } = {},
           likesCount = 0,
           isLiked = false,
           dislikesCount = 0,

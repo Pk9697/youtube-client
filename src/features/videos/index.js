@@ -8,6 +8,7 @@ import videosReducer, {
   fetchVideos,
   fetchChannelVideos,
   fetchSubscriptionsVideos,
+  fetchLoggedInUserWatchHistory,
 } from './services/videosSlice'
 import videoReducer, {
   fetchVideo,
@@ -42,4 +43,5 @@ export {
   VideoPlaylistContainer,
   VideoSearchResultsContainer,
   fetchSubscriptionsVideos,
+  fetchLoggedInUserWatchHistory,
 }

@@ -26,7 +26,7 @@ function TweetsContainer({ currentProfileUserName, tweetsList = [] }) {
       avatar: loggedInUserAvatar,
       _id: loggedInUserId,
       userName: loggedInUserName,
-    },
+    } = {},
   } = useSelector((state) => state.auth)
 
   const {

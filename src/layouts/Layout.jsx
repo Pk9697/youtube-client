@@ -7,10 +7,9 @@ import { fetchLoggedInUserSubscribedToChannels } from '@/features/subscription'
 
 function Layout() {
   const dispatch = useDispatch()
-  const {
-    accessToken,
-    user: { userName },
-  } = useSelector((state) => state.auth)
+  const { accessToken, user: { userName } = {} } = useSelector(
+    (state) => state.auth
+  )
   const { subscribedToChannelsList } = useSelector(
     (state) => state.subscription
   )

@@ -20,7 +20,7 @@ function VideoSearchResultsContainer({ videosList, inProgress = false }) {
             duration,
             views,
             createdAt,
-            owner: { fullName, userName, avatar },
+            owner: { fullName, userName, avatar } = {},
           }) => (
             <Video key={_id} className="sm:grid-cols-[2fr_3fr]">
               <Video.ImageContainerLink to={`${ROUTES.VIEW}?videoId=${_id}`}>
