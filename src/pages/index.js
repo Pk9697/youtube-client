@@ -8,6 +8,7 @@ import Subscriptions from './Subscriptions'
 import History from './History'
 import Subscribers from './Subscribers'
 import Settings from './Settings'
+import LikedVideos from './LikedVideos'
 
 export {
   Home,
@@ -20,4 +21,5 @@ export {
   History,
   Subscribers,
   Settings,
+  LikedVideos,
 }

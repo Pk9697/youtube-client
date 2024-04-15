@@ -25,6 +25,7 @@ import {
   History,
   Subscribers,
   Settings,
+  LikedVideos,
 } from '@/pages'
 
 const router = createBrowserRouter(
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
           <Route path={ROUTES.HISTORY} element={<History />} />
           <Route path={ROUTES.SUBSCRIBERS} element={<Subscribers />} />
           <Route path={ROUTES.SETTINGS} element={<Settings />} />
+          <Route path={ROUTES.LIKED_VIDEOS} element={<LikedVideos />} />
         </Route>
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />} />

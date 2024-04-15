@@ -36,4 +36,43 @@ const fetchCurrentPlaylist = createAsyncThunk(
   }
 )
 
-export { fetchChannelPlaylists, fetchCurrentPlaylist }
+const fetchLoggedInUserLikedVideosPlaylistIdByName = createAsyncThunk(
+  'playlist/fetchLoggedInUserLikedVideosPlaylistIdByName',
+  async ({ accessToken, playlistName = 'LL' }) => {
+    try {
+      const url = APIUrls.fetchLoggedInUserPlaylistIdByName(playlistName)
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+const fetchLoggedInUserWatchLaterPlaylistIdByName = createAsyncThunk(
+  'playlist/fetchLoggedInUserWatchLaterPlaylistIdByName',
+  async ({ accessToken, playlistName = 'WL' }) => {
+    try {
+      const url = APIUrls.fetchLoggedInUserPlaylistIdByName(playlistName)
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+export {
+  fetchChannelPlaylists,
+  fetchCurrentPlaylist,
+  fetchLoggedInUserLikedVideosPlaylistIdByName,
+  fetchLoggedInUserWatchLaterPlaylistIdByName,
+}

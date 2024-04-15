@@ -4,6 +4,8 @@ import VideoPlayerContainer from './layouts/VideoPlayerContainer'
 import VideoRecommendationsContainer from './layouts/VideoRecommendationsContainer'
 import VideoPlaylistContainer from './layouts/VideoPlaylistContainer'
 import VideoSearchResultsContainer from './layouts/VideoSearchResultsContainer'
+import VideoPlaylistContainer2 from './layouts/VideoPlaylistContainer2'
+
 import videosReducer, {
   fetchVideos,
   fetchChannelVideos,
@@ -44,4 +46,5 @@ export {
   VideoSearchResultsContainer,
   fetchSubscriptionsVideos,
   fetchLoggedInUserWatchHistory,
+  VideoPlaylistContainer2,
 }

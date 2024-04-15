@@ -4,6 +4,10 @@ import { useEffect } from 'react'
 import SidebarContainer from './SidebarContainer'
 import NavbarContainer from './NavbarContainer'
 import { fetchLoggedInUserSubscribedToChannels } from '@/features/subscription'
+import {
+  fetchLoggedInUserLikedVideosPlaylistIdByName,
+  fetchLoggedInUserWatchLaterPlaylistIdByName,
+} from '@/features/playlist'
 
 function Layout() {
   const dispatch = useDispatch()
@@ -17,6 +21,8 @@ function Layout() {
 
   useEffect(() => {
     dispatch(fetchLoggedInUserSubscribedToChannels({ accessToken, userName }))
+    dispatch(fetchLoggedInUserLikedVideosPlaylistIdByName({ accessToken }))
+    dispatch(fetchLoggedInUserWatchLaterPlaylistIdByName({ accessToken }))
   }, [])
 
   return (

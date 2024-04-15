@@ -9,4 +9,5 @@ export const ROUTES = {
   HISTORY: '/feed/history',
   SUBSCRIBERS: '/feed/subscribers',
   SETTINGS: '/settings',
+  LIKED_VIDEOS: '/playlist/liked-videos',
 }

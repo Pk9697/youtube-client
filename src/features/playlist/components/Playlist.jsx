@@ -49,7 +49,7 @@ Playlist.Image = function PlaylistImage({
   return (
     <img
       className={twMerge(
-        'block h-full w-full rounded-xl bg-muted object-cover hover:brightness-50',
+        'block max-h-full max-w-full rounded-xl bg-muted object-cover hover:brightness-50',
         className
       )}
       src={src || fallbackSrc}

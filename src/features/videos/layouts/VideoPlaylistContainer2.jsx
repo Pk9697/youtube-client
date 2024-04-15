@@ -1,28 +1,27 @@
 import Loader from '@/components/Loader'
 import Video from '../components/Video'
-import { formatDuration } from '@/utils/formatDuration'
 import { ROUTES } from '@/data/constants'
+import { getPublicUrl } from '@/utils/getPublicUrl'
+import { formatDuration } from '@/utils/formatDuration'
 import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
-import { getPublicUrl } from '@/utils/getPublicUrl'
 
-function VideoSearchResultsContainer({ videosList = [], inProgress = false }) {
+function VideoPlaylistContainer2({ videosList = [], inProgress = false }) {
   return (
     <Loader inProgress={inProgress}>
       <Video.Group className="grid-cols-1">
-        {!videosList.length && <Video.Title>No videos found</Video.Title>}
+        {!videosList.length && <Video.Title>No videos availaible</Video.Title>}
         {videosList?.map(
           ({
             _id,
             thumbnail,
             title,
-            description,
             duration,
             views,
             createdAt,
             owner: { fullName, userName, avatar } = {},
           }) => (
-            <Video key={_id} className="sm:grid-cols-[2fr_3fr]">
+            <Video key={_id} className="sm:grid-cols-[1fr_3fr]">
               <Video.ImageContainerLink to={`${ROUTES.VIEW}?videoId=${_id}`}>
                 <Video.Image src={getPublicUrl(thumbnail)} />
                 <Video.Duration>{formatDuration(duration)}</Video.Duration>
@@ -42,9 +41,6 @@ function VideoSearchResultsContainer({ videosList = [], inProgress = false }) {
                   <Video.Text>
                     {formatViews(views)} views • {formatTimeAgo(createdAt)}
                   </Video.Text>
-                  <Video.Text className="hidden sm:block">
-                    {description}
-                  </Video.Text>
                 </Video.Meta>
                 <Video.Row className="ml-auto items-start">
                   <Video.DropdownMenu />
@@ -58,4 +54,4 @@ function VideoSearchResultsContainer({ videosList = [], inProgress = false }) {
   )
 }
 
-export default VideoSearchResultsContainer
+export default VideoPlaylistContainer2

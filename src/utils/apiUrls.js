@@ -40,4 +40,6 @@ export const APIUrls = {
   fetchUserSubscribersList: (userId) =>
     `${API_ROOT}/subscriptions/subscribers/${userId}`,
   fetchLoggedInUserWatchHistory: () => `${API_ROOT}/users/watch-history`,
+  fetchLoggedInUserPlaylistIdByName: (playlistName) =>
+    `${API_ROOT}/playlists/id/${playlistName}`,
 }

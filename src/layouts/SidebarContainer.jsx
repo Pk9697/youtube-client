@@ -63,7 +63,7 @@ function SidebarContainer({ usersList = [] }) {
           </Sidebar.Icon>
           <Sidebar.Text>History</Sidebar.Text>
         </Sidebar.NavLink>
-        <Sidebar.NavLink to="/liked-videos">
+        <Sidebar.NavLink to={ROUTES.LIKED_VIDEOS}>
           <Sidebar.Icon>
             <ThumbsUpIcon className="h-4 w-4" />
           </Sidebar.Icon>
