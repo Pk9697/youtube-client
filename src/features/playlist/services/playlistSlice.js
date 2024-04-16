@@ -5,12 +5,14 @@ import {
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
+  fetchWatchLaterPlaylist,
 } from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
 const initialState = {
   channelPlaylists: [],
   currentPlaylist: {},
+  watchLaterPlaylist: {},
   likedVideosPlaylistId: null,
   watchLaterPlaylistId: null,
   error: null,
@@ -144,6 +146,34 @@ const playlistSlice = createSlice({
           })
         }
       )
+      .addCase(fetchWatchLaterPlaylist.pending, (state) => {
+        state.watchLaterPlaylist = {}
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(fetchWatchLaterPlaylist.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          state.watchLaterPlaylist = action.payload.data
+          toast({
+            title: 'Watch Later Playlist fetched successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(fetchWatchLaterPlaylist.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -152,6 +182,7 @@ export {
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
+  fetchWatchLaterPlaylist,
 }
 
 export default playlistSlice.reducer

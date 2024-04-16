@@ -4,6 +4,7 @@ import playlistReducer, {
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
+  fetchWatchLaterPlaylist,
 } from './services/playlistSlice'
 
 export {
@@ -13,4 +14,5 @@ export {
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
+  fetchWatchLaterPlaylist,
 }

@@ -7,6 +7,7 @@ import { fetchLoggedInUserSubscribedToChannels } from '@/features/subscription'
 import {
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
+  fetchWatchLaterPlaylist,
 } from '@/features/playlist'
 
 function Layout() {
@@ -19,11 +20,24 @@ function Layout() {
   )
   const { isSidebarOpen } = useSelector((state) => state.app)
 
+  const { watchLaterPlaylistId } = useSelector((state) => state.playlist)
+
   useEffect(() => {
     dispatch(fetchLoggedInUserSubscribedToChannels({ accessToken, userName }))
     dispatch(fetchLoggedInUserLikedVideosPlaylistIdByName({ accessToken }))
     dispatch(fetchLoggedInUserWatchLaterPlaylistIdByName({ accessToken }))
   }, [])
+
+  useEffect(() => {
+    if (watchLaterPlaylistId) {
+      dispatch(
+        fetchWatchLaterPlaylist({
+          accessToken,
+          playlistId: watchLaterPlaylistId,
+        })
+      )
+    }
+  }, [watchLaterPlaylistId])
 
   return (
     <div

@@ -70,9 +70,27 @@ const fetchLoggedInUserWatchLaterPlaylistIdByName = createAsyncThunk(
   }
 )
 
+const fetchWatchLaterPlaylist = createAsyncThunk(
+  'playlist/fetchWatchLaterPlaylist',
+  async ({ accessToken, playlistId }) => {
+    try {
+      const url = APIUrls.fetchCurrentPlaylist(playlistId)
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
+  fetchWatchLaterPlaylist,
 }

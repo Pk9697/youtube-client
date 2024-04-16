@@ -1,6 +1,4 @@
-import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchCurrentPlaylist } from '@/features/playlist'
+import { useSelector } from 'react-redux'
 import Playlist from '@/features/playlist/components/Playlist'
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
@@ -9,10 +7,8 @@ import { VideoPlaylistContainer2 } from '@/features/videos'
 import Loader from '@/components/Loader'
 
 function WatchLater() {
-  const dispatch = useDispatch()
-  const { accessToken } = useSelector((state) => state.auth)
   const {
-    currentPlaylist: {
+    watchLaterPlaylist: {
       _id,
       name,
       description,
@@ -20,17 +16,9 @@ function WatchLater() {
       owner: { fullName, userName, avatar } = {},
       createdAt,
     } = {},
-    watchLaterPlaylistId,
     inProgress,
   } = useSelector((state) => state.playlist)
 
-  useEffect(() => {
-    if (watchLaterPlaylistId) {
-      dispatch(
-        fetchCurrentPlaylist({ accessToken, playlistId: watchLaterPlaylistId })
-      )
-    }
-  }, [])
   return (
     <Loader inProgress={inProgress}>
       <div className="grid w-full items-start gap-4 p-4 sm:grid-cols-[1fr_2fr]">
