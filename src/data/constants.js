@@ -10,4 +10,5 @@ export const ROUTES = {
   SUBSCRIBERS: '/feed/subscribers',
   SETTINGS: '/settings',
   LIKED_VIDEOS: '/playlist/liked-videos',
+  WATCH_LATER: '/playlist/watch-later',
 }

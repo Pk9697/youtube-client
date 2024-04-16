@@ -7,6 +7,7 @@ import {
   ThumbsUpIcon,
   UsersRoundIcon,
   Youtube,
+  ClockIcon,
 } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import Sidebar from './Sidebar'
@@ -68,6 +69,12 @@ function SidebarContainer({ usersList = [] }) {
             <ThumbsUpIcon className="h-4 w-4" />
           </Sidebar.Icon>
           <Sidebar.Text>Liked Videos</Sidebar.Text>
+        </Sidebar.NavLink>
+        <Sidebar.NavLink to={ROUTES.WATCH_LATER}>
+          <Sidebar.Icon>
+            <ClockIcon className="h-4 w-4" />
+          </Sidebar.Icon>
+          <Sidebar.Text>Watch Later</Sidebar.Text>
         </Sidebar.NavLink>
       </Sidebar.Nav>
 

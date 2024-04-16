@@ -9,6 +9,7 @@ import History from './History'
 import Subscribers from './Subscribers'
 import Settings from './Settings'
 import LikedVideos from './LikedVideos'
+import WatchLater from './WatchLater'
 
 export {
   Home,
@@ -22,4 +23,5 @@ export {
   Subscribers,
   Settings,
   LikedVideos,
+  WatchLater,
 }
