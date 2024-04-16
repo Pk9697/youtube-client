@@ -187,7 +187,7 @@ Comment.DropdownMenuItem = function CommentDropdownMenuItem({
   return (
     <DropdownMenuItem
       className={twMerge(
-        'className="flex hover:text-primary" cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all',
+        'flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary',
         className
       )}
       {...restProps}

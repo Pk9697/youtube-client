@@ -1,4 +1,4 @@
-import React from 'react'
+import { ClockIcon, ListPlusIcon } from 'lucide-react'
 import Video from '../components/Video'
 import { formatDuration } from '@/utils/formatDuration'
 import { formatViews } from '@/utils/formatViews'
@@ -42,7 +42,18 @@ function VideoRecommendationsContainer({ videosList, inProgress = false }) {
                   </Video.Text>
                 </Video.Meta>
                 <Video.Row className="ml-auto items-start">
-                  <Video.DropdownMenu />
+                  <Video.DropdownMenu>
+                    <Video.DropdownMenuContent>
+                      <Video.DropdownMenuItem>
+                        <ListPlusIcon className="h-4 w-4" />
+                        Save to playlist
+                      </Video.DropdownMenuItem>
+                      <Video.DropdownMenuItem>
+                        <ClockIcon className="h-4 w-4" />
+                        Save to Watch Later
+                      </Video.DropdownMenuItem>
+                    </Video.DropdownMenuContent>
+                  </Video.DropdownMenu>
                 </Video.Row>
               </Video.Details>
             </Video>

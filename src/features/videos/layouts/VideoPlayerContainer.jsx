@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { ThumbsDownIcon, ThumbsUpIcon } from 'lucide-react'
+import {
+  ThumbsDownIcon,
+  ThumbsUpIcon,
+  ClockIcon,
+  ListPlusIcon,
+} from 'lucide-react'
 import Video from '../components/Video'
 import Loader from '@/components/Loader'
 import { formatViews } from '@/utils/formatViews'
@@ -101,7 +106,18 @@ function VideoPlayerContainer({
               {isDisliked ? <ThumbsDownIcon fill="red" /> : <ThumbsDownIcon />}
               {formatViews(dislikesCount)}
             </Video.Button>
-            <Video.DropdownMenu />
+            <Video.DropdownMenu>
+              <Video.DropdownMenuContent>
+                <Video.DropdownMenuItem>
+                  <ListPlusIcon className="h-4 w-4" />
+                  Save to playlist
+                </Video.DropdownMenuItem>
+                <Video.DropdownMenuItem>
+                  <ClockIcon className="h-4 w-4" />
+                  Save to Watch Later
+                </Video.DropdownMenuItem>
+              </Video.DropdownMenuContent>
+            </Video.DropdownMenu>
           </Video.Row>
         </Video.Details>
         <Video.Card>

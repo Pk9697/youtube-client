@@ -1,10 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import {
-  CircleUserIcon,
-  ClockIcon,
-  EllipsisVerticalIcon,
-  ListPlusIcon,
-} from 'lucide-react'
+import { CircleUserIcon, EllipsisVerticalIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -115,21 +110,38 @@ Video.DropdownMenu = function VideoDropdownMenu({
       <DropdownMenuTrigger className={twMerge('', className)} {...restProps}>
         <EllipsisVerticalIcon />
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem>
-          <div className="flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary">
-            <ListPlusIcon className="h-4 w-4" />
-            Save to playlist
-          </div>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <div className="flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary">
-            <ClockIcon className="h-4 w-4" />
-            Save to Watch Later
-          </div>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+      {children}
     </DropdownMenu>
+  )
+}
+
+Video.DropdownMenuContent = function VideoDropdownMenuContent({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenuContent className={twMerge('', className)} {...restProps}>
+      {children}
+    </DropdownMenuContent>
+  )
+}
+
+Video.DropdownMenuItem = function VideoDropdownMenuItem({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenuItem
+      className={twMerge(
+        'flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary',
+        className
+      )}
+      {...restProps}
+    >
+      {children}
+    </DropdownMenuItem>
   )
 }
 

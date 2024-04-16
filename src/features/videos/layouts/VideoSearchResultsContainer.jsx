@@ -1,3 +1,4 @@
+import { ClockIcon, ListPlusIcon } from 'lucide-react'
 import Loader from '@/components/Loader'
 import Video from '../components/Video'
 import { formatDuration } from '@/utils/formatDuration'
@@ -47,7 +48,18 @@ function VideoSearchResultsContainer({ videosList = [], inProgress = false }) {
                   </Video.Text>
                 </Video.Meta>
                 <Video.Row className="ml-auto items-start">
-                  <Video.DropdownMenu />
+                  <Video.DropdownMenu>
+                    <Video.DropdownMenuContent>
+                      <Video.DropdownMenuItem>
+                        <ListPlusIcon className="h-4 w-4" />
+                        Save to playlist
+                      </Video.DropdownMenuItem>
+                      <Video.DropdownMenuItem>
+                        <ClockIcon className="h-4 w-4" />
+                        Save to Watch Later
+                      </Video.DropdownMenuItem>
+                    </Video.DropdownMenuContent>
+                  </Video.DropdownMenu>
                 </Video.Row>
               </Video.Details>
             </Video>

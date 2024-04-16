@@ -1,4 +1,5 @@
 import { twMerge } from 'tailwind-merge'
+import { ClockIcon, ListPlusIcon } from 'lucide-react'
 import { ROUTES } from '@/data/constants'
 import Video from '../components/Video'
 import { formatDuration } from '@/utils/formatDuration'
@@ -65,7 +66,18 @@ function VideoPlaylistContainer({ currentPlaylist = {}, currentVideoId }) {
                     </Video.TextLink>
                   </Video.Meta>
                   <Video.Row className="ml-auto">
-                    <Video.DropdownMenu />
+                    <Video.DropdownMenu>
+                      <Video.DropdownMenuContent>
+                        <Video.DropdownMenuItem>
+                          <ListPlusIcon className="h-4 w-4" />
+                          Save to playlist
+                        </Video.DropdownMenuItem>
+                        <Video.DropdownMenuItem>
+                          <ClockIcon className="h-4 w-4" />
+                          Save to Watch Later
+                        </Video.DropdownMenuItem>
+                      </Video.DropdownMenuContent>
+                    </Video.DropdownMenu>
                   </Video.Row>
                 </Video.Details>
               </Video>
