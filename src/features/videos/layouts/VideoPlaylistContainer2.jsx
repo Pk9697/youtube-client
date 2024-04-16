@@ -6,15 +6,22 @@ import { getPublicUrl } from '@/utils/getPublicUrl'
 import { formatDuration } from '@/utils/formatDuration'
 import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
+import { useWatchLaterPlaylist } from '@/features/playlist'
 
 function VideoPlaylistContainer2({ videosList = [], inProgress = false }) {
+  const {
+    isVideoSavedInWatchLaterPlaylist,
+    handleAddVideoToWatchLaterPlaylist,
+    handleRemoveVideoFromWatchLaterPlaylist,
+  } = useWatchLaterPlaylist()
+
   return (
     <Loader inProgress={inProgress}>
       <Video.Group className="grid-cols-1">
         {!videosList.length && <Video.Title>No videos available</Video.Title>}
         {videosList?.map(
           ({
-            _id,
+            _id: videoId,
             thumbnail,
             title,
             duration,
@@ -22,8 +29,10 @@ function VideoPlaylistContainer2({ videosList = [], inProgress = false }) {
             createdAt,
             owner: { fullName, userName, avatar } = {},
           }) => (
-            <Video key={_id} className="sm:grid-cols-[1fr_3fr]">
-              <Video.ImageContainerLink to={`${ROUTES.VIEW}?videoId=${_id}`}>
+            <Video key={videoId} className="sm:grid-cols-[1fr_3fr]">
+              <Video.ImageContainerLink
+                to={`${ROUTES.VIEW}?videoId=${videoId}`}
+              >
                 <Video.Image src={getPublicUrl(thumbnail)} />
                 <Video.Duration>{formatDuration(duration)}</Video.Duration>
               </Video.ImageContainerLink>
@@ -33,7 +42,7 @@ function VideoPlaylistContainer2({ videosList = [], inProgress = false }) {
                   to={`${ROUTES.PROFILE}/${userName}`}
                 />
                 <Video.Meta>
-                  <Video.TitleLink to={`${ROUTES.VIEW}?videoId=${_id}`}>
+                  <Video.TitleLink to={`${ROUTES.VIEW}?videoId=${videoId}`}>
                     {title}
                   </Video.TitleLink>
                   <Video.TextLink to={`${ROUTES.PROFILE}/${userName}`}>
@@ -50,10 +59,25 @@ function VideoPlaylistContainer2({ videosList = [], inProgress = false }) {
                         <ListPlusIcon className="h-4 w-4" />
                         Save to playlist
                       </Video.DropdownMenuItem>
-                      <Video.DropdownMenuItem>
-                        <ClockIcon className="h-4 w-4" />
-                        Save to Watch Later
-                      </Video.DropdownMenuItem>
+                      {isVideoSavedInWatchLaterPlaylist(videoId) ? (
+                        <Video.DropdownMenuItem
+                          onClick={() =>
+                            handleRemoveVideoFromWatchLaterPlaylist(videoId)
+                          }
+                        >
+                          <ClockIcon className="h-4 w-4" />
+                          Remove from Watch Later
+                        </Video.DropdownMenuItem>
+                      ) : (
+                        <Video.DropdownMenuItem
+                          onClick={() =>
+                            handleAddVideoToWatchLaterPlaylist(videoId)
+                          }
+                        >
+                          <ClockIcon className="h-4 w-4" />
+                          Save to Watch Later
+                        </Video.DropdownMenuItem>
+                      )}
                     </Video.DropdownMenuContent>
                   </Video.DropdownMenu>
                 </Video.Row>

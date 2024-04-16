@@ -87,10 +87,53 @@ const fetchWatchLaterPlaylist = createAsyncThunk(
   }
 )
 
+const addVideoToWatchLaterPlaylist = createAsyncThunk(
+  'playlist/addVideoToWatchLaterPlaylist',
+  async ({ accessToken, playlistId, videoId }) => {
+    try {
+      const url = APIUrls.addVideoToPlaylist(playlistId, videoId)
+      const response = await axios.patch(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+const removeVideoFromWatchLaterPlaylist = createAsyncThunk(
+  'playlist/removeVideoFromWatchLaterPlaylist',
+  async ({ accessToken, playlistId, videoId }) => {
+    try {
+      const url = APIUrls.removeVideoFromPlaylist(playlistId, videoId)
+      const response = await axios.patch(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
   fetchWatchLaterPlaylist,
+  addVideoToWatchLaterPlaylist,
+  removeVideoFromWatchLaterPlaylist,
 }

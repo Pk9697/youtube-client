@@ -4,8 +4,15 @@ import { ROUTES } from '@/data/constants'
 import Video from '../components/Video'
 import { formatDuration } from '@/utils/formatDuration'
 import { getPublicUrl } from '@/utils/getPublicUrl'
+import { useWatchLaterPlaylist } from '@/features/playlist'
 
 function VideoPlaylistContainer({ currentPlaylist = {}, currentVideoId }) {
+  const {
+    isVideoSavedInWatchLaterPlaylist,
+    handleAddVideoToWatchLaterPlaylist,
+    handleRemoveVideoFromWatchLaterPlaylist,
+  } = useWatchLaterPlaylist()
+
   const {
     _id: playlistId,
     name,
@@ -72,10 +79,25 @@ function VideoPlaylistContainer({ currentPlaylist = {}, currentVideoId }) {
                           <ListPlusIcon className="h-4 w-4" />
                           Save to playlist
                         </Video.DropdownMenuItem>
-                        <Video.DropdownMenuItem>
-                          <ClockIcon className="h-4 w-4" />
-                          Save to Watch Later
-                        </Video.DropdownMenuItem>
+                        {isVideoSavedInWatchLaterPlaylist(videoId) ? (
+                          <Video.DropdownMenuItem
+                            onClick={() =>
+                              handleRemoveVideoFromWatchLaterPlaylist(videoId)
+                            }
+                          >
+                            <ClockIcon className="h-4 w-4" />
+                            Remove from Watch Later
+                          </Video.DropdownMenuItem>
+                        ) : (
+                          <Video.DropdownMenuItem
+                            onClick={() =>
+                              handleAddVideoToWatchLaterPlaylist(videoId)
+                            }
+                          >
+                            <ClockIcon className="h-4 w-4" />
+                            Save to Watch Later
+                          </Video.DropdownMenuItem>
+                        )}
                       </Video.DropdownMenuContent>
                     </Video.DropdownMenu>
                   </Video.Row>

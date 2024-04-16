@@ -42,4 +42,8 @@ export const APIUrls = {
   fetchLoggedInUserWatchHistory: () => `${API_ROOT}/users/watch-history`,
   fetchLoggedInUserPlaylistIdByName: (playlistName) =>
     `${API_ROOT}/playlists/id/${playlistName}`,
+  addVideoToPlaylist: (playlistId, videoId) =>
+    `${API_ROOT}/playlists/add/?playlistId=${playlistId}&videoId=${videoId}`,
+  removeVideoFromPlaylist: (playlistId, videoId) =>
+    `${API_ROOT}/playlists/remove/?playlistId=${playlistId}&videoId=${videoId}`,
 }

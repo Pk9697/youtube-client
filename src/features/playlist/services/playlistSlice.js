@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import {
+  addVideoToWatchLaterPlaylist,
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
   fetchWatchLaterPlaylist,
+  removeVideoFromWatchLaterPlaylist,
 } from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
@@ -174,6 +176,64 @@ const playlistSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(addVideoToWatchLaterPlaylist.pending, (state) => {
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(addVideoToWatchLaterPlaylist.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          state.watchLaterPlaylist.videos.unshift(action.payload.data)
+          toast({
+            title: 'Added video to Watch Later Playlist!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(addVideoToWatchLaterPlaylist.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
+      .addCase(removeVideoFromWatchLaterPlaylist.pending, (state) => {
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(removeVideoFromWatchLaterPlaylist.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          const { videoId } = action.meta.arg
+          state.watchLaterPlaylist.videos =
+            state.watchLaterPlaylist.videos.filter(
+              (video) => video._id !== videoId
+            )
+          toast({
+            title: 'Removed video from Watch Later Playlist!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(removeVideoFromWatchLaterPlaylist.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -183,6 +243,8 @@ export {
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
   fetchWatchLaterPlaylist,
+  addVideoToWatchLaterPlaylist,
+  removeVideoFromWatchLaterPlaylist,
 }
 
 export default playlistSlice.reducer

@@ -6,14 +6,21 @@ import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import Loader from '@/components/Loader'
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
+import { useWatchLaterPlaylist } from '@/features/playlist'
 
 function VideoRecommendationsContainer({ videosList, inProgress = false }) {
+  const {
+    isVideoSavedInWatchLaterPlaylist,
+    handleAddVideoToWatchLaterPlaylist,
+    handleRemoveVideoFromWatchLaterPlaylist,
+  } = useWatchLaterPlaylist()
+
   return (
     <Loader inProgress={inProgress}>
       <Video.Group className="grid-cols-1">
         {videosList?.map(
           ({
-            _id,
+            _id: videoId,
             thumbnail,
             title,
             duration,
@@ -22,16 +29,18 @@ function VideoRecommendationsContainer({ videosList, inProgress = false }) {
             owner: { fullName, userName } = {},
           }) => (
             <Video
-              key={_id}
+              key={videoId}
               className="grid-cols-[2fr_7fr] lg:grid-cols-[2fr_3fr]"
             >
-              <Video.ImageContainerLink to={`${ROUTES.VIEW}?videoId=${_id}`}>
+              <Video.ImageContainerLink
+                to={`${ROUTES.VIEW}?videoId=${videoId}`}
+              >
                 <Video.Image src={getPublicUrl(thumbnail)} />
                 <Video.Duration>{formatDuration(duration)}</Video.Duration>
               </Video.ImageContainerLink>
               <Video.Details>
                 <Video.Meta>
-                  <Video.TitleLink to={`${ROUTES.VIEW}?videoId=${_id}`}>
+                  <Video.TitleLink to={`${ROUTES.VIEW}?videoId=${videoId}`}>
                     {title}
                   </Video.TitleLink>
                   <Video.TextLink to={`${ROUTES.PROFILE}/${userName}`}>
@@ -48,10 +57,25 @@ function VideoRecommendationsContainer({ videosList, inProgress = false }) {
                         <ListPlusIcon className="h-4 w-4" />
                         Save to playlist
                       </Video.DropdownMenuItem>
-                      <Video.DropdownMenuItem>
-                        <ClockIcon className="h-4 w-4" />
-                        Save to Watch Later
-                      </Video.DropdownMenuItem>
+                      {isVideoSavedInWatchLaterPlaylist(videoId) ? (
+                        <Video.DropdownMenuItem
+                          onClick={() =>
+                            handleRemoveVideoFromWatchLaterPlaylist(videoId)
+                          }
+                        >
+                          <ClockIcon className="h-4 w-4" />
+                          Remove from Watch Later
+                        </Video.DropdownMenuItem>
+                      ) : (
+                        <Video.DropdownMenuItem
+                          onClick={() =>
+                            handleAddVideoToWatchLaterPlaylist(videoId)
+                          }
+                        >
+                          <ClockIcon className="h-4 w-4" />
+                          Save to Watch Later
+                        </Video.DropdownMenuItem>
+                      )}
                     </Video.DropdownMenuContent>
                   </Video.DropdownMenu>
                 </Video.Row>
