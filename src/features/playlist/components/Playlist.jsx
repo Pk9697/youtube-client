@@ -2,6 +2,30 @@ import { CircleUserIcon, ListVideoIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 function Playlist({ children, className, ...restProps }) {
   return (
@@ -167,6 +191,257 @@ Playlist.Text = function PlaylistText({ children, className, ...restProps }) {
     >
       {children}
     </div>
+  )
+}
+
+Playlist.Dialog = function PlaylistDialog({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <Dialog className={twMerge('', className)} {...restProps}>
+      {children}
+    </Dialog>
+  )
+}
+
+Playlist.DialogTrigger = function PlaylistDialogTrigger({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogTrigger className={twMerge('', className)} {...restProps}>
+      {children}
+    </DialogTrigger>
+  )
+}
+Playlist.DialogContent = function PlaylistDialogContent({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogContent className={twMerge('max-w-xs', className)} {...restProps}>
+      {children}
+    </DialogContent>
+  )
+}
+
+Playlist.DialogHeader = function PlaylistDialogHeader({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogHeader className={twMerge('space-y-3', className)} {...restProps}>
+      {children}
+    </DialogHeader>
+  )
+}
+
+Playlist.DialogTitle = function PlaylistDialogTitle({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogTitle className={twMerge('', className)} {...restProps}>
+      {children}
+    </DialogTitle>
+  )
+}
+
+Playlist.Col = function PlaylistCol({ children, className, ...restProps }) {
+  return (
+    <div className={twMerge('flex flex-col gap-2', className)} {...restProps}>
+      {children}
+    </div>
+  )
+}
+
+Playlist.Row = function PlaylistRow({ children, className, ...restProps }) {
+  return (
+    <div
+      className={twMerge('flex items-center gap-2', className)}
+      {...restProps}
+    >
+      {children}
+    </div>
+  )
+}
+
+Playlist.Checkbox = function PlaylistCheckbox({
+  children,
+  className,
+  ...restProps
+}) {
+  return <Checkbox className={twMerge('', className)} {...restProps} />
+}
+
+Playlist.Label = function PlaylistLabel({ children, className, ...restProps }) {
+  return (
+    <Label
+      className={twMerge('flex items-center gap-2', className)}
+      {...restProps}
+    >
+      {children}
+    </Label>
+  )
+}
+
+Playlist.DialogFooter = function PlaylistDialogFooter({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogFooter className={twMerge('', className)} {...restProps}>
+      {children}
+    </DialogFooter>
+  )
+}
+
+Playlist.Collapsible = function PlaylistCollapsible({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <Collapsible
+      className={twMerge('w-full space-y-4', className)}
+      {...restProps}
+    >
+      {children}
+    </Collapsible>
+  )
+}
+
+Playlist.CollapsibleTrigger = function PlaylistCollapsibleTrigger({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <CollapsibleTrigger className={twMerge('', className)} {...restProps}>
+      {children}
+    </CollapsibleTrigger>
+  )
+}
+
+Playlist.Button = function PlaylistButton({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <Button
+      className={twMerge('flex items-center gap-2', className)}
+      {...restProps}
+    >
+      {children}
+    </Button>
+  )
+}
+
+Playlist.CollapsibleContent = function PlaylistCollapsibleContent({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <CollapsibleContent className={twMerge('', className)} {...restProps}>
+      {children}
+    </CollapsibleContent>
+  )
+}
+
+Playlist.Form = function PlaylistForm({ children, className, ...restProps }) {
+  return (
+    <form className={twMerge('flex flex-col gap-2', className)} {...restProps}>
+      {children}
+    </form>
+  )
+}
+
+Playlist.InputContainer = function PlaylistInputContainer({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <div className={twMerge('space-y-1', className)} {...restProps}>
+      {children}
+    </div>
+  )
+}
+
+Playlist.Input = function PlaylistInput({ children, className, ...restProps }) {
+  return (
+    <Input className={twMerge('', className)} {...restProps}>
+      {children}
+    </Input>
+  )
+}
+
+Playlist.Select = function PlaylistSelect({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <Select className={twMerge('', className)} {...restProps}>
+      {children}
+    </Select>
+  )
+}
+
+Playlist.SelectTrigger = function PlaylistSelectTrigger({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <SelectTrigger className={twMerge('', className)} {...restProps}>
+      {children}
+    </SelectTrigger>
+  )
+}
+
+Playlist.SelectValue = function PlaylistSelectValue({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <SelectValue className={twMerge('', className)} {...restProps}>
+      {children}
+    </SelectValue>
+  )
+}
+
+Playlist.SelectContent = function PlaylistSelectContent({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <SelectContent className={twMerge('', className)} {...restProps}>
+      {children}
+    </SelectContent>
+  )
+}
+
+Playlist.SelectItem = function PlaylistSelectItem({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <SelectItem className={twMerge('', className)} {...restProps}>
+      {children}
+    </SelectItem>
   )
 }
 

@@ -1,4 +1,6 @@
 import PlaylistContainer from './layouts/PlaylistContainer'
+import Playlist from './components/Playlist'
+import PlaylistDialogContainer from './layouts/PlaylistDialogContainer'
 import playlistReducer, {
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
@@ -22,4 +24,6 @@ export {
   addVideoToWatchLaterPlaylist,
   removeVideoFromWatchLaterPlaylist,
   useWatchLaterPlaylist,
+  Playlist,
+  PlaylistDialogContainer,
 }

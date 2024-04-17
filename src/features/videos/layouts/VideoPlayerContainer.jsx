@@ -17,7 +17,10 @@ import {
 import { ROUTES } from '@/data/constants'
 import { toggleSubscription } from '@/features/subscription'
 import { getPublicUrl } from '@/utils/getPublicUrl'
-import { useWatchLaterPlaylist } from '@/features/playlist'
+import {
+  PlaylistDialogContainer,
+  useWatchLaterPlaylist,
+} from '@/features/playlist'
 
 function VideoPlayerContainer({
   videoDetails = {},
@@ -113,31 +116,39 @@ function VideoPlayerContainer({
               {isDisliked ? <ThumbsDownIcon fill="red" /> : <ThumbsDownIcon />}
               {formatViews(dislikesCount)}
             </Video.Button>
-            <Video.DropdownMenu>
-              <Video.DropdownMenuContent>
-                <Video.DropdownMenuItem>
-                  <ListPlusIcon className="h-4 w-4" />
-                  Save to playlist
-                </Video.DropdownMenuItem>
-                {isVideoSavedInWatchLaterPlaylist(videoId) ? (
-                  <Video.DropdownMenuItem
-                    onClick={() =>
-                      handleRemoveVideoFromWatchLaterPlaylist(videoId)
-                    }
-                  >
-                    <ClockIcon className="h-4 w-4" />
-                    Remove from Watch Later
+            <PlaylistDialogContainer>
+              <Video.DropdownMenu>
+                <Video.DropdownMenuContent>
+                  <Video.DropdownMenuItem>
+                    <PlaylistDialogContainer.DialogTrigger asChild>
+                      <div className="flex w-full items-center gap-3">
+                        <ListPlusIcon className="h-4 w-4" />
+                        Save to playlist
+                      </div>
+                    </PlaylistDialogContainer.DialogTrigger>
                   </Video.DropdownMenuItem>
-                ) : (
-                  <Video.DropdownMenuItem
-                    onClick={() => handleAddVideoToWatchLaterPlaylist(videoId)}
-                  >
-                    <ClockIcon className="h-4 w-4" />
-                    Save to Watch Later
-                  </Video.DropdownMenuItem>
-                )}
-              </Video.DropdownMenuContent>
-            </Video.DropdownMenu>
+                  {isVideoSavedInWatchLaterPlaylist(videoId) ? (
+                    <Video.DropdownMenuItem
+                      onClick={() =>
+                        handleRemoveVideoFromWatchLaterPlaylist(videoId)
+                      }
+                    >
+                      <ClockIcon className="h-4 w-4" />
+                      Remove from Watch Later
+                    </Video.DropdownMenuItem>
+                  ) : (
+                    <Video.DropdownMenuItem
+                      onClick={() =>
+                        handleAddVideoToWatchLaterPlaylist(videoId)
+                      }
+                    >
+                      <ClockIcon className="h-4 w-4" />
+                      Save to Watch Later
+                    </Video.DropdownMenuItem>
+                  )}
+                </Video.DropdownMenuContent>
+              </Video.DropdownMenu>
+            </PlaylistDialogContainer>
           </Video.Row>
         </Video.Details>
         <Video.Card>
