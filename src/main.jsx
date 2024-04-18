@@ -28,6 +28,7 @@ import {
   LikedVideos,
   WatchLater,
 } from '@/pages'
+import { ThemeProvider } from '@/context/theme-provider'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -53,10 +54,12 @@ const router = createBrowserRouter(
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <RouterProvider router={router} />
-      <Toaster />
-    </PersistGate>
-  </Provider>
+  <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={router} />
+        <Toaster />
+      </PersistGate>
+    </Provider>
+  </ThemeProvider>
 )

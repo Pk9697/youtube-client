@@ -18,6 +18,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useTheme } from '@/context/theme-provider'
 
 function Navbar({ children, className, ...restProps }) {
   return (
@@ -195,16 +196,38 @@ Navbar.DropdownMenuItem = function NavbarDropdownMenuItem({
   )
 }
 
-Navbar.Mode = function NavbarMode({
-  isLightMode = true,
-  className,
-  children,
-  ...restProps
-}) {
+Navbar.ModeToggle = function NavbarModeToggle() {
+  const { setTheme } = useTheme()
   return (
-    <div className={twMerge('cursor-pointer', className)} {...restProps}>
-      {isLightMode ? <SunIcon /> : <MoonIcon />}
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon" className="rounded-full">
+          <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => setTheme('light')}
+        >
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => setTheme('dark')}
+        >
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => setTheme('system')}
+        >
+          System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
 

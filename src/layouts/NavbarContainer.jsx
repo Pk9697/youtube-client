@@ -9,7 +9,6 @@ import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 
 function NavbarContainer({ usersList }) {
-  const isLightMode = true
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { accessToken, user: { fullName, avatar } = {} } = useSelector(
@@ -40,7 +39,7 @@ function NavbarContainer({ usersList }) {
         name="query"
         value={query}
       />
-      <Navbar.Mode isLightMode={isLightMode} />
+      <Navbar.ModeToggle />
       <Navbar.DropdownMenu>
         <Navbar.Avatar src={getPublicUrl(avatar)} />
         <Navbar.DropdownMenuContent>
