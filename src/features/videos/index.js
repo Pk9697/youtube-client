@@ -22,6 +22,7 @@ import videoReducer, {
   toggleLikeComment,
   toggleDislikeComment,
   deleteComment,
+  editComment,
 } from './services/videoSlice'
 
 export {
@@ -47,4 +48,5 @@ export {
   fetchSubscriptionsVideos,
   fetchLoggedInUserWatchHistory,
   VideoPlaylistContainer2,
+  editComment,
 }

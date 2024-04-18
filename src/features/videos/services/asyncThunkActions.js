@@ -230,6 +230,23 @@ const fetchLoggedInUserWatchHistory = createAsyncThunk(
   }
 )
 
+const editComment = createAsyncThunk(
+  'video/editComment',
+  async ({ accessToken, commentId, formFields }) => {
+    try {
+      const url = APIUrls.editComment(commentId)
+      const response = await axios.patch(url, formFields, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchVideos,
   fetchVideo,
@@ -243,4 +260,5 @@ export {
   fetchChannelVideos,
   fetchSubscriptionsVideos,
   fetchLoggedInUserWatchHistory,
+  editComment,
 }

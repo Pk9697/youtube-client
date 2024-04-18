@@ -73,10 +73,7 @@ Comment.AvatarLink = function CommentAvatarLink({
 
 Comment.Button = function CommentButton({ children, className, ...restProps }) {
   return (
-    <Button
-      className={twMerge('flex items-center gap-2', className)}
-      {...restProps}
-    >
+    <Button className={twMerge('', className)} {...restProps}>
       {children}
     </Button>
   )

@@ -4,6 +4,7 @@ import { toast } from '@/components/ui/use-toast'
 import {
   addComment,
   deleteComment,
+  editComment,
   fetchVideo,
   fetchVideoComments,
   toggleDislikeComment,
@@ -253,6 +254,35 @@ const videoSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(editComment.pending, (state) => {
+        state.error = null
+      })
+      .addCase(editComment.fulfilled, (state, action) => {
+        if (action.payload?.success) {
+          const { commentId, formFields: { content } = {} } = action.meta.arg
+          const idx = state.comments.findIndex(
+            (comment) => comment._id === commentId
+          )
+          state.comments[idx].content = content
+
+          toast({
+            title: 'Video comment edited!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(editComment.rejected, (state, action) => {
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -267,6 +297,7 @@ export {
   toggleLikeComment,
   toggleDislikeComment,
   deleteComment,
+  editComment,
 }
 
 export default videoSlice.reducer
