@@ -46,4 +46,5 @@ export const APIUrls = {
     `${API_ROOT}/playlists/add/?playlistId=${playlistId}&videoId=${videoId}`,
   removeVideoFromPlaylist: (playlistId, videoId) =>
     `${API_ROOT}/playlists/remove/?playlistId=${playlistId}&videoId=${videoId}`,
+  createPlaylist: () => `${API_ROOT}/playlists/create`,
 }

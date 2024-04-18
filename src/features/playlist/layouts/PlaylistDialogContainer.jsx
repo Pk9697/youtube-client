@@ -3,9 +3,18 @@ import { twMerge } from 'tailwind-merge'
 import { useSelector } from 'react-redux'
 import Playlist from '../components/Playlist'
 import PlaylistCheckboxContainer from './PlaylistCheckboxContainer'
+import useCreatePlaylist from '../hooks/useCreatePlaylist'
 
 function PlaylistDialogContainer({ children, videoId }) {
   const { loggedInUserPlaylists = [] } = useSelector((state) => state.playlist)
+  const {
+    name,
+    description,
+    visibility,
+    handleChange,
+    handleSubmit,
+    handleSelectChange,
+  } = useCreatePlaylist()
 
   return (
     <Playlist.Dialog>
@@ -32,10 +41,16 @@ function PlaylistDialogContainer({ children, videoId }) {
               </Playlist.Button>
             </Playlist.CollapsibleTrigger>
             <Playlist.CollapsibleContent>
-              <Playlist.Form className="flex flex-col gap-2">
+              <Playlist.Form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-2"
+              >
                 <Playlist.InputContainer>
                   <Playlist.Label htmlFor="name">Name</Playlist.Label>
                   <Playlist.Input
+                    name="name"
+                    value={name}
+                    onChange={handleChange}
                     id="name"
                     type="text"
                     autoComplete="text"
@@ -43,12 +58,36 @@ function PlaylistDialogContainer({ children, videoId }) {
                     required
                   />
                 </Playlist.InputContainer>
+                <Playlist.InputContainer>
+                  <Playlist.Label htmlFor="description">
+                    Description
+                  </Playlist.Label>
+                  <Playlist.Input
+                    name="description"
+                    value={description}
+                    onChange={handleChange}
+                    id="description"
+                    type="text"
+                    autoComplete="text"
+                    placeholder="Enter Playlist description"
+                    required
+                  />
+                </Playlist.InputContainer>
 
                 <Playlist.InputContainer>
                   <Playlist.Label htmlFor="privacy">Privacy</Playlist.Label>
-                  <Playlist.Select defaultValue="public">
+                  <Playlist.Select
+                    value={visibility}
+                    name="visibility"
+                    onValueChange={handleSelectChange}
+                  >
                     <Playlist.SelectTrigger id="privacy">
-                      <Playlist.SelectValue placeholder="Privacy" />
+                      <Playlist.SelectValue
+                        placeholder="Privacy"
+                        // value={visibility}
+                        // name="visibility"
+                        // onValueChange={handleChange}
+                      />
                     </Playlist.SelectTrigger>
                     <Playlist.SelectContent>
                       <Playlist.SelectItem value="public">

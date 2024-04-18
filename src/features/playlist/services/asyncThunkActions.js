@@ -129,6 +129,23 @@ const removeVideoFromPlaylist = createAsyncThunk(
   }
 )
 
+const createPlaylist = createAsyncThunk(
+  'playlist/createPlaylist',
+  async ({ accessToken, formFields }) => {
+    try {
+      const url = APIUrls.createPlaylist()
+      const response = await axios.post(url, formFields, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
@@ -137,4 +154,5 @@ export {
   fetchLoggedInUserPlaylists,
   addVideoToPlaylist,
   removeVideoFromPlaylist,
+  createPlaylist,
 }
