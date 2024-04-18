@@ -92,9 +92,9 @@ function TweetsContainer({ currentProfileUserName, tweetsList = [] }) {
                   size="sm"
                 >
                   {isLiked ? (
-                    <ThumbsUpIcon fill="skyblue" className="h-4 w-4" />
+                    <ThumbsUpIcon fill="skyblue" className="mr-2 size-4" />
                   ) : (
-                    <ThumbsUpIcon className="h-4 w-4" />
+                    <ThumbsUpIcon className="mr-2 size-4" />
                   )}
                   {likesCount}
                 </Comment.Button>
@@ -105,9 +105,9 @@ function TweetsContainer({ currentProfileUserName, tweetsList = [] }) {
                   size="sm"
                 >
                   {isDisliked ? (
-                    <ThumbsDownIcon fill="red" className="h-4 w-4" />
+                    <ThumbsDownIcon fill="red" className="mr-2 size-4" />
                   ) : (
-                    <ThumbsDownIcon className="h-4 w-4" />
+                    <ThumbsDownIcon className="mr-2 size-4" />
                   )}
                   {dislikesCount}
                 </Comment.Button>
@@ -118,7 +118,7 @@ function TweetsContainer({ currentProfileUserName, tweetsList = [] }) {
                 {loggedInUserId === tweetOwnerId && (
                   <>
                     <Comment.DropdownMenuItem>
-                      <PencilIcon className="h-4 w-4" />
+                      <PencilIcon className="size-4" />
                       Edit
                     </Comment.DropdownMenuItem>
                     <Comment.DropdownMenuItem
@@ -126,14 +126,14 @@ function TweetsContainer({ currentProfileUserName, tweetsList = [] }) {
                         dispatch(deleteTweet({ accessToken, tweetId }))
                       }
                     >
-                      <Trash2Icon className="h-4 w-4" />
+                      <Trash2Icon className="size-4" />
                       Delete
                     </Comment.DropdownMenuItem>
                   </>
                 )}
 
                 <Comment.DropdownMenuItem>
-                  <FlagIcon className="h-4 w-4" />
+                  <FlagIcon className="size-4" />
                   Report
                 </Comment.DropdownMenuItem>
               </Comment.DropdownMenuContent>
