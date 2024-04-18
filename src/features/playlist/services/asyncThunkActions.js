@@ -70,11 +70,11 @@ const fetchLoggedInUserWatchLaterPlaylistIdByName = createAsyncThunk(
   }
 )
 
-const fetchWatchLaterPlaylist = createAsyncThunk(
-  'playlist/fetchWatchLaterPlaylist',
-  async ({ accessToken, playlistId }) => {
+const fetchLoggedInUserPlaylists = createAsyncThunk(
+  'playlist/fetchLoggedInUserPlaylists',
+  async ({ accessToken, userName }) => {
     try {
-      const url = APIUrls.fetchCurrentPlaylist(playlistId)
+      const url = APIUrls.fetchChannelPlaylists(userName)
       const response = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -87,8 +87,8 @@ const fetchWatchLaterPlaylist = createAsyncThunk(
   }
 )
 
-const addVideoToWatchLaterPlaylist = createAsyncThunk(
-  'playlist/addVideoToWatchLaterPlaylist',
+const addVideoToPlaylist = createAsyncThunk(
+  'playlist/addVideoToPlaylist',
   async ({ accessToken, playlistId, videoId }) => {
     try {
       const url = APIUrls.addVideoToPlaylist(playlistId, videoId)
@@ -107,8 +107,9 @@ const addVideoToWatchLaterPlaylist = createAsyncThunk(
     }
   }
 )
-const removeVideoFromWatchLaterPlaylist = createAsyncThunk(
-  'playlist/removeVideoFromWatchLaterPlaylist',
+
+const removeVideoFromPlaylist = createAsyncThunk(
+  'playlist/removeVideoFromPlaylist',
   async ({ accessToken, playlistId, videoId }) => {
     try {
       const url = APIUrls.removeVideoFromPlaylist(playlistId, videoId)
@@ -133,7 +134,7 @@ export {
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
-  fetchWatchLaterPlaylist,
-  addVideoToWatchLaterPlaylist,
-  removeVideoFromWatchLaterPlaylist,
+  fetchLoggedInUserPlaylists,
+  addVideoToPlaylist,
+  removeVideoFromPlaylist,
 }

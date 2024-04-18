@@ -1,20 +1,20 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import {
-  addVideoToWatchLaterPlaylist,
+  addVideoToPlaylist,
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
+  fetchLoggedInUserPlaylists,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
-  fetchWatchLaterPlaylist,
-  removeVideoFromWatchLaterPlaylist,
+  removeVideoFromPlaylist,
 } from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
 const initialState = {
   channelPlaylists: [],
   currentPlaylist: {},
-  watchLaterPlaylist: {},
+  loggedInUserPlaylists: [],
   likedVideosPlaylistId: null,
   watchLaterPlaylistId: null,
   error: null,
@@ -148,17 +148,17 @@ const playlistSlice = createSlice({
           })
         }
       )
-      .addCase(fetchWatchLaterPlaylist.pending, (state) => {
-        state.watchLaterPlaylist = {}
+      .addCase(fetchLoggedInUserPlaylists.pending, (state) => {
+        state.loggedInUserPlaylists = []
         state.error = null
         state.inProgress = true
       })
-      .addCase(fetchWatchLaterPlaylist.fulfilled, (state, action) => {
+      .addCase(fetchLoggedInUserPlaylists.fulfilled, (state, action) => {
         state.inProgress = false
         if (action.payload?.success) {
-          state.watchLaterPlaylist = action.payload.data
+          state.loggedInUserPlaylists = action.payload.data
           toast({
-            title: 'Watch Later Playlist fetched successfully!',
+            title: 'Channel Playlists fetched successfully!',
           })
         } else {
           state.error = action.payload?.message || 'server error'
@@ -168,7 +168,7 @@ const playlistSlice = createSlice({
           })
         }
       })
-      .addCase(fetchWatchLaterPlaylist.rejected, (state, action) => {
+      .addCase(fetchLoggedInUserPlaylists.rejected, (state, action) => {
         state.inProgress = false
         state.error = action.payload?.message || 'server error'
         toast({
@@ -176,16 +176,23 @@ const playlistSlice = createSlice({
           title: state.error,
         })
       })
-      .addCase(addVideoToWatchLaterPlaylist.pending, (state) => {
+      .addCase(addVideoToPlaylist.pending, (state) => {
         state.error = null
         state.inProgress = true
       })
-      .addCase(addVideoToWatchLaterPlaylist.fulfilled, (state, action) => {
+      .addCase(addVideoToPlaylist.fulfilled, (state, action) => {
         state.inProgress = false
         if (action.payload?.success) {
-          state.watchLaterPlaylist.videos.unshift(action.payload.data)
+          const { playlistId } = action.meta.arg
+          const idx = state.loggedInUserPlaylists.findIndex(
+            (playlist) => playlist._id === playlistId
+          )
+          if (idx !== -1) {
+            state.loggedInUserPlaylists[idx].videos.unshift(action.payload.data)
+          }
+
           toast({
-            title: 'Added video to Watch Later Playlist!',
+            title: 'Added video to Playlist!',
           })
         } else {
           state.error = action.payload?.message || 'server error'
@@ -195,7 +202,7 @@ const playlistSlice = createSlice({
           })
         }
       })
-      .addCase(addVideoToWatchLaterPlaylist.rejected, (state, action) => {
+      .addCase(addVideoToPlaylist.rejected, (state, action) => {
         state.inProgress = false
         state.error = action.payload?.message || 'server error'
         toast({
@@ -203,20 +210,25 @@ const playlistSlice = createSlice({
           title: state.error,
         })
       })
-      .addCase(removeVideoFromWatchLaterPlaylist.pending, (state) => {
+      .addCase(removeVideoFromPlaylist.pending, (state) => {
         state.error = null
         state.inProgress = true
       })
-      .addCase(removeVideoFromWatchLaterPlaylist.fulfilled, (state, action) => {
+      .addCase(removeVideoFromPlaylist.fulfilled, (state, action) => {
         state.inProgress = false
         if (action.payload?.success) {
-          const { videoId } = action.meta.arg
-          state.watchLaterPlaylist.videos =
-            state.watchLaterPlaylist.videos.filter(
-              (video) => video._id !== videoId
-            )
+          const { playlistId, videoId } = action.meta.arg
+          const idx = state.loggedInUserPlaylists.findIndex(
+            (playlist) => playlist._id === playlistId
+          )
+          if (idx !== -1) {
+            state.loggedInUserPlaylists[idx].videos =
+              state.loggedInUserPlaylists[idx].videos.filter(
+                (video) => video._id !== videoId
+              )
+          }
           toast({
-            title: 'Removed video from Watch Later Playlist!',
+            title: 'Removed video from Playlist!',
           })
         } else {
           state.error = action.payload?.message || 'server error'
@@ -226,7 +238,7 @@ const playlistSlice = createSlice({
           })
         }
       })
-      .addCase(removeVideoFromWatchLaterPlaylist.rejected, (state, action) => {
+      .addCase(removeVideoFromPlaylist.rejected, (state, action) => {
         state.inProgress = false
         state.error = action.payload?.message || 'server error'
         toast({
@@ -242,9 +254,9 @@ export {
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
-  fetchWatchLaterPlaylist,
-  addVideoToWatchLaterPlaylist,
-  removeVideoFromWatchLaterPlaylist,
+  fetchLoggedInUserPlaylists,
+  addVideoToPlaylist,
+  removeVideoFromPlaylist,
 }
 
 export default playlistSlice.reducer

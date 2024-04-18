@@ -1,8 +1,12 @@
-import { EarthIcon, EarthLockIcon, ChevronsUpDownIcon } from 'lucide-react'
+import { ChevronsUpDownIcon } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
+import { useSelector } from 'react-redux'
 import Playlist from '../components/Playlist'
+import PlaylistCheckboxContainer from './PlaylistCheckboxContainer'
 
-function PlaylistDialogContainer({ children }) {
+function PlaylistDialogContainer({ children, videoId }) {
+  const { loggedInUserPlaylists = [] } = useSelector((state) => state.playlist)
+
   return (
     <Playlist.Dialog>
       {children}
@@ -10,20 +14,13 @@ function PlaylistDialogContainer({ children }) {
         <Playlist.DialogHeader>
           <Playlist.DialogTitle>Save video to...</Playlist.DialogTitle>
           <Playlist.Col>
-            <Playlist.Row>
-              <Playlist.Checkbox id="terms" />
-              <Playlist.Label htmlFor="terms">
-                Watch Later
-                <EarthLockIcon className="size-5" />
-              </Playlist.Label>
-            </Playlist.Row>
-            <Playlist.Row>
-              <Playlist.Checkbox id="others" />
-              <Playlist.Label htmlFor="others">
-                Others
-                <EarthIcon className="size-5" />
-              </Playlist.Label>
-            </Playlist.Row>
+            {loggedInUserPlaylists.map((playlist) => (
+              <PlaylistCheckboxContainer
+                videoId={videoId}
+                key={playlist._id}
+                {...playlist}
+              />
+            ))}
           </Playlist.Col>
         </Playlist.DialogHeader>
         <Playlist.DialogFooter>

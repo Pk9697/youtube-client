@@ -1,14 +1,18 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 import Playlist from '@/features/playlist/components/Playlist'
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import { VideoPlaylistContainer2 } from '@/features/videos'
 import Loader from '@/components/Loader'
+import { fetchCurrentPlaylist } from '@/features/playlist'
 
 function WatchLater() {
+  const dispatch = useDispatch()
+  const { accessToken } = useSelector((state) => state.auth)
   const {
-    watchLaterPlaylist: {
+    currentPlaylist: {
       _id,
       name,
       description,
@@ -16,8 +20,18 @@ function WatchLater() {
       owner: { fullName, userName, avatar } = {},
       createdAt,
     } = {},
+    watchLaterPlaylistId,
     inProgress,
+    loggedInUserPlaylists,
   } = useSelector((state) => state.playlist)
+
+  useEffect(() => {
+    if (watchLaterPlaylistId) {
+      dispatch(
+        fetchCurrentPlaylist({ accessToken, playlistId: watchLaterPlaylistId })
+      )
+    }
+  }, [loggedInUserPlaylists])
 
   return (
     <Loader inProgress={inProgress}>

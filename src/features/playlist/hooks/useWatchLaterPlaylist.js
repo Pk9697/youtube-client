@@ -1,20 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  addVideoToWatchLaterPlaylist,
-  removeVideoFromWatchLaterPlaylist,
+  addVideoToPlaylist,
+  removeVideoFromPlaylist,
 } from '@/features/playlist'
 
 function useWatchLaterPlaylist() {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
-  const { watchLaterPlaylistId, watchLaterPlaylist } = useSelector(
+  const { watchLaterPlaylistId, loggedInUserPlaylists } = useSelector(
     (state) => state.playlist
   )
 
   const handleAddVideoToWatchLaterPlaylist = (videoId) => {
     if (watchLaterPlaylistId) {
       dispatch(
-        addVideoToWatchLaterPlaylist({
+        addVideoToPlaylist({
           accessToken,
           playlistId: watchLaterPlaylistId,
           videoId,
@@ -25,7 +25,7 @@ function useWatchLaterPlaylist() {
   const handleRemoveVideoFromWatchLaterPlaylist = (videoId) => {
     if (watchLaterPlaylistId) {
       dispatch(
-        removeVideoFromWatchLaterPlaylist({
+        removeVideoFromPlaylist({
           accessToken,
           playlistId: watchLaterPlaylistId,
           videoId,
@@ -35,7 +35,11 @@ function useWatchLaterPlaylist() {
   }
 
   const isVideoSavedInWatchLaterPlaylist = (videoId) => {
-    return watchLaterPlaylist.videos?.some((video) => video._id === videoId)
+    const watchLaterPlaylist = loggedInUserPlaylists.find(
+      (playlist) => playlist._id === watchLaterPlaylistId
+    )
+
+    return watchLaterPlaylist?.videos?.some((video) => video._id === videoId)
   }
 
   return {

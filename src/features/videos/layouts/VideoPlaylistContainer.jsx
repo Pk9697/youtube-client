@@ -76,7 +76,7 @@ function VideoPlaylistContainer({ currentPlaylist = {}, currentVideoId }) {
                     </Video.TextLink>
                   </Video.Meta>
                   <Video.Row className="ml-auto">
-                    <PlaylistDialogContainer>
+                    <PlaylistDialogContainer videoId={videoId}>
                       <Video.DropdownMenu>
                         <Video.DropdownMenuContent>
                           <Video.DropdownMenuItem>

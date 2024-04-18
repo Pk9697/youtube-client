@@ -116,7 +116,7 @@ function VideoPlayerContainer({
               {isDisliked ? <ThumbsDownIcon fill="red" /> : <ThumbsDownIcon />}
               {formatViews(dislikesCount)}
             </Video.Button>
-            <PlaylistDialogContainer>
+            <PlaylistDialogContainer videoId={videoId}>
               <Video.DropdownMenu>
                 <Video.DropdownMenuContent>
                   <Video.DropdownMenuItem>

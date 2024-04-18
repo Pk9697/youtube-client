@@ -6,8 +6,8 @@ import NavbarContainer from './NavbarContainer'
 import { fetchLoggedInUserSubscribedToChannels } from '@/features/subscription'
 import {
   fetchLoggedInUserLikedVideosPlaylistIdByName,
+  fetchLoggedInUserPlaylists,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
-  fetchWatchLaterPlaylist,
 } from '@/features/playlist'
 
 function Layout() {
@@ -20,24 +20,12 @@ function Layout() {
   )
   const { isSidebarOpen } = useSelector((state) => state.app)
 
-  const { watchLaterPlaylistId } = useSelector((state) => state.playlist)
-
   useEffect(() => {
     dispatch(fetchLoggedInUserSubscribedToChannels({ accessToken, userName }))
     dispatch(fetchLoggedInUserLikedVideosPlaylistIdByName({ accessToken }))
     dispatch(fetchLoggedInUserWatchLaterPlaylistIdByName({ accessToken }))
+    dispatch(fetchLoggedInUserPlaylists({ accessToken, userName }))
   }, [])
-
-  useEffect(() => {
-    if (watchLaterPlaylistId) {
-      dispatch(
-        fetchWatchLaterPlaylist({
-          accessToken,
-          playlistId: watchLaterPlaylistId,
-        })
-      )
-    }
-  }, [watchLaterPlaylistId])
 
   return (
     <div

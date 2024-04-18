@@ -56,7 +56,7 @@ function VideoPlaylistContainer2({ videosList = [], inProgress = false }) {
                   </Video.Text>
                 </Video.Meta>
                 <Video.Row className="ml-auto items-start">
-                  <PlaylistDialogContainer>
+                  <PlaylistDialogContainer videoId={videoId}>
                     <Video.DropdownMenu>
                       <Video.DropdownMenuContent>
                         <Video.DropdownMenuItem>

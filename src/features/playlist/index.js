@@ -6,9 +6,9 @@ import playlistReducer, {
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
-  fetchWatchLaterPlaylist,
-  addVideoToWatchLaterPlaylist,
-  removeVideoFromWatchLaterPlaylist,
+  fetchLoggedInUserPlaylists,
+  addVideoToPlaylist,
+  removeVideoFromPlaylist,
 } from './services/playlistSlice'
 
 import useWatchLaterPlaylist from './hooks/useWatchLaterPlaylist'
@@ -20,10 +20,10 @@ export {
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
-  fetchWatchLaterPlaylist,
-  addVideoToWatchLaterPlaylist,
-  removeVideoFromWatchLaterPlaylist,
   useWatchLaterPlaylist,
   Playlist,
   PlaylistDialogContainer,
+  fetchLoggedInUserPlaylists,
+  addVideoToPlaylist,
+  removeVideoFromPlaylist,
 }

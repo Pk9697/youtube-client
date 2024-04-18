@@ -22,6 +22,7 @@ function LikedVideos() {
     } = {},
     likedVideosPlaylistId,
     inProgress,
+    loggedInUserPlaylists,
   } = useSelector((state) => state.playlist)
 
   useEffect(() => {
@@ -30,7 +31,7 @@ function LikedVideos() {
         fetchCurrentPlaylist({ accessToken, playlistId: likedVideosPlaylistId })
       )
     }
-  }, [])
+  }, [loggedInUserPlaylists])
 
   return (
     <Loader inProgress={inProgress}>
