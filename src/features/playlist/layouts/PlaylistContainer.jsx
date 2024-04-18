@@ -6,6 +6,7 @@ import { getPublicUrl } from '@/utils/getPublicUrl'
 function PlaylistContainer({ playlists = [] }) {
   return (
     <Playlist.Group>
+      {!playlists.length && <Playlist.Title>0 playlists</Playlist.Title>}
       {playlists.map(
         ({
           _id,
