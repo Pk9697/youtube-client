@@ -32,7 +32,7 @@ function Layout() {
       className={`grid h-screen w-full flex-grow overflow-auto ${isSidebarOpen ? 'md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]' : ''}`}
     >
       <div
-        className={`sticky top-0 z-10 hidden max-h-screen overflow-auto border-r bg-muted/40 ${isSidebarOpen ? 'md:block' : ''}`}
+        className={`sticky top-0 z-10 hidden max-h-screen overflow-auto border-r bg-muted dark:bg-slate-900 ${isSidebarOpen ? 'md:block' : ''}`}
       >
         <SidebarContainer usersList={subscribedToChannelsList} />
       </div>

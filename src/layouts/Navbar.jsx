@@ -24,7 +24,7 @@ function Navbar({ children, className, ...restProps }) {
   return (
     <header
       className={twMerge(
-        'flex h-14 items-center gap-4 border-b bg-muted/95 px-4 lg:h-[60px] lg:px-6',
+        'flex h-14 items-center gap-4 border-b bg-muted px-4 dark:bg-slate-900 lg:h-[60px] lg:px-6',
         className
       )}
       {...restProps}
