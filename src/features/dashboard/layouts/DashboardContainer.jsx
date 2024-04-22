@@ -1,11 +1,24 @@
+import { useSelector } from 'react-redux'
 import { HeartIcon, UserRoundCheckIcon, ViewIcon } from 'lucide-react'
 import Dashboard from '../components/Dashboard'
+import { formatViews } from '@/utils/formatViews'
 
-function DashboardContainer({ children }) {
+function DashboardContainer({
+  children,
+  dashboardStats: {
+    totalVideosViews = 0,
+    totalSubscribers = 0,
+    totalVideosLikes = 0,
+  } = {},
+}) {
+  const { user: { fullName } = {} } = useSelector((state) => state.auth)
+
   return (
     <Dashboard>
       <Dashboard.Group>
-        <Dashboard.Title>Welcome back, Olivia</Dashboard.Title>
+        <Dashboard.Title>
+          Welcome back, {fullName?.split(' ')[0]}
+        </Dashboard.Title>
         <Dashboard.TextSmall>Check your dashboard summary.</Dashboard.TextSmall>
       </Dashboard.Group>
 
@@ -16,7 +29,9 @@ function DashboardContainer({ children }) {
             <ViewIcon className="size-4 text-muted-foreground" />
           </Dashboard.CardHeader>
           <Dashboard.CardContent>
-            <Dashboard.TitleBig>221,234</Dashboard.TitleBig>
+            <Dashboard.TitleBig>
+              {formatViews(totalVideosViews)}
+            </Dashboard.TitleBig>
           </Dashboard.CardContent>
         </Dashboard.Card>
         <Dashboard.Card>
@@ -25,7 +40,9 @@ function DashboardContainer({ children }) {
             <UserRoundCheckIcon className="size-4 text-muted-foreground" />
           </Dashboard.CardHeader>
           <Dashboard.CardContent>
-            <Dashboard.TitleBig>4053</Dashboard.TitleBig>
+            <Dashboard.TitleBig>
+              {formatViews(totalSubscribers)}
+            </Dashboard.TitleBig>
           </Dashboard.CardContent>
         </Dashboard.Card>
         <Dashboard.Card>
@@ -34,7 +51,9 @@ function DashboardContainer({ children }) {
             <HeartIcon className="size-4 text-muted-foreground" />
           </Dashboard.CardHeader>
           <Dashboard.CardContent>
-            <Dashboard.TitleBig>63,021</Dashboard.TitleBig>
+            <Dashboard.TitleBig>
+              {formatViews(totalVideosLikes)}
+            </Dashboard.TitleBig>
           </Dashboard.CardContent>
         </Dashboard.Card>
       </Dashboard.CardGrid>

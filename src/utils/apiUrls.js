@@ -48,4 +48,6 @@ export const APIUrls = {
     `${API_ROOT}/playlists/remove/?playlistId=${playlistId}&videoId=${videoId}`,
   createPlaylist: () => `${API_ROOT}/playlists/create`,
   editComment: (commentId) => `${API_ROOT}/comments/update/${commentId}`,
+  fetchDashboardStats: () => `${API_ROOT}/dashboard/stats`,
+  fetchDashboardVideos: () => `${API_ROOT}/dashboard/videos`,
 }

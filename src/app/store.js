@@ -10,6 +10,7 @@ import { tweetsReducer } from '@/features/tweets'
 import { subscriptionReducer } from '@/features/subscription'
 import { playlistReducer } from '@/features/playlist'
 import { searchReducer } from '@/features/search'
+import { dashboardReducer } from '@/features/dashboard'
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   subscription: subscriptionReducer,
   playlist: playlistReducer,
   search: searchReducer,
+  dashboard: dashboardReducer,
 })
 
 const persistConfig = {

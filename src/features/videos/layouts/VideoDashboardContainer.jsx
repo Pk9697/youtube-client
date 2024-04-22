@@ -4,14 +4,19 @@ import {
   MoreHorizontalIcon,
 } from 'lucide-react'
 import Video from '../components/Video'
+import { formatViews } from '@/utils/formatViews'
+import { formatTimeAgo } from '@/utils/formatTimeAgo'
+import { getPublicUrl } from '@/utils/getPublicUrl'
 
-function VideoDashboardContainer() {
+function VideoDashboardContainer({ videosList = [] }) {
   return (
     <Video.Card>
       <Video.CardHeader className="flex flex-row items-center space-y-0">
         <Video.CardDetails>
           <Video.CardTitle>Videos</Video.CardTitle>
-          <Video.CardDescription>Manage your videos.</Video.CardDescription>
+          <Video.CardDescription className="text-muted-foreground">
+            Manage your videos.
+          </Video.CardDescription>
         </Video.CardDetails>
 
         <Video.CardActions>
@@ -80,57 +85,73 @@ function VideoDashboardContainer() {
           </Video.TableHeader>
 
           <Video.TableBody>
-            <Video.TableRow>
-              <Video.TableCell>
-                <Video.Image />
-              </Video.TableCell>
-              <Video.TableCell className="font-medium">
-                Beach in Barcelona
-              </Video.TableCell>
-              <Video.TableCell>
-                <Video.Switch />
-              </Video.TableCell>
-              <Video.TableCell className="hidden md:table-cell">
-                500k
-              </Video.TableCell>
-              <Video.TableCell className="hidden md:table-cell">
-                25k
-              </Video.TableCell>
-              <Video.TableCell className="hidden md:table-cell">
-                5k
-              </Video.TableCell>
-              <Video.TableCell className="hidden md:table-cell">
-                2023-07-12 10:42 AM
-              </Video.TableCell>
+            {videosList.map(
+              ({
+                _id: videoId,
+                thumbnail,
+                title,
+                isPublished,
+                views,
+                likesCount,
+                dislikesCount,
+                createdAt,
+              } = {}) => (
+                <Video.TableRow key={videoId}>
+                  <Video.TableCell>
+                    <Video.Image src={getPublicUrl(thumbnail)} />
+                  </Video.TableCell>
+                  <Video.TableCell className="font-medium">
+                    {title}
+                  </Video.TableCell>
+                  <Video.TableCell>
+                    <Video.Switch checked={isPublished} />
+                  </Video.TableCell>
+                  <Video.TableCell className="hidden md:table-cell">
+                    {formatViews(views)}
+                  </Video.TableCell>
+                  <Video.TableCell className="hidden md:table-cell">
+                    {formatViews(likesCount)}
+                  </Video.TableCell>
+                  <Video.TableCell className="hidden md:table-cell">
+                    {formatViews(dislikesCount)}
+                  </Video.TableCell>
+                  <Video.TableCell className="hidden md:table-cell">
+                    {formatTimeAgo(createdAt)}
+                  </Video.TableCell>
 
-              <Video.TableCell>
-                <Video.DropdownMenu>
-                  <Video.DropdownMenuTrigger asChild>
-                    <Video.Button
-                      aria-haspopup="true"
-                      size="icon"
-                      variant="ghost"
-                    >
-                      <MoreHorizontalIcon className="h-4 w-4" />
-                      <span className="sr-only">Toggle menu</span>
-                    </Video.Button>
-                  </Video.DropdownMenuTrigger>
+                  <Video.TableCell>
+                    <Video.DropdownMenu>
+                      <Video.DropdownMenuTrigger asChild>
+                        <Video.Button
+                          aria-haspopup="true"
+                          size="icon"
+                          variant="ghost"
+                        >
+                          <MoreHorizontalIcon className="h-4 w-4" />
+                          <span className="sr-only">Toggle menu</span>
+                        </Video.Button>
+                      </Video.DropdownMenuTrigger>
 
-                  <Video.DropdownMenuContent align="end">
-                    <Video.DropdownMenuLabel>Actions</Video.DropdownMenuLabel>
-                    <Video.DropdownMenuItem>Edit</Video.DropdownMenuItem>
-                    <Video.DropdownMenuItem>Delete</Video.DropdownMenuItem>
-                  </Video.DropdownMenuContent>
-                </Video.DropdownMenu>
-              </Video.TableCell>
-            </Video.TableRow>
+                      <Video.DropdownMenuContent align="end">
+                        <Video.DropdownMenuLabel>
+                          Actions
+                        </Video.DropdownMenuLabel>
+                        <Video.DropdownMenuItem>Edit</Video.DropdownMenuItem>
+                        <Video.DropdownMenuItem>Delete</Video.DropdownMenuItem>
+                      </Video.DropdownMenuContent>
+                    </Video.DropdownMenu>
+                  </Video.TableCell>
+                </Video.TableRow>
+              )
+            )}
           </Video.TableBody>
         </Video.Table>
       </Video.CardContent>
 
       <Video.CardFooter>
         <Video.TextSmall>
-          Showing <strong>1-10</strong> of <strong>32</strong> videos
+          Showing <strong>1-10</strong> of <strong>{videosList.length}</strong>{' '}
+          videos
         </Video.TextSmall>
       </Video.CardFooter>
     </Video.Card>
