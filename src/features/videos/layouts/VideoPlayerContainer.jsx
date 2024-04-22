@@ -4,6 +4,7 @@ import {
   ThumbsUpIcon,
   ClockIcon,
   ListPlusIcon,
+  EllipsisVerticalIcon,
 } from 'lucide-react'
 import Video from '../components/Video'
 import Loader from '@/components/Loader'
@@ -105,7 +106,11 @@ function VideoPlayerContainer({
                 dispatch(toggleLikeVideo({ accessToken, videoId }))
               }
             >
-              {isLiked ? <ThumbsUpIcon fill="skyblue" /> : <ThumbsUpIcon />}
+              {isLiked ? (
+                <ThumbsUpIcon className="mr-2 size-5" fill="skyblue" />
+              ) : (
+                <ThumbsUpIcon className="mr-2 size-5" />
+              )}
               {formatViews(likesCount)}
             </Video.Button>
             <Video.Button
@@ -113,16 +118,29 @@ function VideoPlayerContainer({
                 dispatch(toggleDislikeVideo({ accessToken, videoId }))
               }
             >
-              {isDisliked ? <ThumbsDownIcon fill="red" /> : <ThumbsDownIcon />}
+              {isDisliked ? (
+                <ThumbsDownIcon className="mr-2 size-5" fill="red" />
+              ) : (
+                <ThumbsDownIcon className="mr-2 size-5" />
+              )}
               {formatViews(dislikesCount)}
             </Video.Button>
             <PlaylistDialogContainer videoId={videoId}>
               <Video.DropdownMenu>
+                <Video.DropdownMenuTrigger asChild>
+                  <Video.Button
+                    aria-haspopup="true"
+                    size="icon"
+                    variant="ghost"
+                  >
+                    <EllipsisVerticalIcon className="size-4" />
+                  </Video.Button>
+                </Video.DropdownMenuTrigger>
                 <Video.DropdownMenuContent>
                   <Video.DropdownMenuItem>
                     <PlaylistDialogContainer.DialogTrigger asChild>
                       <div className="flex w-full items-center gap-3">
-                        <ListPlusIcon className="h-4 w-4" />
+                        <ListPlusIcon className="size-4" />
                         Save to playlist
                       </div>
                     </PlaylistDialogContainer.DialogTrigger>
@@ -133,7 +151,7 @@ function VideoPlayerContainer({
                         handleRemoveVideoFromWatchLaterPlaylist(videoId)
                       }
                     >
-                      <ClockIcon className="h-4 w-4" />
+                      <ClockIcon className="size-4" />
                       Remove from Watch Later
                     </Video.DropdownMenuItem>
                   ) : (
@@ -142,7 +160,7 @@ function VideoPlayerContainer({
                         handleAddVideoToWatchLaterPlaylist(videoId)
                       }
                     >
-                      <ClockIcon className="h-4 w-4" />
+                      <ClockIcon className="size-4" />
                       Save to Watch Later
                     </Video.DropdownMenuItem>
                   )}
@@ -153,7 +171,7 @@ function VideoPlayerContainer({
         </Video.Details>
         <Video.Card>
           <Video.CardHeader>
-            <Video.CardTitle>
+            <Video.CardTitle className="text-sm">
               {formatViews(views)} views • {formatTimeAgo(createdAt)}
             </Video.CardTitle>
             <Video.CardDescription>{description}</Video.CardDescription>

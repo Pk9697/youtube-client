@@ -5,6 +5,7 @@ import VideoRecommendationsContainer from './layouts/VideoRecommendationsContain
 import VideoPlaylistContainer from './layouts/VideoPlaylistContainer'
 import VideoSearchResultsContainer from './layouts/VideoSearchResultsContainer'
 import VideoPlaylistContainer2 from './layouts/VideoPlaylistContainer2'
+import VideoDashboardContainer from './layouts/VideoDashboardContainer'
 
 import videosReducer, {
   fetchVideos,
@@ -49,4 +50,5 @@ export {
   fetchLoggedInUserWatchHistory,
   VideoPlaylistContainer2,
   editComment,
+  VideoDashboardContainer,
 }

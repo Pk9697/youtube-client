@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge'
-import { ClockIcon, ListPlusIcon } from 'lucide-react'
+import { ClockIcon, EllipsisVerticalIcon, ListPlusIcon } from 'lucide-react'
 import { ROUTES } from '@/data/constants'
 import Video from '../components/Video'
 import { formatDuration } from '@/utils/formatDuration'
@@ -78,6 +78,15 @@ function VideoPlaylistContainer({ currentPlaylist = {}, currentVideoId }) {
                   <Video.Row className="ml-auto">
                     <PlaylistDialogContainer videoId={videoId}>
                       <Video.DropdownMenu>
+                        <Video.DropdownMenuTrigger asChild>
+                          <Video.Button
+                            aria-haspopup="true"
+                            size="icon"
+                            variant="ghost"
+                          >
+                            <EllipsisVerticalIcon className="h-4 w-4" />
+                          </Video.Button>
+                        </Video.DropdownMenuTrigger>
                         <Video.DropdownMenuContent>
                           <Video.DropdownMenuItem>
                             <PlaylistDialogContainer.DialogTrigger asChild>

@@ -11,4 +11,5 @@ export const ROUTES = {
   SETTINGS: '/settings',
   LIKED_VIDEOS: '/playlist/liked-videos',
   WATCH_LATER: '/playlist/watch-later',
+  DASHBOARD: '/dashboard',
 }

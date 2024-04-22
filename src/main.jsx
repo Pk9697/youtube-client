@@ -27,6 +27,7 @@ import {
   Settings,
   LikedVideos,
   WatchLater,
+  DashboardPage,
 } from '@/pages'
 import { ThemeProvider } from '@/context/theme-provider'
 
@@ -45,6 +46,7 @@ const router = createBrowserRouter(
           <Route path={ROUTES.SETTINGS} element={<Settings />} />
           <Route path={ROUTES.LIKED_VIDEOS} element={<LikedVideos />} />
           <Route path={ROUTES.WATCH_LATER} element={<WatchLater />} />
+          <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
         </Route>
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />} />

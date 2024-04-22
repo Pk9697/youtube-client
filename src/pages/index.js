@@ -10,6 +10,7 @@ import Subscribers from './Subscribers'
 import Settings from './Settings'
 import LikedVideos from './LikedVideos'
 import WatchLater from './WatchLater'
+import DashboardPage from './DashboardPage'
 
 export {
   Home,
@@ -24,4 +25,5 @@ export {
   Settings,
   LikedVideos,
   WatchLater,
+  DashboardPage,
 }

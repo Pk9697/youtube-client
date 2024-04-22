@@ -8,6 +8,7 @@ import {
   UsersRoundIcon,
   Youtube,
   ClockIcon,
+  LayoutDashboardIcon,
 } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import Sidebar from './Sidebar'
@@ -24,7 +25,7 @@ function SidebarContainer({ usersList = [] }) {
       <Sidebar.Header>
         <Sidebar.HeaderLink to={ROUTES.HOME}>
           <Sidebar.Icon>
-            <Youtube color="red" className="h-6 w-6" />
+            <Youtube color="red" className="size-6" />
           </Sidebar.Icon>
           <Sidebar.Text className="text-base">Youtube</Sidebar.Text>
         </Sidebar.HeaderLink>
@@ -32,13 +33,13 @@ function SidebarContainer({ usersList = [] }) {
       <Sidebar.Nav>
         <Sidebar.NavLink to="/">
           <Sidebar.Icon>
-            <HomeIcon className="h-4 w-4" />
+            <HomeIcon className="size-4" />
           </Sidebar.Icon>
           <Sidebar.Text>Home</Sidebar.Text>
         </Sidebar.NavLink>
         <Sidebar.NavLink to={ROUTES.SUBSCRIPTIONS}>
           <Sidebar.Icon>
-            <ListVideoIcon className="h-4 w-4" />
+            <ListVideoIcon className="size-4" />
           </Sidebar.Icon>
           <Sidebar.Text>Subscriptions</Sidebar.Text>
         </Sidebar.NavLink>
@@ -46,33 +47,39 @@ function SidebarContainer({ usersList = [] }) {
 
       <Sidebar.Nav>
         <Sidebar.NavTitle>You</Sidebar.NavTitle>
+        <Sidebar.NavLink to={ROUTES.DASHBOARD}>
+          <Sidebar.Icon>
+            <LayoutDashboardIcon className="size-4" />
+          </Sidebar.Icon>
+          <Sidebar.Text>Dashboard</Sidebar.Text>
+        </Sidebar.NavLink>
         <Sidebar.NavLink to={`${ROUTES.PROFILE}/${loggedInUserName}`}>
           <Sidebar.Icon>
-            <SquareUserRoundIcon className="h-4 w-4" />
+            <SquareUserRoundIcon className="size-4" />
           </Sidebar.Icon>
           <Sidebar.Text>Your Channel</Sidebar.Text>
         </Sidebar.NavLink>
         <Sidebar.NavLink to={ROUTES.SUBSCRIBERS}>
           <Sidebar.Icon>
-            <UsersRoundIcon className="h-4 w-4" />
+            <UsersRoundIcon className="size-4" />
           </Sidebar.Icon>
           <Sidebar.Text>Subscribers</Sidebar.Text>
         </Sidebar.NavLink>
         <Sidebar.NavLink to={ROUTES.HISTORY}>
           <Sidebar.Icon>
-            <HistoryIcon className="h-4 w-4" />
+            <HistoryIcon className="size-4" />
           </Sidebar.Icon>
           <Sidebar.Text>History</Sidebar.Text>
         </Sidebar.NavLink>
         <Sidebar.NavLink to={ROUTES.LIKED_VIDEOS}>
           <Sidebar.Icon>
-            <ThumbsUpIcon className="h-4 w-4" />
+            <ThumbsUpIcon className="size-4" />
           </Sidebar.Icon>
           <Sidebar.Text>Liked Videos</Sidebar.Text>
         </Sidebar.NavLink>
         <Sidebar.NavLink to={ROUTES.WATCH_LATER}>
           <Sidebar.Icon>
-            <ClockIcon className="h-4 w-4" />
+            <ClockIcon className="size-4" />
           </Sidebar.Icon>
           <Sidebar.Text>Watch Later</Sidebar.Text>
         </Sidebar.NavLink>
@@ -92,7 +99,7 @@ function SidebarContainer({ usersList = [] }) {
       <Sidebar.Nav className="mt-auto">
         <Sidebar.NavLink to={ROUTES.SETTINGS}>
           <Sidebar.Icon>
-            <SettingsIcon className="h-4 w-4" />
+            <SettingsIcon className="size-4" />
           </Sidebar.Icon>
           <Sidebar.Text>Settings</Sidebar.Text>
         </Sidebar.NavLink>
