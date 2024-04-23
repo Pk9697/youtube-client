@@ -1,7 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import { toast } from '@/components/ui/use-toast'
-import { fetchDashboardStats, fetchDashboardVideos } from './asyncThunkActions'
+import {
+  fetchDashboardStats,
+  fetchDashboardVideos,
+  toggleVideoPublishStatus,
+} from './asyncThunkActions'
 
 const initialState = {
   dashboardStats: {},
@@ -70,9 +74,40 @@ const dashboardSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(toggleVideoPublishStatus.pending, (state) => {
+        state.inProgress = true
+      })
+      .addCase(toggleVideoPublishStatus.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          const { videoId } = action.meta.arg
+          state.dashboardVideos = state.dashboardVideos.map((video) =>
+            video._id === videoId
+              ? { ...video, isPublished: !video.isPublished }
+              : video
+          )
+          toast({
+            title: 'Video Publish status toggled successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(toggleVideoPublishStatus.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
-export { fetchDashboardStats, fetchDashboardVideos }
+export { fetchDashboardStats, fetchDashboardVideos, toggleVideoPublishStatus }
 
 export default dashboardSlice.reducer

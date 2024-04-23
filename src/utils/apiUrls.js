@@ -50,4 +50,6 @@ export const APIUrls = {
   editComment: (commentId) => `${API_ROOT}/comments/update/${commentId}`,
   fetchDashboardStats: () => `${API_ROOT}/dashboard/stats`,
   fetchDashboardVideos: () => `${API_ROOT}/dashboard/videos`,
+  toggleVideoPublishStatus: (videoId) =>
+    `${API_ROOT}/videos/toggle/publish/${videoId}`,
 }

@@ -3,6 +3,7 @@ import DashboardContainer from './layouts/DashboardContainer'
 import dashboardReducer, {
   fetchDashboardStats,
   fetchDashboardVideos,
+  toggleVideoPublishStatus,
 } from './services/dashboardSlice'
 
 export {
@@ -11,4 +12,5 @@ export {
   dashboardReducer,
   fetchDashboardStats,
   fetchDashboardVideos,
+  toggleVideoPublishStatus,
 }

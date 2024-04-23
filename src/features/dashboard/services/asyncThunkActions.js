@@ -36,4 +36,25 @@ const fetchDashboardVideos = createAsyncThunk(
   }
 )
 
-export { fetchDashboardStats, fetchDashboardVideos }
+const toggleVideoPublishStatus = createAsyncThunk(
+  'dashboard/toggleVideoPublishStatus',
+  async ({ accessToken, videoId }) => {
+    try {
+      const url = APIUrls.toggleVideoPublishStatus(videoId)
+      const response = await axios.patch(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+export { fetchDashboardStats, fetchDashboardVideos, toggleVideoPublishStatus }

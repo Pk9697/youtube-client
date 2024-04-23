@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from 'react-redux'
 import {
   CirclePlusIcon,
   ListFilterIcon,
@@ -7,8 +8,12 @@ import Video from '../components/Video'
 import { formatViews } from '@/utils/formatViews'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import { formatDate } from '@/utils/formatDate'
+import { toggleVideoPublishStatus } from '@/features/dashboard'
 
 function VideoDashboardContainer({ videosList = [] }) {
+  const dispatch = useDispatch()
+  const { accessToken } = useSelector((state) => state.auth)
+
   return (
     <Video.Card>
       <Video.CardHeader className="flex flex-row items-center space-y-0">
@@ -104,7 +109,14 @@ function VideoDashboardContainer({ videosList = [] }) {
                     {title}
                   </Video.TableCell>
                   <Video.TableCell>
-                    <Video.Switch checked={isPublished} />
+                    <Video.Switch
+                      checked={isPublished}
+                      onCheckedChange={() =>
+                        dispatch(
+                          toggleVideoPublishStatus({ accessToken, videoId })
+                        )
+                      }
+                    />
                   </Video.TableCell>
                   <Video.TableCell className="hidden md:table-cell">
                     {formatViews(views)}
