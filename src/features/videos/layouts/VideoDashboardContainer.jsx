@@ -5,8 +5,8 @@ import {
 } from 'lucide-react'
 import Video from '../components/Video'
 import { formatViews } from '@/utils/formatViews'
-import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import { getPublicUrl } from '@/utils/getPublicUrl'
+import { formatDate } from '@/utils/formatDate'
 
 function VideoDashboardContainer({ videosList = [] }) {
   return (
@@ -64,7 +64,7 @@ function VideoDashboardContainer({ videosList = [] }) {
               <Video.TableHead className="w-[80px]">
                 <span className="sr-only">Image</span>
               </Video.TableHead>
-              <Video.TableHead>Name</Video.TableHead>
+              <Video.TableHead>Title</Video.TableHead>
               <Video.TableHead>Status</Video.TableHead>
               <Video.TableHead className="hidden md:table-cell">
                 Views
@@ -116,7 +116,7 @@ function VideoDashboardContainer({ videosList = [] }) {
                     {formatViews(dislikesCount)}
                   </Video.TableCell>
                   <Video.TableCell className="hidden md:table-cell">
-                    {formatTimeAgo(createdAt)}
+                    {formatDate(createdAt)}
                   </Video.TableCell>
 
                   <Video.TableCell>
