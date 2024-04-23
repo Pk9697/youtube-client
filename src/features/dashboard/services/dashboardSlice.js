@@ -113,9 +113,17 @@ const dashboardSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           const { videoId } = action.meta.arg
+          const idx = state.dashboardVideos.findIndex(
+            (video) => video._id === videoId
+          )
+          state.dashboardStats.totalVideosLikes -=
+            state.dashboardVideos[idx].likesCount
+          state.dashboardStats.totalVideosViews -=
+            state.dashboardVideos[idx].views
           state.dashboardVideos = state.dashboardVideos.filter(
             (video) => video._id !== videoId
           )
+
           toast({
             title: 'Video Deleted successfully!',
           })
