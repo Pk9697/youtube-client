@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
 import {
   CirclePlusIcon,
   ListFilterIcon,
@@ -8,11 +9,23 @@ import Video from '../components/Video'
 import { formatViews } from '@/utils/formatViews'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import { formatDate } from '@/utils/formatDate'
-import { deleteVideo, toggleVideoPublishStatus } from '@/features/dashboard'
+import {
+  deleteVideo,
+  sortVideos,
+  toggleVideoPublishStatus,
+} from '@/features/dashboard'
 
 function VideoDashboardContainer({ videosList = [] }) {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
+
+  // TODO : Move below code in custom hook named useSort
+  const [sortBy, setSortBy] = useState('createdAt')
+
+  const handleSortChange = (value) => {
+    setSortBy(value)
+    dispatch(sortVideos({ sortBy: value }))
+  }
 
   return (
     <Video.Card>
@@ -30,26 +43,32 @@ function VideoDashboardContainer({ videosList = [] }) {
               <Video.Button variant="outline" size="sm" className="h-7 gap-1">
                 <ListFilterIcon className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  Filter
+                  Sort
                 </span>
               </Video.Button>
             </Video.DropdownMenuTrigger>
 
             <Video.DropdownMenuContent align="end">
-              <Video.DropdownMenuLabel>Filter by</Video.DropdownMenuLabel>
+              <Video.DropdownMenuLabel>Sort by</Video.DropdownMenuLabel>
               <Video.DropdownMenuSeparator />
-              <Video.DropdownMenuCheckboxItem checked>
-                Created At
-              </Video.DropdownMenuCheckboxItem>
-              <Video.DropdownMenuCheckboxItem>
-                Views
-              </Video.DropdownMenuCheckboxItem>
-              <Video.DropdownMenuCheckboxItem>
-                Likes
-              </Video.DropdownMenuCheckboxItem>
-              <Video.DropdownMenuCheckboxItem>
-                Dislikes
-              </Video.DropdownMenuCheckboxItem>
+
+              <Video.DropdownMenuRadioGroup
+                value={sortBy}
+                onValueChange={handleSortChange}
+              >
+                <Video.DropdownMenuRadioItem value="createdAt">
+                  Created At
+                </Video.DropdownMenuRadioItem>
+                <Video.DropdownMenuRadioItem value="views">
+                  Views
+                </Video.DropdownMenuRadioItem>
+                <Video.DropdownMenuRadioItem value="likesCount">
+                  Likes
+                </Video.DropdownMenuRadioItem>
+                <Video.DropdownMenuRadioItem value="dislikesCount">
+                  Dislikes
+                </Video.DropdownMenuRadioItem>
+              </Video.DropdownMenuRadioGroup>
             </Video.DropdownMenuContent>
           </Video.DropdownMenu>
 

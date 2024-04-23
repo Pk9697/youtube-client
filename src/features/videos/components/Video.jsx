@@ -6,10 +6,11 @@ import { twMerge } from 'tailwind-merge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
@@ -150,15 +151,27 @@ Video.DropdownMenuLabel = function VideoDropdownMenuLabel({
   )
 }
 
-Video.DropdownMenuCheckboxItem = function VideoDropdownMenuCheckboxItem({
+Video.DropdownMenuRadioGroup = function VideoDropdownMenuRadioGroup({
   children,
   className,
   ...restProps
 }) {
   return (
-    <DropdownMenuCheckboxItem className={twMerge('', className)} {...restProps}>
+    <DropdownMenuRadioGroup className={twMerge('', className)} {...restProps}>
       {children}
-    </DropdownMenuCheckboxItem>
+    </DropdownMenuRadioGroup>
+  )
+}
+
+Video.DropdownMenuRadioItem = function VideoDropdownMenuRadioItem({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenuRadioItem className={twMerge('', className)} {...restProps}>
+      {children}
+    </DropdownMenuRadioItem>
   )
 }
 

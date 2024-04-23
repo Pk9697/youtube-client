@@ -5,6 +5,7 @@ import dashboardReducer, {
   fetchDashboardVideos,
   toggleVideoPublishStatus,
   deleteVideo,
+  sortVideos,
 } from './services/dashboardSlice'
 
 export {
@@ -15,4 +16,5 @@ export {
   fetchDashboardVideos,
   toggleVideoPublishStatus,
   deleteVideo,
+  sortVideos,
 }

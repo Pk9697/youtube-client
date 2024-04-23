@@ -18,7 +18,22 @@ const initialState = {
 const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
-  reducers: {},
+  reducers: {
+    sortVideos: (state, action) => {
+      const { sortBy = 'createdAt', sortOrder = -1 } = action.payload
+
+      state.dashboardVideos.sort((a, b) => {
+        switch (sortBy) {
+          case 'createdAt': {
+            return sortOrder * (Date.parse(a[sortBy]) - Date.parse(b[sortBy]))
+          }
+          default: {
+            return sortOrder * (a[sortBy] - b[sortBy])
+          }
+        }
+      })
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchDashboardStats.pending, (state) => {
@@ -145,6 +160,8 @@ const dashboardSlice = createSlice({
       })
   },
 })
+
+export const { sortVideos } = dashboardSlice.actions
 
 export {
   fetchDashboardStats,
