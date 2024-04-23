@@ -2,6 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { toast } from '@/components/ui/use-toast'
 import {
+  deleteVideo,
   fetchDashboardStats,
   fetchDashboardVideos,
   toggleVideoPublishStatus,
@@ -105,9 +106,43 @@ const dashboardSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(deleteVideo.pending, (state) => {
+        state.inProgress = true
+      })
+      .addCase(deleteVideo.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          const { videoId } = action.meta.arg
+          state.dashboardVideos = state.dashboardVideos.filter(
+            (video) => video._id !== videoId
+          )
+          toast({
+            title: 'Video Deleted successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(deleteVideo.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
-export { fetchDashboardStats, fetchDashboardVideos, toggleVideoPublishStatus }
+export {
+  fetchDashboardStats,
+  fetchDashboardVideos,
+  toggleVideoPublishStatus,
+  deleteVideo,
+}
 
 export default dashboardSlice.reducer

@@ -8,7 +8,7 @@ import Video from '../components/Video'
 import { formatViews } from '@/utils/formatViews'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import { formatDate } from '@/utils/formatDate'
-import { toggleVideoPublishStatus } from '@/features/dashboard'
+import { deleteVideo, toggleVideoPublishStatus } from '@/features/dashboard'
 
 function VideoDashboardContainer({ videosList = [] }) {
   const dispatch = useDispatch()
@@ -149,7 +149,13 @@ function VideoDashboardContainer({ videosList = [] }) {
                           Actions
                         </Video.DropdownMenuLabel>
                         <Video.DropdownMenuItem>Edit</Video.DropdownMenuItem>
-                        <Video.DropdownMenuItem>Delete</Video.DropdownMenuItem>
+                        <Video.DropdownMenuItem
+                          onClick={() =>
+                            dispatch(deleteVideo({ accessToken, videoId }))
+                          }
+                        >
+                          Delete
+                        </Video.DropdownMenuItem>
                       </Video.DropdownMenuContent>
                     </Video.DropdownMenu>
                   </Video.TableCell>

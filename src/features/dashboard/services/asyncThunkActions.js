@@ -57,4 +57,26 @@ const toggleVideoPublishStatus = createAsyncThunk(
   }
 )
 
-export { fetchDashboardStats, fetchDashboardVideos, toggleVideoPublishStatus }
+const deleteVideo = createAsyncThunk(
+  'dashboard/deleteVideo',
+  async ({ accessToken, videoId }) => {
+    try {
+      const url = APIUrls.deleteVideo(videoId)
+      const response = await axios.delete(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+export {
+  fetchDashboardStats,
+  fetchDashboardVideos,
+  toggleVideoPublishStatus,
+  deleteVideo,
+}

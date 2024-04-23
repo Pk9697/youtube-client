@@ -52,4 +52,5 @@ export const APIUrls = {
   fetchDashboardVideos: () => `${API_ROOT}/dashboard/videos`,
   toggleVideoPublishStatus: (videoId) =>
     `${API_ROOT}/videos/toggle/publish/${videoId}`,
+  deleteVideo: (videoId) => `${API_ROOT}/videos/delete/${videoId}`,
 }
