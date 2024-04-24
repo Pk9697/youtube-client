@@ -67,6 +67,7 @@ function Register() {
                   id="avatar"
                   type="file"
                   required
+                  className="file:text-primary"
                 />
               </Form.InputContainer>
               <Form.InputContainer>
@@ -76,6 +77,7 @@ function Register() {
                   name="coverImage"
                   id="coverImage"
                   type="file"
+                  className="file:text-primary"
                 />
               </Form.InputContainer>
               <Form.InputContainer>
