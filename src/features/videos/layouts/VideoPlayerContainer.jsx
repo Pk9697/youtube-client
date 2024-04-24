@@ -137,14 +137,12 @@ function VideoPlayerContainer({
                   </Video.Button>
                 </Video.DropdownMenuTrigger>
                 <Video.DropdownMenuContent>
-                  <Video.DropdownMenuItem>
-                    <PlaylistDialogContainer.DialogTrigger asChild>
-                      <div className="flex w-full items-center gap-3">
-                        <ListPlusIcon className="size-4" />
-                        Save to playlist
-                      </div>
-                    </PlaylistDialogContainer.DialogTrigger>
-                  </Video.DropdownMenuItem>
+                  <PlaylistDialogContainer.DialogTrigger asChild>
+                    <Video.DropdownMenuItem>
+                      <ListPlusIcon className="size-4" />
+                      Save to playlist
+                    </Video.DropdownMenuItem>
+                  </PlaylistDialogContainer.DialogTrigger>
                   {isVideoSavedInWatchLaterPlaylist(videoId) ? (
                     <Video.DropdownMenuItem
                       onClick={() =>

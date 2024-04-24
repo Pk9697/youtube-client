@@ -205,23 +205,23 @@ Video.DropdownMenuContent = function VideoDropdownMenuContent({
   )
 }
 
-Video.DropdownMenuItem = function VideoDropdownMenuItem({
-  children,
-  className,
-  ...restProps
-}) {
+Video.DropdownMenuItem = React.forwardRef(function VideoDropdownMenuItem(
+  { children, className, ...restProps },
+  ref
+) {
   return (
     <DropdownMenuItem
       className={twMerge(
         'flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary',
         className
       )}
+      ref={ref}
       {...restProps}
     >
       {children}
     </DropdownMenuItem>
   )
-}
+})
 
 Video.AvatarLink = function VideoAvatarLink({
   to = '/',

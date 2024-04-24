@@ -3,7 +3,10 @@ import { useState } from 'react'
 import {
   CirclePlusIcon,
   ListFilterIcon,
+  ListPlusIcon,
   MoreHorizontalIcon,
+  PencilIcon,
+  Trash2Icon,
 } from 'lucide-react'
 import Video from '../components/Video'
 import { formatViews } from '@/utils/formatViews'
@@ -15,6 +18,7 @@ import {
   toggleVideoPublishStatus,
 } from '@/features/dashboard'
 import VideoUploadDialogContainer from './VideoUploadDialogContainer'
+import { PlaylistDialogContainer } from '@/features/playlist'
 
 function VideoDashboardContainer({ videosList = [] }) {
   const dispatch = useDispatch()
@@ -156,32 +160,45 @@ function VideoDashboardContainer({ videosList = [] }) {
                   </Video.TableCell>
 
                   <Video.TableCell>
-                    <Video.DropdownMenu>
-                      <Video.DropdownMenuTrigger asChild>
-                        <Video.Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontalIcon className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Video.Button>
-                      </Video.DropdownMenuTrigger>
+                    <PlaylistDialogContainer videoId={videoId}>
+                      <Video.DropdownMenu>
+                        <Video.DropdownMenuTrigger asChild>
+                          <Video.Button
+                            aria-haspopup="true"
+                            size="icon"
+                            variant="ghost"
+                          >
+                            <MoreHorizontalIcon className="h-4 w-4" />
+                            <span className="sr-only">Toggle menu</span>
+                          </Video.Button>
+                        </Video.DropdownMenuTrigger>
 
-                      <Video.DropdownMenuContent align="end">
-                        <Video.DropdownMenuLabel>
-                          Actions
-                        </Video.DropdownMenuLabel>
-                        <Video.DropdownMenuItem>Edit</Video.DropdownMenuItem>
-                        <Video.DropdownMenuItem
-                          onClick={() =>
-                            dispatch(deleteVideo({ accessToken, videoId }))
-                          }
-                        >
-                          Delete
-                        </Video.DropdownMenuItem>
-                      </Video.DropdownMenuContent>
-                    </Video.DropdownMenu>
+                        <Video.DropdownMenuContent align="end">
+                          <Video.DropdownMenuLabel>
+                            Actions
+                          </Video.DropdownMenuLabel>
+                          <PlaylistDialogContainer.DialogTrigger asChild>
+                            <Video.DropdownMenuItem>
+                              <ListPlusIcon className="h-4 w-4" />
+                              Save to playlist
+                            </Video.DropdownMenuItem>
+                          </PlaylistDialogContainer.DialogTrigger>
+                          <Video.DropdownMenuItem>
+                            <PencilIcon className="h-4 w-4" />
+                            Edit
+                          </Video.DropdownMenuItem>
+                          <Video.DropdownMenuItem
+                            className="bg-destructive"
+                            onClick={() =>
+                              dispatch(deleteVideo({ accessToken, videoId }))
+                            }
+                          >
+                            <Trash2Icon className="h-4 w-4" />
+                            Delete
+                          </Video.DropdownMenuItem>
+                        </Video.DropdownMenuContent>
+                      </Video.DropdownMenu>
+                    </PlaylistDialogContainer>
                   </Video.TableCell>
                 </Video.TableRow>
               )
