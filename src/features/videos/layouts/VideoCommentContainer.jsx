@@ -98,7 +98,7 @@ function VideoCommentContainer({
               required
             />
             <Comment.Button
-              disabled={commentInput === commentContent}
+              disabled={commentInput?.trim() === commentContent}
               type="submit"
               size="icon"
             >
