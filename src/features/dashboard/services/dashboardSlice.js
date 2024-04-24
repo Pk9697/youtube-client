@@ -6,6 +6,7 @@ import {
   fetchDashboardStats,
   fetchDashboardVideos,
   toggleVideoPublishStatus,
+  uploadVideo,
 } from './asyncThunkActions'
 
 const initialState = {
@@ -158,6 +159,35 @@ const dashboardSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(uploadVideo.pending, (state) => {
+        state.inProgress = true
+      })
+      .addCase(uploadVideo.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          if (action.payload.data?._id) {
+            state.dashboardVideos.unshift(action.payload.data)
+          }
+
+          toast({
+            title: 'Video Uploaded successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(uploadVideo.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -168,6 +198,7 @@ export {
   fetchDashboardVideos,
   toggleVideoPublishStatus,
   deleteVideo,
+  uploadVideo,
 }
 
 export default dashboardSlice.reducer

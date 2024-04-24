@@ -9,10 +9,12 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+import { Switch } from '@/components/ui/switch'
 
 function Form({ children, className, onSubmit, encType, ...restProps }) {
   return (
-    <Card className={twMerge('max-w-sm" mx-auto', className)} {...restProps}>
+    <Card className={twMerge('mx-auto max-w-sm', className)} {...restProps}>
       <form encType={encType} onSubmit={onSubmit}>
         {children}
       </form>
@@ -130,6 +132,16 @@ Form.Text = function FormText({ children, className, ...restProps }) {
     >
       {children}
     </div>
+  )
+}
+
+Form.TextArea = function FormTextArea({ className, ...restProps }) {
+  return <Textarea className={twMerge('', className)} {...restProps} />
+}
+
+Form.Switch = function FormSwitch({ className, ...restProps }) {
+  return (
+    <Switch className={twMerge('cursor-pointer', className)} {...restProps} />
   )
 }
 

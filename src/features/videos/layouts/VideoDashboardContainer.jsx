@@ -14,6 +14,7 @@ import {
   sortVideos,
   toggleVideoPublishStatus,
 } from '@/features/dashboard'
+import VideoUploadDialogContainer from './VideoUploadDialogContainer'
 
 function VideoDashboardContainer({ videosList = [] }) {
   const dispatch = useDispatch()
@@ -72,12 +73,16 @@ function VideoDashboardContainer({ videosList = [] }) {
             </Video.DropdownMenuContent>
           </Video.DropdownMenu>
 
-          <Video.Button size="sm" className="h-7 gap-1">
-            <CirclePlusIcon className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Upload Video
-            </span>
-          </Video.Button>
+          <VideoUploadDialogContainer>
+            <VideoUploadDialogContainer.DialogTrigger asChild>
+              <Video.Button size="sm" className="h-7 gap-1">
+                <CirclePlusIcon className="h-3.5 w-3.5" />
+                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                  Upload Video
+                </span>
+              </Video.Button>
+            </VideoUploadDialogContainer.DialogTrigger>
+          </VideoUploadDialogContainer>
         </Video.CardActions>
       </Video.CardHeader>
 

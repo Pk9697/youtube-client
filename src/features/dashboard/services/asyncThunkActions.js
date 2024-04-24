@@ -74,9 +74,27 @@ const deleteVideo = createAsyncThunk(
   }
 )
 
+const uploadVideo = createAsyncThunk(
+  'dashboard/uploadVideo',
+  async ({ accessToken, formFields = {} }) => {
+    try {
+      const url = APIUrls.uploadVideo()
+      const response = await axios.post(url, formFields, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchDashboardStats,
   fetchDashboardVideos,
   toggleVideoPublishStatus,
   deleteVideo,
+  uploadVideo,
 }

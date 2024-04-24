@@ -53,4 +53,5 @@ export const APIUrls = {
   toggleVideoPublishStatus: (videoId) =>
     `${API_ROOT}/videos/toggle/publish/${videoId}`,
   deleteVideo: (videoId) => `${API_ROOT}/videos/delete/${videoId}`,
+  uploadVideo: () => `${API_ROOT}/videos/upload`,
 }

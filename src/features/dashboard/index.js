@@ -6,6 +6,7 @@ import dashboardReducer, {
   toggleVideoPublishStatus,
   deleteVideo,
   sortVideos,
+  uploadVideo,
 } from './services/dashboardSlice'
 
 export {
@@ -17,4 +18,5 @@ export {
   toggleVideoPublishStatus,
   deleteVideo,
   sortVideos,
+  uploadVideo,
 }

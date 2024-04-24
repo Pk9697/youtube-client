@@ -32,6 +32,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 
 function Video({ children, className, ...restProps }) {
   return (
@@ -520,6 +529,85 @@ Video.TableCell = function VideoTableCell({
     <TableCell className={twMerge('', className)} {...restProps}>
       {children}
     </TableCell>
+  )
+}
+
+Video.Dialog = function VideoDialog({ children, className, ...restProps }) {
+  return (
+    <Dialog className={twMerge('', className)} {...restProps}>
+      {children}
+    </Dialog>
+  )
+}
+
+Video.DialogTrigger = function VideoDialogTrigger({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogTrigger className={twMerge('', className)} {...restProps}>
+      {children}
+    </DialogTrigger>
+  )
+}
+Video.DialogContent = function VideoDialogContent({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogContent className={twMerge('', className)} {...restProps}>
+      {children}
+    </DialogContent>
+  )
+}
+
+Video.DialogHeader = function VideoDialogHeader({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogHeader className={twMerge('', className)} {...restProps}>
+      {children}
+    </DialogHeader>
+  )
+}
+
+Video.DialogTitle = function VideoDialogTitle({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogTitle className={twMerge('', className)} {...restProps}>
+      {children}
+    </DialogTitle>
+  )
+}
+
+Video.DialogDescription = function VideoDialogDescription({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogDescription className={twMerge('', className)} {...restProps}>
+      {children}
+    </DialogDescription>
+  )
+}
+
+Video.DialogFooter = function VideoDialogFooter({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogFooter className={twMerge('', className)} {...restProps}>
+      {children}
+    </DialogFooter>
   )
 }
 
