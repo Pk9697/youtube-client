@@ -91,10 +91,28 @@ const uploadVideo = createAsyncThunk(
   }
 )
 
+const editVideo = createAsyncThunk(
+  'dashboard/editVideo',
+  async ({ accessToken, formFields = {}, videoId }) => {
+    try {
+      const url = APIUrls.editVideo(videoId)
+      const response = await axios.patch(url, formFields, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchDashboardStats,
   fetchDashboardVideos,
   toggleVideoPublishStatus,
   deleteVideo,
   uploadVideo,
+  editVideo,
 }

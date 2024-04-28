@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { toast } from '@/components/ui/use-toast'
 import {
   deleteVideo,
+  editVideo,
   fetchDashboardStats,
   fetchDashboardVideos,
   toggleVideoPublishStatus,
@@ -188,6 +189,35 @@ const dashboardSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(editVideo.pending, (state) => {
+        state.inProgress = true
+      })
+      .addCase(editVideo.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          const { videoId } = action.meta.arg
+          state.dashboardVideos = state.dashboardVideos.map((video) =>
+            video._id === videoId ? action.payload.data : video
+          )
+          toast({
+            title: 'Video Edited successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(editVideo.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -199,6 +229,7 @@ export {
   toggleVideoPublishStatus,
   deleteVideo,
   uploadVideo,
+  editVideo,
 }
 
 export default dashboardSlice.reducer

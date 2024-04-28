@@ -1,28 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useState } from 'react'
-import {
-  CirclePlusIcon,
-  ListFilterIcon,
-  ListPlusIcon,
-  MoreHorizontalIcon,
-  PencilIcon,
-  Trash2Icon,
-} from 'lucide-react'
+import { CirclePlusIcon, ListFilterIcon } from 'lucide-react'
 import Video from '../components/Video'
-import { formatViews } from '@/utils/formatViews'
-import { getPublicUrl } from '@/utils/getPublicUrl'
-import { formatDate } from '@/utils/formatDate'
-import {
-  deleteVideo,
-  sortVideos,
-  toggleVideoPublishStatus,
-} from '@/features/dashboard'
+import { sortVideos } from '@/features/dashboard'
 import VideoUploadDialogContainer from './VideoUploadDialogContainer'
-import { PlaylistDialogContainer } from '@/features/playlist'
+import VideoTableRowContainer from './VideoTableRowContainer'
 
 function VideoDashboardContainer({ videosList = [] }) {
   const dispatch = useDispatch()
-  const { accessToken } = useSelector((state) => state.auth)
 
   // TODO : Move below code in custom hook named useSort
   const [sortBy, setSortBy] = useState('createdAt')
@@ -118,91 +103,9 @@ function VideoDashboardContainer({ videosList = [] }) {
           </Video.TableHeader>
 
           <Video.TableBody>
-            {videosList.map(
-              ({
-                _id: videoId,
-                thumbnail,
-                title,
-                isPublished,
-                views,
-                likesCount,
-                dislikesCount,
-                createdAt,
-              } = {}) => (
-                <Video.TableRow key={videoId}>
-                  <Video.TableCell>
-                    <Video.Image src={getPublicUrl(thumbnail)} />
-                  </Video.TableCell>
-                  <Video.TableCell className="font-medium">
-                    {title}
-                  </Video.TableCell>
-                  <Video.TableCell>
-                    <Video.Switch
-                      checked={isPublished}
-                      onCheckedChange={() =>
-                        dispatch(
-                          toggleVideoPublishStatus({ accessToken, videoId })
-                        )
-                      }
-                    />
-                  </Video.TableCell>
-                  <Video.TableCell className="hidden md:table-cell">
-                    {formatViews(views)}
-                  </Video.TableCell>
-                  <Video.TableCell className="hidden md:table-cell">
-                    {formatViews(likesCount)}
-                  </Video.TableCell>
-                  <Video.TableCell className="hidden md:table-cell">
-                    {formatViews(dislikesCount)}
-                  </Video.TableCell>
-                  <Video.TableCell className="hidden md:table-cell">
-                    {formatDate(createdAt)}
-                  </Video.TableCell>
-
-                  <Video.TableCell>
-                    <PlaylistDialogContainer videoId={videoId}>
-                      <Video.DropdownMenu>
-                        <Video.DropdownMenuTrigger asChild>
-                          <Video.Button
-                            aria-haspopup="true"
-                            size="icon"
-                            variant="ghost"
-                          >
-                            <MoreHorizontalIcon className="h-4 w-4" />
-                            <span className="sr-only">Toggle menu</span>
-                          </Video.Button>
-                        </Video.DropdownMenuTrigger>
-
-                        <Video.DropdownMenuContent align="end">
-                          <Video.DropdownMenuLabel>
-                            Actions
-                          </Video.DropdownMenuLabel>
-                          <PlaylistDialogContainer.DialogTrigger asChild>
-                            <Video.DropdownMenuItem>
-                              <ListPlusIcon className="h-4 w-4" />
-                              Save to playlist
-                            </Video.DropdownMenuItem>
-                          </PlaylistDialogContainer.DialogTrigger>
-                          <Video.DropdownMenuItem>
-                            <PencilIcon className="h-4 w-4" />
-                            Edit
-                          </Video.DropdownMenuItem>
-                          <Video.DropdownMenuItem
-                            className="bg-destructive"
-                            onClick={() =>
-                              dispatch(deleteVideo({ accessToken, videoId }))
-                            }
-                          >
-                            <Trash2Icon className="h-4 w-4" />
-                            Delete
-                          </Video.DropdownMenuItem>
-                        </Video.DropdownMenuContent>
-                      </Video.DropdownMenu>
-                    </PlaylistDialogContainer>
-                  </Video.TableCell>
-                </Video.TableRow>
-              )
-            )}
+            {videosList.map((video) => (
+              <VideoTableRowContainer key={video._id} video={video} />
+            ))}
           </Video.TableBody>
         </Video.Table>
       </Video.CardContent>

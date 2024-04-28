@@ -7,6 +7,7 @@ import dashboardReducer, {
   deleteVideo,
   sortVideos,
   uploadVideo,
+  editVideo,
 } from './services/dashboardSlice'
 
 export {
@@ -19,4 +20,5 @@ export {
   deleteVideo,
   sortVideos,
   uploadVideo,
+  editVideo,
 }
