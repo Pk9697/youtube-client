@@ -25,7 +25,25 @@ const initialState = {
 const playlistSlice = createSlice({
   name: 'playlist',
   initialState,
-  reducers: {},
+  reducers: {
+    sortLoggedInUserPlaylists: (state, action) => {
+      const { sortBy = 'updatedAt', sortOrder = -1 } = action.payload
+
+      state.loggedInUserPlaylists.sort((a, b) => {
+        switch (sortBy) {
+          case 'updatedAt': {
+            return sortOrder * (Date.parse(a[sortBy]) - Date.parse(b[sortBy]))
+          }
+          case 'videos': {
+            return sortOrder * (a[sortBy].length - b[sortBy].length)
+          }
+          default: {
+            return sortOrder * (a[sortBy] - b[sortBy])
+          }
+        }
+      })
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannelPlaylists.pending, (state) => {
@@ -189,7 +207,11 @@ const playlistSlice = createSlice({
             (playlist) => playlist._id === playlistId
           )
           if (idx !== -1) {
-            state.loggedInUserPlaylists[idx].videos.unshift(action.payload.data)
+            state.loggedInUserPlaylists[idx].videos.unshift(
+              action.payload.data?.video
+            )
+            state.loggedInUserPlaylists[idx].updatedAt =
+              action.payload.data?.playlist?.updatedAt
           }
 
           toast({
@@ -227,6 +249,8 @@ const playlistSlice = createSlice({
               state.loggedInUserPlaylists[idx].videos.filter(
                 (video) => video._id !== videoId
               )
+            state.loggedInUserPlaylists[idx].updatedAt =
+              action.payload.data?.updatedAt
           }
           toast({
             title: 'Removed video from Playlist!',
@@ -276,6 +300,8 @@ const playlistSlice = createSlice({
       })
   },
 })
+
+export const { sortLoggedInUserPlaylists } = playlistSlice.actions
 
 export {
   fetchChannelPlaylists,

@@ -1,6 +1,7 @@
 import PlaylistContainer from './layouts/PlaylistContainer'
 import Playlist from './components/Playlist'
 import PlaylistDialogContainer from './layouts/PlaylistDialogContainer'
+import PlaylistDashboardContainer from './layouts/PlaylistDashboardContainer'
 import playlistReducer, {
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
@@ -10,6 +11,7 @@ import playlistReducer, {
   addVideoToPlaylist,
   removeVideoFromPlaylist,
   createPlaylist,
+  sortLoggedInUserPlaylists,
 } from './services/playlistSlice'
 
 import useWatchLaterPlaylist from './hooks/useWatchLaterPlaylist'
@@ -28,4 +30,6 @@ export {
   addVideoToPlaylist,
   removeVideoFromPlaylist,
   createPlaylist,
+  PlaylistDashboardContainer,
+  sortLoggedInUserPlaylists,
 }

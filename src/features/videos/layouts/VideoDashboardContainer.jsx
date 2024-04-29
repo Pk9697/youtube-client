@@ -112,7 +112,7 @@ function VideoDashboardContainer({ videosList = [] }) {
 
       <Video.CardFooter>
         <Video.TextSmall>
-          Showing <strong>1-10</strong> of <strong>{videosList.length}</strong>{' '}
+          Showing <strong>1-10</strong> of <strong>{videosList?.length}</strong>{' '}
           videos
         </Video.TextSmall>
       </Video.CardFooter>

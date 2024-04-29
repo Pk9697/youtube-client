@@ -1,3 +1,4 @@
+import React from 'react'
 import { CircleUserIcon, ListVideoIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
@@ -26,6 +27,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 
 function Playlist({ children, className, ...restProps }) {
   return (
@@ -194,6 +221,21 @@ Playlist.Text = function PlaylistText({ children, className, ...restProps }) {
   )
 }
 
+Playlist.TextSmall = function PlaylistTextSmall({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <div
+      className={twMerge('text-xs text-muted-foreground', className)}
+      {...restProps}
+    >
+      {children}
+    </div>
+  )
+}
+
 Playlist.Dialog = function PlaylistDialog({
   children,
   className,
@@ -330,20 +372,20 @@ Playlist.CollapsibleTrigger = function PlaylistCollapsibleTrigger({
   )
 }
 
-Playlist.Button = function PlaylistButton({
-  children,
-  className,
-  ...restProps
-}) {
+Playlist.Button = React.forwardRef(function PlaylistButton(
+  { children, className, ...restProps },
+  ref
+) {
   return (
     <Button
       className={twMerge('flex items-center gap-2', className)}
+      ref={ref}
       {...restProps}
     >
       {children}
     </Button>
   )
-}
+})
 
 Playlist.CollapsibleContent = function PlaylistCollapsibleContent({
   children,
@@ -442,6 +484,268 @@ Playlist.SelectItem = function PlaylistSelectItem({
     <SelectItem className={twMerge('', className)} {...restProps}>
       {children}
     </SelectItem>
+  )
+}
+
+Playlist.Card = function PlaylistCard({ children, className, ...restProps }) {
+  return (
+    <Card className={twMerge('', className)} {...restProps}>
+      {children}
+    </Card>
+  )
+}
+
+Playlist.CardHeader = function PlaylistCardHeader({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <CardHeader className={twMerge('', className)} {...restProps}>
+      {children}
+    </CardHeader>
+  )
+}
+
+Playlist.CardTitle = function PlaylistCardTitle({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <CardTitle className={twMerge('', className)} {...restProps}>
+      {children}
+    </CardTitle>
+  )
+}
+
+Playlist.CardDescription = function PlaylistCardDescription({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <CardDescription className={twMerge('', className)} {...restProps}>
+      {children}
+    </CardDescription>
+  )
+}
+
+Playlist.CardActions = function PlaylistCardActions({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <div
+      className={twMerge('ml-auto flex items-center gap-2', className)}
+      {...restProps}
+    >
+      {children}
+    </div>
+  )
+}
+
+Playlist.CardContent = function PlaylistCardContent({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <CardContent className={twMerge('', className)} {...restProps}>
+      {children}
+    </CardContent>
+  )
+}
+
+Playlist.CardFooter = function PlaylistCardFooter({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <CardFooter className={twMerge('', className)} {...restProps}>
+      {children}
+    </CardFooter>
+  )
+}
+
+Playlist.CardDetails = function PlaylistCardDetails({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <div className={twMerge('', className)} {...restProps}>
+      {children}
+    </div>
+  )
+}
+
+Playlist.DropdownMenu = function PlaylistDropdownMenu({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenu className={twMerge('', className)} {...restProps}>
+      {children}
+    </DropdownMenu>
+  )
+}
+
+Playlist.DropdownMenuTrigger = function PlaylistDropdownMenuTrigger({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenuTrigger className={twMerge('', className)} {...restProps}>
+      {children}
+    </DropdownMenuTrigger>
+  )
+}
+
+Playlist.DropdownMenuLabel = function PlaylistDropdownMenuLabel({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenuLabel className={twMerge('', className)} {...restProps}>
+      {children}
+    </DropdownMenuLabel>
+  )
+}
+
+Playlist.DropdownMenuRadioGroup = function PlaylistDropdownMenuRadioGroup({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenuRadioGroup className={twMerge('', className)} {...restProps}>
+      {children}
+    </DropdownMenuRadioGroup>
+  )
+}
+
+Playlist.DropdownMenuRadioItem = function PlaylistDropdownMenuRadioItem({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenuRadioItem className={twMerge('', className)} {...restProps}>
+      {children}
+    </DropdownMenuRadioItem>
+  )
+}
+
+Playlist.DropdownMenuSeparator = function PlaylistDropdownMenuSeparator({
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenuSeparator className={twMerge('', className)} {...restProps} />
+  )
+}
+
+Playlist.DropdownMenuContent = function PlaylistDropdownMenuContent({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DropdownMenuContent className={twMerge('', className)} {...restProps}>
+      {children}
+    </DropdownMenuContent>
+  )
+}
+
+Playlist.DropdownMenuItem = React.forwardRef(function PlaylistDropdownMenuItem(
+  { children, className, ...restProps },
+  ref
+) {
+  return (
+    <DropdownMenuItem
+      className={twMerge(
+        'flex cursor-pointer items-center gap-3 rounded-lg text-sm font-medium text-muted-foreground transition-all hover:text-primary',
+        className
+      )}
+      ref={ref}
+      {...restProps}
+    >
+      {children}
+    </DropdownMenuItem>
+  )
+})
+
+Playlist.Table = function PlaylistTable({ children, className, ...restProps }) {
+  return (
+    <Table className={twMerge('', className)} {...restProps}>
+      {children}
+    </Table>
+  )
+}
+
+Playlist.TableHeader = function PlaylistTableHeader({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <TableHeader className={twMerge('', className)} {...restProps}>
+      {children}
+    </TableHeader>
+  )
+}
+
+Playlist.TableHead = function PlaylistTableHead({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <TableHead className={twMerge('', className)} {...restProps}>
+      {children}
+    </TableHead>
+  )
+}
+
+Playlist.TableBody = function PlaylistTableBody({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <TableBody className={twMerge('', className)} {...restProps}>
+      {children}
+    </TableBody>
+  )
+}
+
+Playlist.TableRow = function PlaylistTableRow({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <TableRow className={twMerge('', className)} {...restProps}>
+      {children}
+    </TableRow>
+  )
+}
+
+Playlist.TableCell = function PlaylistTableCell({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <TableCell className={twMerge('', className)} {...restProps}>
+      {children}
+    </TableCell>
   )
 }
 

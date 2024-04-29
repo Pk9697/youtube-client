@@ -7,6 +7,7 @@ import {
   fetchDashboardVideos,
 } from '@/features/dashboard'
 import { VideoDashboardContainer } from '@/features/videos'
+import { PlaylistDashboardContainer } from '@/features/playlist'
 
 function DashboardPage() {
   const dispatch = useDispatch()
@@ -14,6 +15,7 @@ function DashboardPage() {
   const { dashboardStats, dashboardVideos } = useSelector(
     (state) => state.dashboard
   )
+  const { loggedInUserPlaylists } = useSelector((state) => state.playlist)
 
   useEffect(() => {
     dispatch(fetchDashboardStats({ accessToken }))
@@ -32,6 +34,9 @@ function DashboardPage() {
 
         <Dashboard.TabsContent value="videos">
           <VideoDashboardContainer videosList={dashboardVideos} />
+        </Dashboard.TabsContent>
+        <Dashboard.TabsContent value="playlists">
+          <PlaylistDashboardContainer playlists={loggedInUserPlaylists} />
         </Dashboard.TabsContent>
       </Dashboard.Tabs>
     </DashboardContainer>
