@@ -6,6 +6,7 @@ import VideoPlaylistContainer from './layouts/VideoPlaylistContainer'
 import VideoSearchResultsContainer from './layouts/VideoSearchResultsContainer'
 import VideoPlaylistContainer2 from './layouts/VideoPlaylistContainer2'
 import VideoDashboardContainer from './layouts/VideoDashboardContainer'
+import VideoPlaylistTableContainer from './layouts/VideoPlaylistTableContainer'
 
 import videosReducer, {
   fetchVideos,
@@ -51,4 +52,5 @@ export {
   VideoPlaylistContainer2,
   editComment,
   VideoDashboardContainer,
+  VideoPlaylistTableContainer,
 }

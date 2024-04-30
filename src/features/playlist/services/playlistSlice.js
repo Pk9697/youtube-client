@@ -242,16 +242,25 @@ const playlistSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           const { playlistId, videoId } = action.meta.arg
-          const idx = state.loggedInUserPlaylists.findIndex(
+          // UPDATE loggedInUserPlaylists
+          const existingPlaylist = state.loggedInUserPlaylists.find(
             (playlist) => playlist._id === playlistId
           )
-          if (idx !== -1) {
-            state.loggedInUserPlaylists[idx].videos =
-              state.loggedInUserPlaylists[idx].videos.filter(
-                (video) => video._id !== videoId
-              )
-            state.loggedInUserPlaylists[idx].updatedAt =
-              action.payload.data?.updatedAt
+          if (existingPlaylist) {
+            state.loggedInUserPlaylists = state.loggedInUserPlaylists.filter(
+              (playlist) => playlist._id !== playlistId
+            )
+            existingPlaylist.videos = existingPlaylist.videos.filter(
+              (video) => video._id !== videoId
+            )
+            existingPlaylist.updatedAt = action.payload.data?.updatedAt
+            state.loggedInUserPlaylists.unshift(existingPlaylist)
+          }
+          // UPDATE currentPlaylist
+          if (state.currentPlaylist?._id === playlistId) {
+            state.currentPlaylist.videos = state.currentPlaylist.videos?.filter(
+              (video) => video._id !== videoId
+            )
           }
           toast({
             title: 'Removed video from Playlist!',

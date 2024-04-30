@@ -11,6 +11,7 @@ import Playlist from '../components/Playlist'
 import { formatDate } from '@/utils/formatDate'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import { deletePlaylist } from '../services/asyncThunkActions'
+import PlaylistEditContainer from './PlaylistEditContainer'
 
 function PlaylistTableRowContainer({ playlist = {} }) {
   const dispatch = useDispatch()
@@ -39,32 +40,40 @@ function PlaylistTableRowContainer({ playlist = {} }) {
       </Playlist.TableCell>
 
       <Playlist.TableCell>
-        <Playlist.DropdownMenu>
-          <Playlist.DropdownMenuTrigger asChild>
-            <Playlist.Button aria-haspopup="true" size="icon" variant="ghost">
-              <MoreHorizontalIcon className="h-4 w-4" />
-              <span className="sr-only">Toggle menu</span>
-            </Playlist.Button>
-          </Playlist.DropdownMenuTrigger>
+        <Playlist.Dialog>
+          <Playlist.DropdownMenu>
+            <Playlist.DropdownMenuTrigger asChild>
+              <Playlist.Button aria-haspopup="true" size="icon" variant="ghost">
+                <MoreHorizontalIcon className="h-4 w-4" />
+                <span className="sr-only">Toggle menu</span>
+              </Playlist.Button>
+            </Playlist.DropdownMenuTrigger>
 
-          <Playlist.DropdownMenuContent align="end">
-            <Playlist.DropdownMenuLabel>Actions</Playlist.DropdownMenuLabel>
-            <Playlist.DropdownMenuSeparator />
-            <Playlist.DropdownMenuItem>
-              <PencilIcon className="h-4 w-4" />
-              Edit
-            </Playlist.DropdownMenuItem>
-            <Playlist.DropdownMenuItem
-              className="bg-destructive"
-              onClick={() =>
-                dispatch(deletePlaylist({ accessToken, playlistId }))
-              }
-            >
-              <Trash2Icon className="h-4 w-4" />
-              Delete
-            </Playlist.DropdownMenuItem>
-          </Playlist.DropdownMenuContent>
-        </Playlist.DropdownMenu>
+            <Playlist.DropdownMenuContent align="end">
+              <Playlist.DropdownMenuLabel>Actions</Playlist.DropdownMenuLabel>
+              <Playlist.DropdownMenuSeparator />
+              <Playlist.DialogTrigger asChild>
+                <Playlist.DropdownMenuItem>
+                  <PencilIcon className="h-4 w-4" />
+                  Edit
+                </Playlist.DropdownMenuItem>
+              </Playlist.DialogTrigger>
+              <Playlist.DropdownMenuItem
+                className="bg-destructive"
+                onClick={() =>
+                  dispatch(deletePlaylist({ accessToken, playlistId }))
+                }
+              >
+                <Trash2Icon className="h-4 w-4" />
+                Delete
+              </Playlist.DropdownMenuItem>
+            </Playlist.DropdownMenuContent>
+          </Playlist.DropdownMenu>
+
+          <Playlist.DialogContent>
+            <PlaylistEditContainer playlist={playlist} />
+          </Playlist.DialogContent>
+        </Playlist.Dialog>
       </Playlist.TableCell>
     </Playlist.TableRow>
   )

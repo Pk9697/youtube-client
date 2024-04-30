@@ -53,6 +53,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 function Playlist({ children, className, ...restProps }) {
   return (
@@ -746,6 +747,50 @@ Playlist.TableCell = function PlaylistTableCell({
     <TableCell className={twMerge('', className)} {...restProps}>
       {children}
     </TableCell>
+  )
+}
+
+Playlist.Tabs = function PlaylistTabs({ children, className, ...restProps }) {
+  return (
+    <Tabs className={twMerge('', className)} {...restProps}>
+      {children}
+    </Tabs>
+  )
+}
+
+Playlist.TabsList = function PlaylistTabsList({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <TabsList className={twMerge('', className)} {...restProps}>
+      {children}
+    </TabsList>
+  )
+}
+
+Playlist.TabsTrigger = function PlaylistTabsTrigger({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <TabsTrigger className={twMerge('', className)} {...restProps}>
+      {children}
+    </TabsTrigger>
+  )
+}
+
+Playlist.TabsContent = function PlaylistTabsContent({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <TabsContent className={twMerge('', className)} {...restProps}>
+      {children}
+    </TabsContent>
   )
 }
 
