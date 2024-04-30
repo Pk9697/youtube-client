@@ -4,6 +4,7 @@ import {
   addVideoToPlaylist,
   createPlaylist,
   deletePlaylist,
+  editPlaylist,
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
@@ -338,6 +339,42 @@ const playlistSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(editPlaylist.pending, (state) => {
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(editPlaylist.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          const {
+            playlistId,
+            formFields: { name, description, visibility },
+          } = action.meta.arg
+          state.loggedInUserPlaylists = state.loggedInUserPlaylists.map(
+            (playlist) =>
+              playlist._id === playlistId
+                ? { ...playlist, name, description, visibility }
+                : playlist
+          )
+          toast({
+            title: 'Playlist edited successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(editPlaylist.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -353,6 +390,7 @@ export {
   removeVideoFromPlaylist,
   createPlaylist,
   deletePlaylist,
+  editPlaylist,
 }
 
 export default playlistSlice.reducer

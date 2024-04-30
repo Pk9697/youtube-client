@@ -13,6 +13,7 @@ import playlistReducer, {
   createPlaylist,
   sortLoggedInUserPlaylists,
   deletePlaylist,
+  editPlaylist,
 } from './services/playlistSlice'
 
 import useWatchLaterPlaylist from './hooks/useWatchLaterPlaylist'
@@ -34,4 +35,5 @@ export {
   PlaylistDashboardContainer,
   sortLoggedInUserPlaylists,
   deletePlaylist,
+  editPlaylist,
 }

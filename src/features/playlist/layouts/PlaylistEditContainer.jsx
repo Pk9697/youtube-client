@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { VideoPlaylistTableContainer } from '@/features/videos'
 import Playlist from '../components/Playlist'
 import { fetchCurrentPlaylist } from '../services/asyncThunkActions'
+import PlaylistEditDetailsContainer from './PlaylistEditDetailsContainer'
 
 function PlaylistEditContainer({ playlist = {} }) {
   const { _id: playlistId } = playlist
@@ -22,7 +23,9 @@ function PlaylistEditContainer({ playlist = {} }) {
         <Playlist.TabsTrigger value="details">Details</Playlist.TabsTrigger>
         <Playlist.TabsTrigger value="videos">Videos</Playlist.TabsTrigger>
       </Playlist.TabsList>
-      <Playlist.TabsContent value="details">details</Playlist.TabsContent>
+      <Playlist.TabsContent value="details">
+        <PlaylistEditDetailsContainer playlist={playlist} />
+      </Playlist.TabsContent>
       <Playlist.TabsContent value="videos">
         <VideoPlaylistTableContainer
           videosList={currentPlaylist.videos}

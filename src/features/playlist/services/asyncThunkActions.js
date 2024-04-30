@@ -163,6 +163,23 @@ const deletePlaylist = createAsyncThunk(
   }
 )
 
+const editPlaylist = createAsyncThunk(
+  'playlist/editPlaylist',
+  async ({ accessToken, formFields, playlistId }) => {
+    try {
+      const url = APIUrls.editPlaylist(playlistId)
+      const response = await axios.patch(url, formFields, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
@@ -173,4 +190,5 @@ export {
   removeVideoFromPlaylist,
   createPlaylist,
   deletePlaylist,
+  editPlaylist,
 }

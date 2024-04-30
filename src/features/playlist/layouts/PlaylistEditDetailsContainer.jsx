@@ -1,15 +1,16 @@
 import Playlist from '../components/Playlist'
-import useCreatePlaylist from '../hooks/useCreatePlaylist'
+import useEditPlaylistDetails from '../hooks/useEditPlaylistDetails'
 
-function PlaylistCreateContainer() {
+function PlaylistEditDetailsContainer({ playlist = {} }) {
   const {
     name,
     description,
     visibility,
     handleChange,
-    handleSubmit,
     handleSelectChange,
-  } = useCreatePlaylist()
+    handleSubmit,
+    inProgress,
+  } = useEditPlaylistDetails({ playlist })
 
   return (
     <Playlist.Form onSubmit={handleSubmit} className="flex flex-col gap-2">
@@ -23,7 +24,6 @@ function PlaylistCreateContainer() {
           type="text"
           autoComplete="text"
           placeholder="Enter Playlist name"
-          required
         />
       </Playlist.InputContainer>
       <Playlist.InputContainer>
@@ -36,7 +36,6 @@ function PlaylistCreateContainer() {
           type="text"
           autoComplete="text"
           placeholder="Enter Playlist description"
-          required
         />
       </Playlist.InputContainer>
 
@@ -57,11 +56,11 @@ function PlaylistCreateContainer() {
         </Playlist.Select>
       </Playlist.InputContainer>
 
-      <Playlist.Button type="submit" className="mt-4">
-        Create
+      <Playlist.Button disabled={inProgress} type="submit" className="mt-4">
+        Save
       </Playlist.Button>
     </Playlist.Form>
   )
 }
 
-export default PlaylistCreateContainer
+export default PlaylistEditDetailsContainer

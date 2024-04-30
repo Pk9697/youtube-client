@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -293,6 +294,17 @@ Playlist.DialogTitle = function PlaylistDialogTitle({
     <DialogTitle className={twMerge('', className)} {...restProps}>
       {children}
     </DialogTitle>
+  )
+}
+Playlist.DialogDescription = function PlaylistDialogDescription({
+  children,
+  className,
+  ...restProps
+}) {
+  return (
+    <DialogDescription className={twMerge('', className)} {...restProps}>
+      {children}
+    </DialogDescription>
   )
 }
 
