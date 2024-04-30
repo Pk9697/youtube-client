@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   addVideoToPlaylist,
   createPlaylist,
+  deletePlaylist,
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
   fetchLoggedInUserLikedVideosPlaylistIdByName,
@@ -298,6 +299,36 @@ const playlistSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(deletePlaylist.pending, (state) => {
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(deletePlaylist.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          const { playlistId } = action.meta.arg
+          state.loggedInUserPlaylists = state.loggedInUserPlaylists.filter(
+            (playlist) => playlist._id !== playlistId
+          )
+          toast({
+            title: 'Playlist deleted successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(deletePlaylist.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -312,6 +343,7 @@ export {
   addVideoToPlaylist,
   removeVideoFromPlaylist,
   createPlaylist,
+  deletePlaylist,
 }
 
 export default playlistSlice.reducer

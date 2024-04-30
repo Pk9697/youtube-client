@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from 'react-redux'
 import {
   EarthIcon,
   EarthLockIcon,
@@ -9,9 +10,12 @@ import { formatViews } from '@/utils/formatViews'
 import Playlist from '../components/Playlist'
 import { formatDate } from '@/utils/formatDate'
 import { getPublicUrl } from '@/utils/getPublicUrl'
+import { deletePlaylist } from '../services/asyncThunkActions'
 
 function PlaylistTableRowContainer({ playlist = {} }) {
-  const { name, visibility, videos = [], updatedAt } = playlist
+  const dispatch = useDispatch()
+  const { accessToken } = useSelector((state) => state.auth)
+  const { _id: playlistId, name, visibility, videos = [], updatedAt } = playlist
   return (
     <Playlist.TableRow>
       <Playlist.TableCell>
@@ -50,7 +54,12 @@ function PlaylistTableRowContainer({ playlist = {} }) {
               <PencilIcon className="h-4 w-4" />
               Edit
             </Playlist.DropdownMenuItem>
-            <Playlist.DropdownMenuItem className="bg-destructive">
+            <Playlist.DropdownMenuItem
+              className="bg-destructive"
+              onClick={() =>
+                dispatch(deletePlaylist({ accessToken, playlistId }))
+              }
+            >
               <Trash2Icon className="h-4 w-4" />
               Delete
             </Playlist.DropdownMenuItem>

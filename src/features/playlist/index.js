@@ -12,6 +12,7 @@ import playlistReducer, {
   removeVideoFromPlaylist,
   createPlaylist,
   sortLoggedInUserPlaylists,
+  deletePlaylist,
 } from './services/playlistSlice'
 
 import useWatchLaterPlaylist from './hooks/useWatchLaterPlaylist'
@@ -32,4 +33,5 @@ export {
   createPlaylist,
   PlaylistDashboardContainer,
   sortLoggedInUserPlaylists,
+  deletePlaylist,
 }

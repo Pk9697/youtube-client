@@ -146,6 +146,23 @@ const createPlaylist = createAsyncThunk(
   }
 )
 
+const deletePlaylist = createAsyncThunk(
+  'playlist/deletePlaylist',
+  async ({ accessToken, playlistId }) => {
+    try {
+      const url = APIUrls.deletePlaylist(playlistId)
+      const response = await axios.delete(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
@@ -155,4 +172,5 @@ export {
   addVideoToPlaylist,
   removeVideoFromPlaylist,
   createPlaylist,
+  deletePlaylist,
 }

@@ -55,4 +55,5 @@ export const APIUrls = {
   deleteVideo: (videoId) => `${API_ROOT}/videos/delete/${videoId}`,
   uploadVideo: () => `${API_ROOT}/videos/upload`,
   editVideo: (videoId) => `${API_ROOT}/videos/update/${videoId}`,
+  deletePlaylist: (playlistId) => `${API_ROOT}/playlists/delete/${playlistId}`,
 }
