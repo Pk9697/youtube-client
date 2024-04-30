@@ -265,7 +265,7 @@ Playlist.DialogContent = function PlaylistDialogContent({
   ...restProps
 }) {
   return (
-    <DialogContent className={twMerge('max-w-xs', className)} {...restProps}>
+    <DialogContent className={twMerge('', className)} {...restProps}>
       {children}
     </DialogContent>
   )

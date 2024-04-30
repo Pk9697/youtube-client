@@ -72,7 +72,7 @@ function PlaylistDashboardContainer({ playlists = [] }) {
                 </span>
               </Playlist.Button>
             </Playlist.DialogTrigger>
-            <Playlist.DialogContent>
+            <Playlist.DialogContent className="max-w-xs">
               <PlaylistCreateContainer />
             </Playlist.DialogContent>
           </Playlist.Dialog>

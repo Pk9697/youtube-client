@@ -8,7 +8,7 @@ function PlaylistDialogContentContainer({ videoId }) {
   const { loggedInUserPlaylists = [] } = useSelector((state) => state.playlist)
 
   return (
-    <Playlist.DialogContent>
+    <Playlist.DialogContent className="max-w-xs">
       <Playlist.DialogHeader>
         <Playlist.DialogTitle>Save video to...</Playlist.DialogTitle>
         <Playlist.Col>
