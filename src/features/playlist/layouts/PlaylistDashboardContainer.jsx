@@ -4,6 +4,7 @@ import { CirclePlusIcon, ListFilterIcon } from 'lucide-react'
 import Playlist from '../components/Playlist'
 import PlaylistTableRowContainer from './PlaylistTableRowContainer'
 import { sortLoggedInUserPlaylists } from '../services/playlistSlice'
+import PlaylistCreateContainer from './PlaylistCreateContainer'
 
 function PlaylistDashboardContainer({ playlists = [] }) {
   const dispatch = useDispatch()
@@ -62,12 +63,19 @@ function PlaylistDashboardContainer({ playlists = [] }) {
               </Playlist.DropdownMenuRadioGroup>
             </Playlist.DropdownMenuContent>
           </Playlist.DropdownMenu>
-          <Playlist.Button size="sm" className="h-7 gap-1">
-            <CirclePlusIcon className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Create Playlist
-            </span>
-          </Playlist.Button>
+          <Playlist.Dialog>
+            <Playlist.DialogTrigger asChild>
+              <Playlist.Button size="sm" className="h-7 gap-1">
+                <CirclePlusIcon className="h-3.5 w-3.5" />
+                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                  Create Playlist
+                </span>
+              </Playlist.Button>
+            </Playlist.DialogTrigger>
+            <Playlist.DialogContent>
+              <PlaylistCreateContainer />
+            </Playlist.DialogContent>
+          </Playlist.Dialog>
         </Playlist.CardActions>
       </Playlist.CardHeader>
 
