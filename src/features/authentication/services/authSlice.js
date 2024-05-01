@@ -1,7 +1,13 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { login, register, logout } from './asyncThunkActions'
+import {
+  login,
+  register,
+  logout,
+  updateAvatar,
+  updateCoverImage,
+} from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
 const initialState = {
@@ -118,6 +124,60 @@ const authSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(updateAvatar.pending, (state) => {
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(updateAvatar.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          state.user.avatar = action.payload.data?.avatar
+          toast({
+            title: 'Avatar updated successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(updateAvatar.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
+      .addCase(updateCoverImage.pending, (state) => {
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(updateCoverImage.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          state.user.coverImage = action.payload.data?.coverImage
+          toast({
+            title: 'CoverImage updated successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(updateCoverImage.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -125,6 +185,6 @@ const authSlice = createSlice({
 // export const {} = authSlice.actions
 
 // async thunk actions
-export { login, register, logout }
+export { login, register, logout, updateAvatar, updateCoverImage }
 
 export default authSlice.reducer

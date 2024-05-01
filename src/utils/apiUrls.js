@@ -57,4 +57,6 @@ export const APIUrls = {
   editVideo: (videoId) => `${API_ROOT}/videos/update/${videoId}`,
   deletePlaylist: (playlistId) => `${API_ROOT}/playlists/delete/${playlistId}`,
   editPlaylist: (playlistId) => `${API_ROOT}/playlists/update/${playlistId}`,
+  updateAvatar: () => `${API_ROOT}/users/update-avatar`,
+  updateCoverImage: () => `${API_ROOT}/users/update-cover-image`,
 }

@@ -39,4 +39,39 @@ const logout = createAsyncThunk('auth/logout', async ({ accessToken }) => {
     return err.response?.data
   }
 })
-export { login, register, logout }
+
+const updateAvatar = createAsyncThunk(
+  'auth/updateAvatar',
+  async ({ accessToken, formFields }) => {
+    try {
+      const url = APIUrls.updateAvatar()
+      const response = await axios.patch(url, formFields, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+const updateCoverImage = createAsyncThunk(
+  'auth/updateCoverImage',
+  async ({ accessToken, formFields }) => {
+    try {
+      const url = APIUrls.updateCoverImage()
+      const response = await axios.patch(url, formFields, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+export { login, register, logout, updateAvatar, updateCoverImage }

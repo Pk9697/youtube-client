@@ -22,7 +22,7 @@ Channel.CoverImage = function ChannelCoverImage({
     <img
       src={src || fallbackSrc}
       className={twMerge(
-        'aspect-video max-h-48 rounded-md bg-muted object-cover',
+        'aspect-video max-h-48 w-full rounded-md bg-muted object-cover',
         className
       )}
       {...restProps}
