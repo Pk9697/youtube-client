@@ -7,6 +7,7 @@ import {
   logout,
   updateAvatar,
   updateCoverImage,
+  updateAccountDetails,
 } from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
@@ -178,6 +179,41 @@ const authSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(updateAccountDetails.pending, (state) => {
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(updateAccountDetails.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          const {
+            formFields: { fullName, email },
+          } = action.meta.arg
+          if (fullName) {
+            state.user.fullName = fullName
+          }
+          if (email) {
+            state.user.email = email
+          }
+          toast({
+            title: 'Account Details updated successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(updateAccountDetails.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -185,6 +221,13 @@ const authSlice = createSlice({
 // export const {} = authSlice.actions
 
 // async thunk actions
-export { login, register, logout, updateAvatar, updateCoverImage }
+export {
+  login,
+  register,
+  logout,
+  updateAvatar,
+  updateCoverImage,
+  updateAccountDetails,
+}
 
 export default authSlice.reducer

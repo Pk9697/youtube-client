@@ -7,6 +7,7 @@ import authReducer, {
   logout,
   updateAvatar,
   updateCoverImage,
+  updateAccountDetails,
 } from './services/authSlice'
 
 export {
@@ -19,4 +20,5 @@ export {
   logout,
   updateAvatar,
   updateCoverImage,
+  updateAccountDetails,
 }

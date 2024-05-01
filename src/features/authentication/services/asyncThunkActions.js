@@ -74,4 +74,28 @@ const updateCoverImage = createAsyncThunk(
   }
 )
 
-export { login, register, logout, updateAvatar, updateCoverImage }
+const updateAccountDetails = createAsyncThunk(
+  'auth/updateAccountDetails',
+  async ({ accessToken, formFields }) => {
+    try {
+      const url = APIUrls.updateAccountDetails()
+      const response = await axios.patch(url, formFields, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+export {
+  login,
+  register,
+  logout,
+  updateAvatar,
+  updateCoverImage,
+  updateAccountDetails,
+}
