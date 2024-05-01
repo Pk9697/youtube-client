@@ -8,6 +8,7 @@ import {
   updateAvatar,
   updateCoverImage,
   updateAccountDetails,
+  updatePassword,
 } from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
@@ -214,6 +215,32 @@ const authSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(updatePassword.pending, (state) => {
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(updatePassword.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          toast({
+            title: 'Password updated successfully!',
+          })
+        } else {
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(updatePassword.rejected, (state, action) => {
+        state.inProgress = false
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
   },
 })
 
@@ -228,6 +255,7 @@ export {
   updateAvatar,
   updateCoverImage,
   updateAccountDetails,
+  updatePassword,
 }
 
 export default authSlice.reducer

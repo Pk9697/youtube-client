@@ -60,4 +60,5 @@ export const APIUrls = {
   updateAvatar: () => `${API_ROOT}/users/update-avatar`,
   updateCoverImage: () => `${API_ROOT}/users/update-cover-image`,
   updateAccountDetails: () => `${API_ROOT}/users/update-account`,
+  updatePassword: () => `${API_ROOT}/users/update-password`,
 }

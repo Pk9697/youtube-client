@@ -91,6 +91,23 @@ const updateAccountDetails = createAsyncThunk(
   }
 )
 
+const updatePassword = createAsyncThunk(
+  'auth/updatePassword',
+  async ({ accessToken, formFields }) => {
+    try {
+      const url = APIUrls.updatePassword()
+      const response = await axios.patch(url, formFields, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
 export {
   login,
   register,
@@ -98,4 +115,5 @@ export {
   updateAvatar,
   updateCoverImage,
   updateAccountDetails,
+  updatePassword,
 }

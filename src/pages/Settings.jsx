@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label'
 import Channel from '@/features/channel/components/Channel'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import { Form, updateAvatar, updateCoverImage } from '@/features/authentication'
-import { useUpdateAccountDetails } from '@/features/settings'
+import { useUpdateAccountDetails, useUpdatePassword } from '@/features/settings'
 
 function Settings() {
   const dispatch = useDispatch()
@@ -35,6 +35,15 @@ function Settings() {
     handleUpdateAccountDetailsChange,
     handleUpdateAccountDetailsSubmit,
   } = useUpdateAccountDetails({ user })
+
+  const {
+    password,
+    newPassword,
+    confirmNewPassword,
+    handleUpdatePasswordChange,
+    handleUpdatePasswordSubmit,
+    isPasswordUpdateButtonDisabled,
+  } = useUpdatePassword()
 
   return (
     <Channel>
@@ -108,6 +117,58 @@ function Settings() {
               </Form.InputContainer>
               <Form.Button
                 disabled={fullName === user?.fullName && email === user?.email}
+                type="submit"
+              >
+                Save
+              </Form.Button>
+            </Form.GridGroup>
+          </form>
+        </Channel.TabsContent>
+
+        <Channel.TabsContent value="password">
+          <form onSubmit={handleUpdatePasswordSubmit}>
+            <Form.GridGroup>
+              <Form.InputContainer>
+                <Form.Label htmlFor="password">Password</Form.Label>
+                <Form.Input
+                  value={password}
+                  onChange={handleUpdatePasswordChange}
+                  name="password"
+                  id="password"
+                  type="password"
+                  autoComplete="password"
+                  required
+                />
+              </Form.InputContainer>
+              <Form.InputContainer>
+                <Form.Label htmlFor="newPassword">New Password</Form.Label>
+                <Form.Input
+                  value={newPassword}
+                  onChange={handleUpdatePasswordChange}
+                  name="newPassword"
+                  id="newPassword"
+                  type="password"
+                  autoComplete="newPassword"
+                  required
+                />
+              </Form.InputContainer>
+              <Form.InputContainer>
+                <Form.Label htmlFor="confirmNewPassword">
+                  Confirm New Password
+                </Form.Label>
+                <Form.Input
+                  value={confirmNewPassword}
+                  onChange={handleUpdatePasswordChange}
+                  name="confirmNewPassword"
+                  id="confirmNewPassword"
+                  type="password"
+                  autoComplete="confirmNewPassword"
+                  required
+                />
+              </Form.InputContainer>
+
+              <Form.Button
+                disabled={isPasswordUpdateButtonDisabled}
                 type="submit"
               >
                 Save
