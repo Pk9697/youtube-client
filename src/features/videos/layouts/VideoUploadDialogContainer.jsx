@@ -35,6 +35,7 @@ function VideoUploadDialogContainer({ children }) {
                 name="videoFile"
                 id="videoFile"
                 type="file"
+                accept="video/mp4,video/x-m4v,video/*"
                 required
                 className="cursor-pointer file:text-primary"
               />
@@ -46,6 +47,7 @@ function VideoUploadDialogContainer({ children }) {
                 name="thumbnail"
                 id="thumbnail"
                 type="file"
+                accept="image/*"
                 className="cursor-pointer file:text-primary"
                 required
               />

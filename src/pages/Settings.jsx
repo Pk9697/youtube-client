@@ -58,6 +58,7 @@ function Settings() {
         type="file"
         id="coverImage"
         className="hidden"
+        accept="image/*"
       />
       <Channel.Details>
         <Label htmlFor="avatar" className="relative cursor-pointer">
@@ -71,6 +72,7 @@ function Settings() {
           type="file"
           id="avatar"
           className="hidden"
+          accept="image/*"
         />
         <Channel.Meta>
           <Channel.Title>{user?.fullName}</Channel.Title>

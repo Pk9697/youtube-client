@@ -30,6 +30,7 @@ function VideoEditDialogContentContainer({ video }) {
               name="thumbnail"
               id="thumbnail"
               type="file"
+              accept="image/*"
               className="cursor-pointer file:text-primary"
             />
           </Form.InputContainer>

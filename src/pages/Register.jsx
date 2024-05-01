@@ -68,6 +68,7 @@ function Register() {
                   type="file"
                   required
                   className="file:text-primary"
+                  accept="image/*"
                 />
               </Form.InputContainer>
               <Form.InputContainer>
@@ -78,6 +79,7 @@ function Register() {
                   id="coverImage"
                   type="file"
                   className="file:text-primary"
+                  accept="image/*"
                 />
               </Form.InputContainer>
               <Form.InputContainer>

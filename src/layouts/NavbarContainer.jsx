@@ -45,7 +45,9 @@ function NavbarContainer({ usersList }) {
         <Navbar.DropdownMenuContent>
           <Navbar.DropdownMenuLabel>{fullName}</Navbar.DropdownMenuLabel>
           <Navbar.DropdownMenuSeparator />
-          <Navbar.DropdownMenuItem>Settings</Navbar.DropdownMenuItem>
+          <Navbar.DropdownMenuItem onClick={() => navigate(ROUTES.SETTINGS)}>
+            Settings
+          </Navbar.DropdownMenuItem>
           <Navbar.DropdownMenuSeparator />
           <Navbar.DropdownMenuItem
             onClick={() => dispatch(logout({ accessToken }))}
