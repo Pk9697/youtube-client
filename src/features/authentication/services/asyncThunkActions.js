@@ -108,6 +108,44 @@ const updatePassword = createAsyncThunk(
   }
 )
 
+const verifyAccessToken = createAsyncThunk(
+  'auth/verifyAccessToken',
+  async ({ accessToken }) => {
+    try {
+      const url = APIUrls.verifyAccessToken()
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data
+    } catch (err) {
+      return err.response?.data
+    }
+  }
+)
+
+// const refreshAccessToken = createAsyncThunk(
+//   'auth/refreshAccessToken',
+//   async ({ refreshToken }) => {
+//     try {
+//       const url = APIUrls.refreshAccessToken()
+//       const response = await axios.post(
+//         url,
+//         {},
+//         {
+//           headers: {
+//             Authorization: `Bearer ${refreshToken}`,
+//           },
+//         }
+//       )
+//       return response.data
+//     } catch (err) {
+//       return err.response?.data
+//     }
+//   }
+// )
+
 export {
   login,
   register,
@@ -116,4 +154,6 @@ export {
   updateCoverImage,
   updateAccountDetails,
   updatePassword,
+  verifyAccessToken,
+  // refreshAccessToken,
 }

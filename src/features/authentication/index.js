@@ -9,6 +9,8 @@ import authReducer, {
   updateCoverImage,
   updateAccountDetails,
   updatePassword,
+  verifyAccessToken,
+  // refreshAccessToken,
 } from './services/authSlice'
 
 export {
@@ -23,4 +25,6 @@ export {
   updateCoverImage,
   updateAccountDetails,
   updatePassword,
+  verifyAccessToken,
+  // refreshAccessToken,
 }

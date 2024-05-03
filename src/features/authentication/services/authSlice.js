@@ -9,12 +9,14 @@ import {
   updateCoverImage,
   updateAccountDetails,
   updatePassword,
+  verifyAccessToken,
 } from './asyncThunkActions'
 import { toast } from '@/components/ui/use-toast'
 
 const initialState = {
   user: null,
   accessToken: null,
+  refreshToken: null,
   error: null,
   isLoggedIn: false,
   inProgress: false,
@@ -34,6 +36,7 @@ const authSlice = createSlice({
       .addCase(login.pending, (state) => {
         state.user = null
         state.accessToken = null
+        state.refreshToken = null
         state.error = null
         state.isLoggedIn = false
         state.inProgress = true
@@ -44,6 +47,7 @@ const authSlice = createSlice({
           state.isLoggedIn = true
           state.user = action.payload.data?.user
           state.accessToken = action.payload.data?.accessToken
+          state.refreshToken = action.payload.data?.refreshToken
           toast({
             title: action.payload?.message || 'Logged in successfully!',
           })
@@ -66,6 +70,7 @@ const authSlice = createSlice({
       .addCase(register.pending, (state) => {
         state.user = null
         state.accessToken = null
+        state.refreshToken = null
         state.error = null
         state.isLoggedIn = false
         state.inProgress = true
@@ -96,6 +101,7 @@ const authSlice = createSlice({
       .addCase(logout.pending, (state) => {
         state.user = null
         state.accessToken = null
+        state.refreshToken = null
         state.error = null
         state.isLoggedIn = false
         state.inProgress = true
@@ -105,6 +111,7 @@ const authSlice = createSlice({
         if (action.payload?.success) {
           state.user = null
           state.accessToken = null
+          state.refreshToken = null
           state.error = null
           state.isLoggedIn = false
           toast({
@@ -241,6 +248,75 @@ const authSlice = createSlice({
           title: state.error,
         })
       })
+      .addCase(verifyAccessToken.pending, (state) => {
+        state.error = null
+        state.inProgress = true
+      })
+      .addCase(verifyAccessToken.fulfilled, (state, action) => {
+        state.inProgress = false
+        if (action.payload?.success) {
+          state.isLoggedIn = true
+          toast({
+            title: 'Access Token verified successfully!',
+          })
+        } else {
+          state.isLoggedIn = false
+          state.accessToken = null
+          state.refreshToken = null
+          state.user = null
+          state.error = action.payload?.message || 'server error'
+          toast({
+            variant: 'destructive',
+            title: state.error,
+          })
+        }
+      })
+      .addCase(verifyAccessToken.rejected, (state, action) => {
+        state.inProgress = false
+        state.isLoggedIn = false
+        state.accessToken = null
+        state.refreshToken = null
+        state.user = null
+        state.error = action.payload?.message || 'server error'
+        toast({
+          variant: 'destructive',
+          title: state.error,
+        })
+      })
+    // TODO : add refresh token logic
+    // .addCase(refreshAccessToken.pending, (state) => {
+    //   state.error = null
+    //   state.inProgress = true
+    // })
+    // .addCase(refreshAccessToken.fulfilled, (state, action) => {
+    //   state.inProgress = false
+    //   if (action.payload?.success) {
+    //     state.accessToken = action.payload.data?.accessToken
+    //     state.refreshToken = action.payload.data?.refreshToken
+    //     toast({
+    //       title: 'Access and refresh Token refreshed successfully!',
+    //     })
+    //   } else {
+    //     state.error = action.payload?.message || 'server error'
+    //     toast({
+    //       variant: 'destructive',
+    //       title: state.error,
+    //     })
+    //   }
+    // })
+    // .addCase(refreshAccessToken.rejected, (state, action) => {
+    //   state.inProgress = false
+    //   state.user = null
+    //   state.accessToken = null
+    //   state.refreshToken = null
+    //   state.error = null
+    //   state.isLoggedIn = false
+    //   state.error = action.payload?.message || 'server error'
+    //   toast({
+    //     variant: 'destructive',
+    //     title: state.error,
+    //   })
+    // })
   },
 })
 
@@ -256,6 +332,7 @@ export {
   updateCoverImage,
   updateAccountDetails,
   updatePassword,
+  verifyAccessToken,
 }
 
 export default authSlice.reducer
