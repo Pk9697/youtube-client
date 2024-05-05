@@ -49,7 +49,8 @@ export const APIUrls = {
   createPlaylist: () => `${API_ROOT}/playlists/create`,
   editComment: (commentId) => `${API_ROOT}/comments/update/${commentId}`,
   fetchDashboardStats: () => `${API_ROOT}/dashboard/stats`,
-  fetchDashboardVideos: () => `${API_ROOT}/dashboard/videos`,
+  fetchDashboardVideos: (page = 1, limit = 10) =>
+    `${API_ROOT}/dashboard/videos?page=${page}&limit=${limit}`,
   toggleVideoPublishStatus: (videoId) =>
     `${API_ROOT}/videos/toggle/publish/${videoId}`,
   deleteVideo: (videoId) => `${API_ROOT}/videos/delete/${videoId}`,

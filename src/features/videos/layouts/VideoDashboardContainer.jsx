@@ -1,14 +1,15 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { CirclePlusIcon, ListFilterIcon } from 'lucide-react'
 import Video from '../components/Video'
-import { sortVideos } from '@/features/dashboard'
+import { fetchDashboardVideos, sortVideos } from '@/features/dashboard'
 import VideoUploadDialogContainer from './VideoUploadDialogContainer'
 import VideoTableRowContainer from './VideoTableRowContainer'
+import PaginateContainer from '@/layouts/PaginateContainer'
 
-function VideoDashboardContainer({ videosList = [] }) {
+function VideoDashboardContainer({ videosList = [], paginate = {} }) {
   const dispatch = useDispatch()
-
+  const { accessToken } = useSelector((state) => state.auth)
   // TODO : Move below code in custom hook named useSort
   const [sortBy, setSortBy] = useState('createdAt')
 
@@ -17,13 +18,27 @@ function VideoDashboardContainer({ videosList = [] }) {
     dispatch(sortVideos({ sortBy: value }))
   }
 
+  const lowerLimit = paginate.pagingCounter
+  const upperLimit = Math.min(
+    paginate.pagingCounter + paginate.limit - 1,
+    paginate.totalDocs
+  )
+
+  const handleChangePage = (page = 1) => {
+    dispatch(fetchDashboardVideos({ accessToken, page }))
+  }
+
   return (
     <Video.Card>
       <Video.CardHeader className="flex flex-row items-center space-y-0">
         <Video.CardDetails>
           <Video.CardTitle>Videos</Video.CardTitle>
-          <Video.CardDescription className="text-muted-foreground">
-            Manage your videos.
+          <Video.CardDescription className="text-xs text-muted-foreground">
+            Showing{' '}
+            <strong>
+              {lowerLimit}-{upperLimit}
+            </strong>{' '}
+            of <strong>{paginate.totalDocs}</strong> videos
           </Video.CardDescription>
         </Video.CardDetails>
 
@@ -111,10 +126,10 @@ function VideoDashboardContainer({ videosList = [] }) {
       </Video.CardContent>
 
       <Video.CardFooter>
-        <Video.TextSmall>
-          Showing <strong>1-10</strong> of <strong>{videosList?.length}</strong>{' '}
-          videos
-        </Video.TextSmall>
+        <PaginateContainer
+          paginate={paginate}
+          handleChangePage={handleChangePage}
+        />
       </Video.CardFooter>
     </Video.Card>
   )

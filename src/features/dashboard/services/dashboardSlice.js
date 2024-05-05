@@ -13,6 +13,7 @@ import {
 const initialState = {
   dashboardStats: {},
   dashboardVideos: [],
+  paginate: {},
   error: null,
   inProgress: false,
 }
@@ -72,7 +73,9 @@ const dashboardSlice = createSlice({
       .addCase(fetchDashboardVideos.fulfilled, (state, action) => {
         state.inProgress = false
         if (action.payload?.success) {
-          state.dashboardVideos = action.payload.data?.docs
+          const { docs, ...paginateOptions } = action.payload.data || {}
+          state.dashboardVideos = docs
+          state.paginate = paginateOptions
           toast({
             title: 'Dashboard Stats fetched successfully',
           })

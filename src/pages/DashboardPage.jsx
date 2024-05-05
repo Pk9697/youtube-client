@@ -12,7 +12,7 @@ import { PlaylistDashboardContainer } from '@/features/playlist'
 function DashboardPage() {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
-  const { dashboardStats, dashboardVideos } = useSelector(
+  const { dashboardStats, dashboardVideos, paginate } = useSelector(
     (state) => state.dashboard
   )
   const { loggedInUserPlaylists } = useSelector((state) => state.playlist)
@@ -33,7 +33,10 @@ function DashboardPage() {
         </Dashboard.TabsList>
 
         <Dashboard.TabsContent value="videos">
-          <VideoDashboardContainer videosList={dashboardVideos} />
+          <VideoDashboardContainer
+            videosList={dashboardVideos}
+            paginate={paginate}
+          />
         </Dashboard.TabsContent>
         <Dashboard.TabsContent value="playlists">
           <PlaylistDashboardContainer playlists={loggedInUserPlaylists} />
