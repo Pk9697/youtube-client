@@ -8,25 +8,17 @@ import {
 function History() {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
-  const { videosList, inProgress, paginate } = useSelector(
-    (state) => state.videos
-  )
+  const { videosList, inProgress } = useSelector((state) => state.videos)
 
   useEffect(() => {
     dispatch(fetchLoggedInUserWatchHistory({ accessToken }))
   }, [])
-
-  const handleChangePage = (page = 1) => {
-    dispatch(fetchLoggedInUserWatchHistory({ accessToken, page }))
-  }
 
   return (
     <div className="p-4">
       <VideoSearchResultsContainer
         videosList={videosList}
         inProgress={inProgress}
-        paginate={paginate}
-        handleChangePage={handleChangePage}
       />
     </div>
   )
