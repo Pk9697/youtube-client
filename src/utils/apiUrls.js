@@ -7,7 +7,8 @@ export const APIUrls = {
   login: () => `${API_ROOT}/users/login`,
   register: () => `${API_ROOT}/users/register`,
 
-  fetchVideos: () => `${API_ROOT}/videos`,
+  fetchVideos: (page, limit) =>
+    `${API_ROOT}/videos?page=${page}&limit=${limit}`,
   fetchVideo: (videoId) => `${API_ROOT}/videos/view/${videoId}`,
   logout: () => `${API_ROOT}/users/logout`,
   toggleLikeVideo: (videoId) => `${API_ROOT}/likes/toggle/video/${videoId}`,
@@ -35,7 +36,8 @@ export const APIUrls = {
   fetchChannelPlaylists: (userName) =>
     `${API_ROOT}/playlists/user/?userName=${userName}`,
   fetchCurrentPlaylist: (playlistId) => `${API_ROOT}/playlists/${playlistId}`,
-  fetchVideosByQuery: (query) => `${API_ROOT}/videos/?query=${query}`,
+  fetchVideosByQuery: (query, page, limit) =>
+    `${API_ROOT}/videos/?query=${query}&page=${page}&limit=${limit}`,
   fetchSubscriptionsVideos: () => `${API_ROOT}/subscriptions/channels/videos`,
   fetchUserSubscribersList: (userId) =>
     `${API_ROOT}/subscriptions/subscribers/${userId}`,

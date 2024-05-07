@@ -5,6 +5,7 @@ import { fetchVideosByQuery } from './asyncThunkActions'
 
 const initialState = {
   searchResults: [],
+  paginate: null,
   error: null,
   inProgress: false,
 }
@@ -23,7 +24,9 @@ const searchSlice = createSlice({
       .addCase(fetchVideosByQuery.fulfilled, (state, action) => {
         state.inProgress = false
         if (action.payload?.success) {
-          state.searchResults = action.payload.data?.docs
+          const { docs, ...paginateOptions } = action.payload.data || {}
+          state.searchResults = docs
+          state.paginate = paginateOptions
           toast({
             title: 'Search Results fetched successfully!',
           })

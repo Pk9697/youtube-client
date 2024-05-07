@@ -22,6 +22,10 @@ function DashboardPage() {
     dispatch(fetchDashboardVideos({ accessToken }))
   }, [])
 
+  const handleChangePage = (page = 1) => {
+    dispatch(fetchDashboardVideos({ accessToken, page }))
+  }
+
   return (
     <DashboardContainer dashboardStats={dashboardStats}>
       <Dashboard.Tabs defaultValue="videos">
@@ -36,6 +40,7 @@ function DashboardPage() {
           <VideoDashboardContainer
             videosList={dashboardVideos}
             paginate={paginate}
+            handleChangePage={handleChangePage}
           />
         </Dashboard.TabsContent>
         <Dashboard.TabsContent value="playlists">

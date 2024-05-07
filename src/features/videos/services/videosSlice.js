@@ -10,6 +10,7 @@ import { toast } from '@/components/ui/use-toast'
 
 const initialState = {
   videosList: [],
+  paginate: null,
   error: null,
   inProgress: false,
 }
@@ -28,7 +29,9 @@ const videosSlice = createSlice({
       .addCase(fetchVideos.fulfilled, (state, action) => {
         state.inProgress = false
         if (action.payload?.success) {
-          state.videosList = action.payload.data?.docs
+          const { docs, ...paginateOptions } = action.payload.data || {}
+          state.videosList = docs
+          state.paginate = paginateOptions
           toast({
             title: action.payload?.message || 'Videos fetched successfully!',
           })

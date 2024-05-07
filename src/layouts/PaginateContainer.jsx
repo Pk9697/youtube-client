@@ -7,7 +7,9 @@ import {
   PaginationItem,
 } from '@/components/ui/pagination'
 
-function PaginateContainer({ paginate = {}, handleChangePage }) {
+function PaginateContainer({ paginate, handleChangePage }) {
+  if (!paginate || !handleChangePage) return null
+
   const { hasPrevPage, hasNextPage, page, prevPage, nextPage, totalPages } =
     paginate
 

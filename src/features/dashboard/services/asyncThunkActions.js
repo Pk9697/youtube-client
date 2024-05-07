@@ -21,7 +21,7 @@ const fetchDashboardStats = createAsyncThunk(
 
 const fetchDashboardVideos = createAsyncThunk(
   'dashboard/fetchDashboardVideos',
-  async ({ accessToken, page = 1, limit = 1 }) => {
+  async ({ accessToken, page = 1, limit = 10 }) => {
     try {
       const url = APIUrls.fetchDashboardVideos(page, limit)
       const response = await axios.get(url, {

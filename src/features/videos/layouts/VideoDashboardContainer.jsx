@@ -1,15 +1,18 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { CirclePlusIcon, ListFilterIcon } from 'lucide-react'
 import Video from '../components/Video'
-import { fetchDashboardVideos, sortVideos } from '@/features/dashboard'
+import { sortVideos } from '@/features/dashboard'
 import VideoUploadDialogContainer from './VideoUploadDialogContainer'
 import VideoTableRowContainer from './VideoTableRowContainer'
 import PaginateContainer from '@/layouts/PaginateContainer'
 
-function VideoDashboardContainer({ videosList = [], paginate = {} }) {
+function VideoDashboardContainer({
+  videosList = [],
+  paginate,
+  handleChangePage,
+}) {
   const dispatch = useDispatch()
-  const { accessToken } = useSelector((state) => state.auth)
   // TODO : Move below code in custom hook named useSort
   const [sortBy, setSortBy] = useState('createdAt')
 
@@ -23,10 +26,6 @@ function VideoDashboardContainer({ videosList = [], paginate = {} }) {
     paginate.pagingCounter + paginate.limit - 1,
     paginate.totalDocs
   )
-
-  const handleChangePage = (page = 1) => {
-    dispatch(fetchDashboardVideos({ accessToken, page }))
-  }
 
   return (
     <Video.Card>

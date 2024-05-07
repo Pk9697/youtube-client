@@ -4,9 +4,9 @@ import { APIUrls } from '@/utils/apiUrls'
 
 const fetchVideosByQuery = createAsyncThunk(
   'search/fetchVideosByQuery',
-  async ({ accessToken, query }) => {
+  async ({ accessToken, query, page = 1, limit = 10 }) => {
     try {
-      const url = APIUrls.fetchVideosByQuery(query)
+      const url = APIUrls.fetchVideosByQuery(query, page, limit)
       const response = await axios.post(
         url,
         {},

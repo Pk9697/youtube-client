@@ -4,9 +4,9 @@ import { APIUrls } from '@/utils/apiUrls'
 
 const fetchVideos = createAsyncThunk(
   'videos/fetchVideos',
-  async ({ accessToken }) => {
+  async ({ accessToken, page = 1, limit = 10 }) => {
     try {
-      const url = APIUrls.fetchVideos()
+      const url = APIUrls.fetchVideos(page, limit)
       const response = await axios.post(
         url,
         {},

@@ -8,15 +8,23 @@ function SearchResults() {
   const { query } = useParams()
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
-  const { searchResults } = useSelector((state) => state.search)
+  const { searchResults, paginate } = useSelector((state) => state.search)
 
   useEffect(() => {
     dispatch(fetchVideosByQuery({ accessToken, query }))
   }, [query])
 
+  const handleChangePage = (page = 1) => {
+    dispatch(fetchVideosByQuery({ accessToken, query, page }))
+  }
+
   return (
     <div className="p-4">
-      <VideoSearchResultsContainer videosList={searchResults} />
+      <VideoSearchResultsContainer
+        videosList={searchResults}
+        paginate={paginate}
+        handleChangePage={handleChangePage}
+      />
     </div>
   )
 }
