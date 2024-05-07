@@ -22,8 +22,11 @@ function Profile() {
     inProgress: inProgressChannelFetching,
     subscribedToChannelsList,
   } = useSelector((state) => state.channel)
-  const { videosList: channelVideos, inProgress: inProgressVideosFetching } =
-    useSelector((state) => state.videos)
+  const {
+    videosList: channelVideos,
+    inProgress: inProgressVideosFetching,
+    paginate,
+  } = useSelector((state) => state.videos)
   const { tweetsList: channelTweets, inProgress: inProgressTweetsFetching } =
     useSelector((state) => state.tweets)
   const { inProgress: inProgressSubscription } = useSelector(
@@ -38,6 +41,10 @@ function Profile() {
     dispatch(fetchUserSubscribedToChannels({ accessToken, userName }))
     dispatch(fetchChannelPlaylists({ accessToken, userName }))
   }, [userName])
+
+  const handleChangePage = (page = 1) => {
+    dispatch(fetchChannelVideos({ accessToken, userName, page }))
+  }
 
   return (
     <Loader inProgress={inProgressChannelFetching}>
@@ -58,6 +65,8 @@ function Profile() {
             <VideoContainer
               videosList={channelVideos}
               inProgress={inProgressVideosFetching}
+              paginate={paginate}
+              handleChangePage={handleChangePage}
             />
           </Channel.TabsContent>
           <Channel.TabsContent value="playlists">

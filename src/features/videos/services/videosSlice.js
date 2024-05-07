@@ -59,7 +59,9 @@ const videosSlice = createSlice({
       .addCase(fetchChannelVideos.fulfilled, (state, action) => {
         state.inProgress = false
         if (action.payload?.success) {
-          state.videosList = action.payload.data?.docs
+          const { docs, ...paginateOptions } = action.payload.data || {}
+          state.videosList = docs
+          state.paginate = paginateOptions
           toast({
             title: 'Channel Videos Fetched!',
           })
