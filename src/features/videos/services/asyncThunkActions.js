@@ -84,9 +84,9 @@ const toggleDislikeVideo = createAsyncThunk(
 
 const fetchVideoComments = createAsyncThunk(
   'video/fetchVideoComments',
-  async ({ accessToken, videoId }) => {
+  async ({ accessToken, videoId, page = 1, limit = 10 }) => {
     try {
-      const url = APIUrls.fetchVideoComments(videoId)
+      const url = APIUrls.fetchVideoComments(videoId, page, limit)
       const response = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${accessToken}`,

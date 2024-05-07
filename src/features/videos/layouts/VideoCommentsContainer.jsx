@@ -5,8 +5,15 @@ import useComment from '../hooks/useComment'
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import VideoCommentContainer from './VideoCommentContainer'
+import PaginateContainer from '@/layouts/PaginateContainer'
 
-function VideoCommentsContainer({ videoOwnerId, videoId, comments = [] }) {
+function VideoCommentsContainer({
+  videoOwnerId,
+  videoId,
+  comments = [],
+  paginate,
+  handleChangePage,
+}) {
   const {
     accessToken,
     user: { avatar: loggedInUserAvatar, userName: loggedInUserName } = {},
@@ -43,6 +50,11 @@ function VideoCommentsContainer({ videoOwnerId, videoId, comments = [] }) {
           {...comment}
         />
       ))}
+
+      <PaginateContainer
+        paginate={paginate}
+        handleChangePage={handleChangePage}
+      />
     </Comment.Group>
   )
 }

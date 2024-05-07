@@ -17,6 +17,7 @@ import {
 const initialState = {
   videoDetails: null,
   comments: [],
+  paginate: null,
   error: null,
   inProgress: false,
 }
@@ -120,7 +121,9 @@ const videoSlice = createSlice({
       .addCase(fetchVideoComments.fulfilled, (state, action) => {
         state.inProgress = false
         if (action.payload?.success) {
-          state.comments = action.payload.data?.docs
+          const { docs, ...paginateOptions } = action.payload.data || {}
+          state.comments = docs
+          state.paginate = paginateOptions
           toast({
             title: 'Video comments fetched successfully!',
           })

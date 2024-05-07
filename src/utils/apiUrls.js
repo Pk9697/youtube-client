@@ -15,7 +15,8 @@ export const APIUrls = {
   toggleDislikeVideo: (videoId) =>
     `${API_ROOT}/dislikes/toggle/video/${videoId}`,
   toggleSubscription: (userId) => `${API_ROOT}/subscriptions/toggle/${userId}`,
-  fetchVideoComments: (videoId) => `${API_ROOT}/comments/${videoId}`,
+  fetchVideoComments: (videoId, page, limit) =>
+    `${API_ROOT}/comments/${videoId}?page=${page}&limit=${limit}`,
   addComment: (videoId) => `${API_ROOT}/comments/add/${videoId}`,
   toggleLikeComment: (commentId) =>
     `${API_ROOT}/likes/toggle/comment/${commentId}`,

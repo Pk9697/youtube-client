@@ -28,6 +28,7 @@ function View() {
     videoDetails,
     comments,
     inProgress: inProgressVideoFetching,
+    paginate,
   } = useSelector((state) => state.video)
 
   const { inProgress: inProgressSubscription } = useSelector(
@@ -67,6 +68,10 @@ function View() {
     }
   }, [playlistId])
 
+  const handleChangePage = (page = 1) => {
+    dispatch(fetchVideoComments({ accessToken, videoId, page }))
+  }
+
   return (
     <Loader
       inProgress={inProgressVideoFetching || inProgressSearchResultsFetching}
@@ -87,6 +92,8 @@ function View() {
             videoOwnerId={videoDetails?.owner?._id}
             videoId={videoId}
             comments={comments}
+            paginate={paginate}
+            handleChangePage={handleChangePage}
           />
         </div>
         <div className="flex flex-col gap-4">
