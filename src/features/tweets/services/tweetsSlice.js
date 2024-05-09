@@ -30,9 +30,9 @@ const tweetsSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           state.tweetsList = action.payload.data
-          toast({
-            title: 'Channel Tweets fetched successfully!',
-          })
+          // toast({
+          //   title: 'Channel Tweets fetched successfully!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({

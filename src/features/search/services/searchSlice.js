@@ -27,9 +27,9 @@ const searchSlice = createSlice({
           const { docs, ...paginateOptions } = action.payload.data || {}
           state.searchResults = docs
           state.paginate = paginateOptions
-          toast({
-            title: 'Search Results fetched successfully!',
-          })
+          // toast({
+          //   title: 'Search Results fetched successfully!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({

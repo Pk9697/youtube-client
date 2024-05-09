@@ -72,9 +72,9 @@ const channelSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           state.channelInfo = action.payload.data
-          toast({
-            title: 'User Channel Fetched!',
-          })
+          // toast({
+          //   title: 'User Channel Fetched!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({
@@ -98,9 +98,9 @@ const channelSlice = createSlice({
       .addCase(fetchUserSubscribedToChannels.fulfilled, (state, action) => {
         if (action.payload?.success) {
           state.subscribedToChannelsList = action.payload.data
-          toast({
-            title: 'User Subscribed to Channels fetched successfully!',
-          })
+          // toast({
+          //   title: 'User Subscribed to Channels fetched successfully!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({

@@ -32,9 +32,9 @@ const videosSlice = createSlice({
           const { docs, ...paginateOptions } = action.payload.data || {}
           state.videosList = docs
           state.paginate = paginateOptions
-          toast({
-            title: action.payload?.message || 'Videos fetched successfully!',
-          })
+          // toast({
+          //   title: action.payload?.message || 'Videos fetched successfully!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({
@@ -62,9 +62,9 @@ const videosSlice = createSlice({
           const { docs, ...paginateOptions } = action.payload.data || {}
           state.videosList = docs
           state.paginate = paginateOptions
-          toast({
-            title: 'Channel Videos Fetched!',
-          })
+          // toast({
+          //   title: 'Channel Videos Fetched!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({
@@ -90,9 +90,9 @@ const videosSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           state.videosList = action.payload.data
-          toast({
-            title: action.payload?.message || 'Videos fetched successfully!',
-          })
+          // toast({
+          //   title: action.payload?.message || 'Videos fetched successfully!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({
@@ -118,9 +118,9 @@ const videosSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           state.videosList = action.payload.data
-          toast({
-            title: action.payload?.message || 'Videos fetched successfully!',
-          })
+          // toast({
+          //   title: action.payload?.message || 'Videos fetched successfully!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({

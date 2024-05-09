@@ -256,9 +256,9 @@ const authSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           state.isLoggedIn = true
-          toast({
-            title: 'Access Token verified successfully!',
-          })
+          // toast({
+          //   title: 'Access Token verified successfully!',
+          // })
         } else {
           state.isLoggedIn = false
           state.accessToken = null

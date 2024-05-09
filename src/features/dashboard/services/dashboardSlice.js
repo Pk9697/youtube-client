@@ -47,9 +47,9 @@ const dashboardSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           state.dashboardStats = action.payload.data
-          toast({
-            title: 'Dashboard Stats fetched successfully',
-          })
+          // toast({
+          //   title: 'Dashboard Stats fetched successfully',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({
@@ -76,9 +76,9 @@ const dashboardSlice = createSlice({
           const { docs, ...paginateOptions } = action.payload.data || {}
           state.dashboardVideos = docs
           state.paginate = paginateOptions
-          toast({
-            title: 'Dashboard Stats fetched successfully',
-          })
+          // toast({
+          //   title: 'Dashboard Stats fetched successfully',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({

@@ -46,9 +46,9 @@ const videoSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           state.videoDetails = action.payload.data
-          toast({
-            title: action.payload?.message || 'Videos fetched successfully!',
-          })
+          // toast({
+          //   title: action.payload?.message || 'Videos fetched successfully!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({
@@ -124,9 +124,9 @@ const videoSlice = createSlice({
           const { docs, ...paginateOptions } = action.payload.data || {}
           state.comments = docs
           state.paginate = paginateOptions
-          toast({
-            title: 'Video comments fetched successfully!',
-          })
+          // toast({
+          //   title: 'Video comments fetched successfully!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({

@@ -57,9 +57,9 @@ const playlistSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           state.channelPlaylists = action.payload.data
-          toast({
-            title: 'Channel Playlists fetched successfully!',
-          })
+          // toast({
+          //   title: 'Channel Playlists fetched successfully!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({
@@ -85,9 +85,9 @@ const playlistSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           state.currentPlaylist = action.payload.data
-          toast({
-            title: 'Current Playlist fetched successfully!',
-          })
+          // toast({
+          //   title: 'Current Playlist fetched successfully!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({
@@ -116,9 +116,9 @@ const playlistSlice = createSlice({
         (state, action) => {
           if (action.payload?.success) {
             state.likedVideosPlaylistId = action.payload.data
-            toast({
-              title: 'Current Playlist fetched successfully!',
-            })
+            // toast({
+            //   title: 'Current Playlist fetched successfully!',
+            // })
           } else {
             state.error = action.payload?.message || 'server error'
             toast({
@@ -147,9 +147,9 @@ const playlistSlice = createSlice({
         (state, action) => {
           if (action.payload?.success) {
             state.watchLaterPlaylistId = action.payload.data
-            toast({
-              title: 'Current Playlist fetched successfully!',
-            })
+            // toast({
+            //   title: 'Current Playlist fetched successfully!',
+            // })
           } else {
             state.error = action.payload?.message || 'server error'
             toast({
@@ -178,9 +178,9 @@ const playlistSlice = createSlice({
         state.inProgress = false
         if (action.payload?.success) {
           state.loggedInUserPlaylists = action.payload.data
-          toast({
-            title: 'Channel Playlists fetched successfully!',
-          })
+          // toast({
+          //   title: 'Channel Playlists fetched successfully!',
+          // })
         } else {
           state.error = action.payload?.message || 'server error'
           toast({
