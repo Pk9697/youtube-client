@@ -84,6 +84,7 @@ Video.Image = function VideoImage({ className, ...restProps }) {
         className
       )}
       alt="Video Thumbnail"
+      loading="lazy"
       {...restProps}
     />
   )
@@ -235,6 +236,7 @@ Video.AvatarLink = function VideoAvatarLink({
         <AvatarImage
           src={src}
           className={twMerge('', className)}
+          loading="lazy"
           {...restProps}
         />
         <AvatarFallback>
