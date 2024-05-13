@@ -7,7 +7,6 @@ import {
   EllipsisVerticalIcon,
 } from 'lucide-react'
 import Video from '../components/Video'
-import Loader from '@/components/Loader'
 import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import {
@@ -22,6 +21,7 @@ import {
   PlaylistDialogContainer,
   useWatchLaterPlaylist,
 } from '@/features/playlist'
+import VideoPlayerSkeletonContainer from '../skeletons/VideoPlayerSkeletonContainer'
 
 function VideoPlayerContainer({
   videoDetails = {},
@@ -62,121 +62,111 @@ function VideoPlayerContainer({
     dispatch(toggleSubscription({ accessToken, userId }))
   }
 
-  return (
-    <Loader inProgress={inProgress}>
-      <Video.PlayerContainer>
-        <Video.Player src={getPublicUrl(videoFile)}>
-          Your browser does not support the video tag.
-        </Video.Player>
-        <Video.Title>{title}</Video.Title>
-        <Video.Details className="flex-wrap">
-          <Video.Row>
-            <Video.AvatarLink
-              src={getPublicUrl(avatar)}
-              to={`${ROUTES.PROFILE}/${userName}`}
-            />
-            <Video.Meta>
-              <Video.TitleLink to={`${ROUTES.PROFILE}/${userName}`}>
-                {fullName}
-              </Video.TitleLink>
-              <Video.Text>
-                {formatViews(subscribersCount)} Subscribers
-              </Video.Text>
-            </Video.Meta>
-            {isSubscribed ? (
-              <Video.Button
-                disabled={inProgressSubscription}
-                onClick={handleToggleSubscription}
-                variant="destructive"
-              >
-                Unsubscribe
-              </Video.Button>
+  return inProgress ? (
+    <VideoPlayerSkeletonContainer />
+  ) : (
+    <Video.PlayerContainer>
+      <Video.Player src={getPublicUrl(videoFile)}>
+        Your browser does not support the video tag.
+      </Video.Player>
+      <Video.Title>{title}</Video.Title>
+      <Video.Details className="flex-wrap">
+        <Video.Row>
+          <Video.AvatarLink
+            src={getPublicUrl(avatar)}
+            to={`${ROUTES.PROFILE}/${userName}`}
+          />
+          <Video.Meta>
+            <Video.TitleLink to={`${ROUTES.PROFILE}/${userName}`}>
+              {fullName}
+            </Video.TitleLink>
+            <Video.Text>{formatViews(subscribersCount)} Subscribers</Video.Text>
+          </Video.Meta>
+          {isSubscribed ? (
+            <Video.Button
+              disabled={inProgressSubscription}
+              onClick={handleToggleSubscription}
+              variant="destructive"
+            >
+              Unsubscribe
+            </Video.Button>
+          ) : (
+            <Video.Button
+              disabled={inProgressSubscription}
+              onClick={handleToggleSubscription}
+            >
+              Subscribe
+            </Video.Button>
+          )}
+        </Video.Row>
+        <Video.Row className="ml-auto">
+          <Video.Button
+            onClick={() => dispatch(toggleLikeVideo({ accessToken, videoId }))}
+          >
+            {isLiked ? (
+              <ThumbsUpIcon className="mr-2 size-5" fill="skyblue" />
             ) : (
-              <Video.Button
-                disabled={inProgressSubscription}
-                onClick={handleToggleSubscription}
-              >
-                Subscribe
-              </Video.Button>
+              <ThumbsUpIcon className="mr-2 size-5" />
             )}
-          </Video.Row>
-          <Video.Row className="ml-auto">
-            <Video.Button
-              onClick={() =>
-                dispatch(toggleLikeVideo({ accessToken, videoId }))
-              }
-            >
-              {isLiked ? (
-                <ThumbsUpIcon className="mr-2 size-5" fill="skyblue" />
-              ) : (
-                <ThumbsUpIcon className="mr-2 size-5" />
-              )}
-              {formatViews(likesCount)}
-            </Video.Button>
-            <Video.Button
-              onClick={() =>
-                dispatch(toggleDislikeVideo({ accessToken, videoId }))
-              }
-            >
-              {isDisliked ? (
-                <ThumbsDownIcon className="mr-2 size-5" fill="red" />
-              ) : (
-                <ThumbsDownIcon className="mr-2 size-5" />
-              )}
-              {formatViews(dislikesCount)}
-            </Video.Button>
-            <PlaylistDialogContainer videoId={videoId}>
-              <Video.DropdownMenu>
-                <Video.DropdownMenuTrigger asChild>
-                  <Video.Button
-                    aria-haspopup="true"
-                    size="icon"
-                    variant="ghost"
+            {formatViews(likesCount)}
+          </Video.Button>
+          <Video.Button
+            onClick={() =>
+              dispatch(toggleDislikeVideo({ accessToken, videoId }))
+            }
+          >
+            {isDisliked ? (
+              <ThumbsDownIcon className="mr-2 size-5" fill="red" />
+            ) : (
+              <ThumbsDownIcon className="mr-2 size-5" />
+            )}
+            {formatViews(dislikesCount)}
+          </Video.Button>
+          <PlaylistDialogContainer videoId={videoId}>
+            <Video.DropdownMenu>
+              <Video.DropdownMenuTrigger asChild>
+                <Video.Button aria-haspopup="true" size="icon" variant="ghost">
+                  <EllipsisVerticalIcon className="size-4" />
+                </Video.Button>
+              </Video.DropdownMenuTrigger>
+              <Video.DropdownMenuContent>
+                <PlaylistDialogContainer.DialogTrigger asChild>
+                  <Video.DropdownMenuItem>
+                    <ListPlusIcon className="size-4" />
+                    Save to playlist
+                  </Video.DropdownMenuItem>
+                </PlaylistDialogContainer.DialogTrigger>
+                {isVideoSavedInWatchLaterPlaylist(videoId) ? (
+                  <Video.DropdownMenuItem
+                    onClick={() =>
+                      handleRemoveVideoFromWatchLaterPlaylist(videoId)
+                    }
                   >
-                    <EllipsisVerticalIcon className="size-4" />
-                  </Video.Button>
-                </Video.DropdownMenuTrigger>
-                <Video.DropdownMenuContent>
-                  <PlaylistDialogContainer.DialogTrigger asChild>
-                    <Video.DropdownMenuItem>
-                      <ListPlusIcon className="size-4" />
-                      Save to playlist
-                    </Video.DropdownMenuItem>
-                  </PlaylistDialogContainer.DialogTrigger>
-                  {isVideoSavedInWatchLaterPlaylist(videoId) ? (
-                    <Video.DropdownMenuItem
-                      onClick={() =>
-                        handleRemoveVideoFromWatchLaterPlaylist(videoId)
-                      }
-                    >
-                      <ClockIcon className="size-4" />
-                      Remove from Watch Later
-                    </Video.DropdownMenuItem>
-                  ) : (
-                    <Video.DropdownMenuItem
-                      onClick={() =>
-                        handleAddVideoToWatchLaterPlaylist(videoId)
-                      }
-                    >
-                      <ClockIcon className="size-4" />
-                      Save to Watch Later
-                    </Video.DropdownMenuItem>
-                  )}
-                </Video.DropdownMenuContent>
-              </Video.DropdownMenu>
-            </PlaylistDialogContainer>
-          </Video.Row>
-        </Video.Details>
-        <Video.Card>
-          <Video.CardHeader>
-            <Video.CardTitle className="text-sm">
-              {formatViews(views)} views • {formatTimeAgo(createdAt)}
-            </Video.CardTitle>
-            <Video.CardDescription>{description}</Video.CardDescription>
-          </Video.CardHeader>
-        </Video.Card>
-      </Video.PlayerContainer>
-    </Loader>
+                    <ClockIcon className="size-4" />
+                    Remove from Watch Later
+                  </Video.DropdownMenuItem>
+                ) : (
+                  <Video.DropdownMenuItem
+                    onClick={() => handleAddVideoToWatchLaterPlaylist(videoId)}
+                  >
+                    <ClockIcon className="size-4" />
+                    Save to Watch Later
+                  </Video.DropdownMenuItem>
+                )}
+              </Video.DropdownMenuContent>
+            </Video.DropdownMenu>
+          </PlaylistDialogContainer>
+        </Video.Row>
+      </Video.Details>
+      <Video.Card>
+        <Video.CardHeader>
+          <Video.CardTitle className="text-sm">
+            {formatViews(views)} views • {formatTimeAgo(createdAt)}
+          </Video.CardTitle>
+          <Video.CardDescription>{description}</Video.CardDescription>
+        </Video.CardHeader>
+      </Video.Card>
+    </Video.PlayerContainer>
   )
 }
 

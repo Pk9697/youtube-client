@@ -12,7 +12,6 @@ import {
   fetchVideo,
   fetchVideoComments,
 } from '@/features/videos'
-import Loader from '@/components/Loader'
 import { fetchCurrentPlaylist } from '@/features/playlist'
 import { fetchVideosByQuery } from '@/features/search'
 
@@ -73,43 +72,39 @@ function View() {
   }
 
   return (
-    <Loader
-      inProgress={inProgressVideoFetching || inProgressSearchResultsFetching}
+    <div
+      className={twMerge(
+        'grid w-full items-start gap-4 p-4',
+        isSidebarOpen ? 'xl:grid-cols-[6fr_3fr]' : 'lg:grid-cols-[6fr_3fr]'
+      )}
     >
-      <div
-        className={twMerge(
-          'grid w-full items-start gap-4 p-4',
-          isSidebarOpen ? 'xl:grid-cols-[6fr_3fr]' : 'lg:grid-cols-[6fr_3fr]'
-        )}
-      >
-        <div className="flex flex-col gap-4">
-          <VideoPlayerContainer
-            videoDetails={videoDetails}
-            inProgress={inProgressVideoFetching}
-            inProgressSubscription={inProgressSubscription}
-          />
-          <VideoCommentsContainer
-            videoOwnerId={videoDetails?.owner?._id}
-            videoId={videoId}
-            comments={comments}
-            paginate={paginate}
-            handleChangePage={handleChangePage}
-          />
-        </div>
-        <div className="flex flex-col gap-4">
-          {playlistId && (
-            <VideoPlaylistContainer
-              currentPlaylist={currentPlaylist}
-              currentVideoId={videoId}
-            />
-          )}
-          <VideoRecommendationsContainer
-            videosList={searchResults}
-            inProgress={inProgressSearchResultsFetching}
-          />
-        </div>
+      <div className="flex flex-col gap-4">
+        <VideoPlayerContainer
+          videoDetails={videoDetails}
+          inProgress={inProgressVideoFetching}
+          inProgressSubscription={inProgressSubscription}
+        />
+        <VideoCommentsContainer
+          videoOwnerId={videoDetails?.owner?._id}
+          videoId={videoId}
+          comments={comments}
+          paginate={paginate}
+          handleChangePage={handleChangePage}
+        />
       </div>
-    </Loader>
+      <div className="flex flex-col gap-4">
+        {playlistId && (
+          <VideoPlaylistContainer
+            currentPlaylist={currentPlaylist}
+            currentVideoId={videoId}
+          />
+        )}
+        <VideoRecommendationsContainer
+          videosList={searchResults}
+          inProgress={inProgressSearchResultsFetching}
+        />
+      </div>
+    </div>
   )
 }
 
