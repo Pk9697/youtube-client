@@ -2,6 +2,7 @@ import PlaylistContainer from './layouts/PlaylistContainer'
 import Playlist from './components/Playlist'
 import PlaylistDialogContainer from './layouts/PlaylistDialogContainer'
 import PlaylistDashboardContainer from './layouts/PlaylistDashboardContainer'
+import PlaylistSkeleton from './skeletons/PlaylistSkeleton'
 import playlistReducer, {
   fetchChannelPlaylists,
   fetchCurrentPlaylist,
@@ -15,7 +16,6 @@ import playlistReducer, {
   deletePlaylist,
   editPlaylist,
 } from './services/playlistSlice'
-
 import useWatchLaterPlaylist from './hooks/useWatchLaterPlaylist'
 
 export {
@@ -36,4 +36,5 @@ export {
   sortLoggedInUserPlaylists,
   deletePlaylist,
   editPlaylist,
+  PlaylistSkeleton,
 }

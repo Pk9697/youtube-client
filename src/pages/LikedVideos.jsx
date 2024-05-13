@@ -1,12 +1,11 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchCurrentPlaylist } from '@/features/playlist'
+import { PlaylistSkeleton, fetchCurrentPlaylist } from '@/features/playlist'
 import Playlist from '@/features/playlist/components/Playlist'
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import { VideoPlaylistContainer2 } from '@/features/videos'
-import Loader from '@/components/Loader'
 
 function LikedVideos() {
   const dispatch = useDispatch()
@@ -34,8 +33,10 @@ function LikedVideos() {
   }, [loggedInUserPlaylists])
 
   return (
-    <Loader inProgress={inProgress}>
-      <div className="grid w-full items-start gap-4 p-4 sm:grid-cols-[1fr_2fr]">
+    <div className="grid w-full items-start gap-4 p-4 sm:grid-cols-[1fr_2fr]">
+      {inProgress ? (
+        <PlaylistSkeleton />
+      ) : (
         <Playlist>
           <Playlist.ImageContainerLink
             to={`${ROUTES.VIEW}?videoId=${videos[0]?._id}&playlistId=${_id}`}
@@ -62,9 +63,9 @@ function LikedVideos() {
             </Playlist.Meta>
           </Playlist.Details>
         </Playlist>
-        <VideoPlaylistContainer2 videosList={videos} />
-      </div>
-    </Loader>
+      )}
+      <VideoPlaylistContainer2 videosList={videos} inProgress={inProgress} />
+    </div>
   )
 }
 
