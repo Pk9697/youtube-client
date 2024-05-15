@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { APIUrls } from '@/utils/apiUrls'
+import createAsyncThunkWithLoadingAndError from '@/app/createAsyncThunkWithLoadingAndError'
 
 const fetchVideos = createAsyncThunk(
   'videos/fetchVideos',
@@ -23,62 +24,50 @@ const fetchVideos = createAsyncThunk(
   }
 )
 
-const fetchVideo = createAsyncThunk(
+const fetchVideo = createAsyncThunkWithLoadingAndError(
   'video/fetchVideo',
   async ({ accessToken, videoId }) => {
-    try {
-      const url = APIUrls.fetchVideo(videoId)
-      const response = await axios.get(url, {
+    const url = APIUrls.fetchVideo(videoId)
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
+  }
+)
+
+const toggleLikeVideo = createAsyncThunkWithLoadingAndError(
+  'video/toggleLikeVideo',
+  async ({ accessToken, videoId }) => {
+    const url = APIUrls.toggleLikeVideo(videoId)
+    const response = await axios.post(
+      url,
+      {},
+      {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+      }
+    )
+    return response.data
   }
 )
 
-const toggleLikeVideo = createAsyncThunk(
-  'video/toggleLikeVideo',
-  async ({ accessToken, videoId }) => {
-    try {
-      const url = APIUrls.toggleLikeVideo(videoId)
-      const response = await axios.post(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
-  }
-)
-
-const toggleDislikeVideo = createAsyncThunk(
+const toggleDislikeVideo = createAsyncThunkWithLoadingAndError(
   'video/toggleDislikeVideo',
   async ({ accessToken, videoId }) => {
-    try {
-      const url = APIUrls.toggleDislikeVideo(videoId)
-      const response = await axios.post(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.toggleDislikeVideo(videoId)
+    const response = await axios.post(
+      url,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    return response.data
   }
 )
 

@@ -18,8 +18,6 @@ const initialState = {
   videoDetails: null,
   comments: [],
   paginate: null,
-  error: null,
-  inProgress: false,
 }
 
 const videoSlice = createSlice({
@@ -36,37 +34,10 @@ const videoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchVideo.pending, (state) => {
-        state.videoDetails = null
-        state.error = null
-        state.comments = []
-        state.inProgress = true
-      })
       .addCase(fetchVideo.fulfilled, (state, action) => {
-        state.inProgress = false
         if (action.payload?.success) {
           state.videoDetails = action.payload.data
-          // toast({
-          //   title: action.payload?.message || 'Videos fetched successfully!',
-          // })
-        } else {
-          state.error = action.payload?.message || 'server error'
-          toast({
-            variant: 'destructive',
-            title: state.error,
-          })
         }
-      })
-      .addCase(fetchVideo.rejected, (state, action) => {
-        state.inProgress = false
-        state.error = action.payload?.message || 'server error'
-        toast({
-          variant: 'destructive',
-          title: state.error,
-        })
-      })
-      .addCase(toggleLikeVideo.pending, (state) => {
-        state.error = null
       })
       .addCase(toggleLikeVideo.fulfilled, (state, action) => {
         if (action.payload?.success) {
@@ -74,23 +45,7 @@ const videoSlice = createSlice({
           toast({
             title: action.payload?.message || 'Like toggled successfully!',
           })
-        } else {
-          state.error = action.payload?.message || 'server error'
-          toast({
-            variant: 'destructive',
-            title: state.error,
-          })
         }
-      })
-      .addCase(toggleLikeVideo.rejected, (state, action) => {
-        state.error = action.payload?.message || 'server error'
-        toast({
-          variant: 'destructive',
-          title: state.error,
-        })
-      })
-      .addCase(toggleDislikeVideo.pending, (state) => {
-        state.error = null
       })
       .addCase(toggleDislikeVideo.fulfilled, (state, action) => {
         if (action.payload?.success) {
@@ -98,28 +53,15 @@ const videoSlice = createSlice({
           toast({
             title: action.payload?.message || 'Dislike toggled successfully!',
           })
-        } else {
-          state.error = action.payload?.message || 'server error'
-          toast({
-            variant: 'destructive',
-            title: state.error,
-          })
         }
-      })
-      .addCase(toggleDislikeVideo.rejected, (state, action) => {
-        state.error = action.payload?.message || 'server error'
-        toast({
-          variant: 'destructive',
-          title: state.error,
-        })
       })
       .addCase(fetchVideoComments.pending, (state) => {
         state.error = null
         state.comments = []
-        state.inProgress = true
+        // state.inProgress = true
       })
       .addCase(fetchVideoComments.fulfilled, (state, action) => {
-        state.inProgress = false
+        // state.inProgress = false
         if (action.payload?.success) {
           const { docs, ...paginateOptions } = action.payload.data || {}
           state.comments = docs
@@ -136,7 +78,7 @@ const videoSlice = createSlice({
         }
       })
       .addCase(fetchVideoComments.rejected, (state, action) => {
-        state.inProgress = false
+        // state.inProgress = false
         state.error = action.payload?.message || 'server error'
         toast({
           variant: 'destructive',

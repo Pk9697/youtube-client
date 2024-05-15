@@ -22,6 +22,7 @@ import {
   useWatchLaterPlaylist,
 } from '@/features/playlist'
 import VideoPlayerSkeletonContainer from '../skeletons/VideoPlayerSkeletonContainer'
+import useApp from '@/app/useApp'
 
 function VideoPlayerContainer({
   videoDetails = {},
@@ -29,6 +30,11 @@ function VideoPlayerContainer({
   inProgressSubscription = false,
 }) {
   const dispatch = useDispatch()
+  const { isLoading: isLoadingLikeVideo } = useApp('video/toggleLikeVideo')
+  const { isLoading: isLoadingDislikeVideo } = useApp(
+    'video/toggleDislikeVideo'
+  )
+
   const { accessToken } = useSelector((state) => state.auth)
   const {
     isVideoSavedInWatchLaterPlaylist,
@@ -101,6 +107,7 @@ function VideoPlayerContainer({
         </Video.Row>
         <Video.Row className="ml-auto">
           <Video.Button
+            disabled={isLoadingLikeVideo}
             onClick={() => dispatch(toggleLikeVideo({ accessToken, videoId }))}
           >
             {isLiked ? (
@@ -111,6 +118,7 @@ function VideoPlayerContainer({
             {formatViews(likesCount)}
           </Video.Button>
           <Video.Button
+            disabled={isLoadingDislikeVideo}
             onClick={() =>
               dispatch(toggleDislikeVideo({ accessToken, videoId }))
             }

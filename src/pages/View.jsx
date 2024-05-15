@@ -14,6 +14,7 @@ import {
 } from '@/features/videos'
 import { fetchCurrentPlaylist } from '@/features/playlist'
 import { fetchVideosByQuery } from '@/features/search'
+import useApp from '@/app/useApp'
 
 function View() {
   const dispatch = useDispatch()
@@ -21,23 +22,17 @@ function View() {
   const videoId = searchParams.get('videoId')
   const playlistId = searchParams.get('playlistId')
 
+  const { isLoading: isLoadingFetchVideo } = useApp('video/fetchVideo')
+
   const { accessToken } = useSelector((state) => state.auth)
-
-  const {
-    videoDetails,
-    comments,
-    inProgress: inProgressVideoFetching,
-    paginate,
-  } = useSelector((state) => state.video)
-
+  const { videoDetails, comments, paginate } = useSelector(
+    (state) => state.video
+  )
   const { inProgress: inProgressSubscription } = useSelector(
     (state) => state.subscription
   )
-
   const { currentPlaylist } = useSelector((state) => state.playlist)
-
   const { isSidebarOpen } = useSelector((state) => state.app)
-
   const { searchResults, inProgress: inProgressSearchResultsFetching } =
     useSelector((state) => state.search)
 
@@ -81,7 +76,7 @@ function View() {
       <div className="flex flex-col gap-4">
         <VideoPlayerContainer
           videoDetails={videoDetails}
-          inProgress={inProgressVideoFetching}
+          inProgress={isLoadingFetchVideo}
           inProgressSubscription={inProgressSubscription}
         />
         <VideoCommentsContainer
