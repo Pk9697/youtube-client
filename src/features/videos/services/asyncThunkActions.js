@@ -1,26 +1,21 @@
 import axios from 'axios'
-import { createAsyncThunk } from '@reduxjs/toolkit'
 import { APIUrls } from '@/utils/apiUrls'
 import createAsyncThunkWithLoadingAndError from '@/app/createAsyncThunkWithLoadingAndError'
 
-const fetchVideos = createAsyncThunk(
+const fetchVideos = createAsyncThunkWithLoadingAndError(
   'videos/fetchVideos',
   async ({ accessToken, page = 1, limit = 10 }) => {
-    try {
-      const url = APIUrls.fetchVideos(page, limit)
-      const response = await axios.post(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.fetchVideos(page, limit)
+    const response = await axios.post(
+      url,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    return response.data
   }
 )
 
@@ -71,168 +66,132 @@ const toggleDislikeVideo = createAsyncThunkWithLoadingAndError(
   }
 )
 
-const fetchVideoComments = createAsyncThunk(
+const fetchVideoComments = createAsyncThunkWithLoadingAndError(
   'video/fetchVideoComments',
   async ({ accessToken, videoId, page = 1, limit = 10 }) => {
-    try {
-      const url = APIUrls.fetchVideoComments(videoId, page, limit)
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.fetchVideoComments(videoId, page, limit)
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const addComment = createAsyncThunk(
+const addComment = createAsyncThunkWithLoadingAndError(
   'video/addComment',
   async ({ accessToken, formFields, videoId }) => {
-    try {
-      const url = APIUrls.addComment(videoId)
-      const response = await axios.post(url, formFields, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.addComment(videoId)
+    const response = await axios.post(url, formFields, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const toggleLikeComment = createAsyncThunk(
+const toggleLikeComment = createAsyncThunkWithLoadingAndError(
   'video/toggleLikeComment',
   async ({ accessToken, commentId }) => {
-    try {
-      const url = APIUrls.toggleLikeComment(commentId)
-      const response = await axios.post(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.toggleLikeComment(commentId)
+    const response = await axios.post(
+      url,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    return response.data
   }
 )
 
-const toggleDislikeComment = createAsyncThunk(
+const toggleDislikeComment = createAsyncThunkWithLoadingAndError(
   'video/toggleDislikeComment',
   async ({ accessToken, commentId }) => {
-    try {
-      const url = APIUrls.toggleDislikeComment(commentId)
-      const response = await axios.post(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.toggleDislikeComment(commentId)
+    const response = await axios.post(
+      url,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    return response.data
   }
 )
 
-const deleteComment = createAsyncThunk(
+const deleteComment = createAsyncThunkWithLoadingAndError(
   'video/deleteComment',
   async ({ accessToken, commentId }) => {
-    try {
-      const url = APIUrls.deleteComment(commentId)
-      const response = await axios.delete(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.deleteComment(commentId)
+    const response = await axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const fetchChannelVideos = createAsyncThunk(
+const fetchChannelVideos = createAsyncThunkWithLoadingAndError(
   'videos/fetchChannelVideos',
   async ({ accessToken, userName }) => {
-    try {
-      const url = APIUrls.fetchChannelVideos(userName)
-      const response = await axios.post(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.fetchChannelVideos(userName)
+    const response = await axios.post(
+      url,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    return response.data
   }
 )
 
-const fetchSubscriptionsVideos = createAsyncThunk(
+const fetchSubscriptionsVideos = createAsyncThunkWithLoadingAndError(
   'videos/fetchSubscriptionsVideos',
   async ({ accessToken }) => {
-    try {
-      const url = APIUrls.fetchSubscriptionsVideos()
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.fetchSubscriptionsVideos()
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const fetchLoggedInUserWatchHistory = createAsyncThunk(
+const fetchLoggedInUserWatchHistory = createAsyncThunkWithLoadingAndError(
   'videos/fetchLoggedInUserWatchHistory',
   async ({ accessToken }) => {
-    try {
-      const url = APIUrls.fetchLoggedInUserWatchHistory()
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.fetchLoggedInUserWatchHistory()
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const editComment = createAsyncThunk(
+const editComment = createAsyncThunkWithLoadingAndError(
   'video/editComment',
   async ({ accessToken, commentId, formFields }) => {
-    try {
-      const url = APIUrls.editComment(commentId)
-      const response = await axios.patch(url, formFields, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.editComment(commentId)
+    const response = await axios.patch(url, formFields, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 

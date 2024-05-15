@@ -30,8 +30,10 @@ function VideoPlayerContainer({
   inProgressSubscription = false,
 }) {
   const dispatch = useDispatch()
-  const { isLoading: isLoadingLikeVideo } = useApp('video/toggleLikeVideo')
-  const { isLoading: isLoadingDislikeVideo } = useApp(
+  const { isLoading: isLoadingToggleLikeVideo } = useApp(
+    'video/toggleLikeVideo'
+  )
+  const { isLoading: isLoadingToggleDislikeVideo } = useApp(
     'video/toggleDislikeVideo'
   )
 
@@ -107,7 +109,7 @@ function VideoPlayerContainer({
         </Video.Row>
         <Video.Row className="ml-auto">
           <Video.Button
-            disabled={isLoadingLikeVideo}
+            disabled={isLoadingToggleLikeVideo}
             onClick={() => dispatch(toggleLikeVideo({ accessToken, videoId }))}
           >
             {isLiked ? (
@@ -118,7 +120,7 @@ function VideoPlayerContainer({
             {formatViews(likesCount)}
           </Video.Button>
           <Video.Button
-            disabled={isLoadingDislikeVideo}
+            disabled={isLoadingToggleDislikeVideo}
             onClick={() =>
               dispatch(toggleDislikeVideo({ accessToken, videoId }))
             }

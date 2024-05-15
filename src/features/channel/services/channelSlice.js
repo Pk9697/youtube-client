@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { toast } from '@/components/ui/use-toast'
 import {
   fetchChannel,
   fetchUserSubscribedToChannels,
@@ -9,8 +8,6 @@ import {
 const initialState = {
   channelInfo: null,
   subscribedToChannelsList: [],
-  error: null,
-  inProgress: false,
 }
 
 const channelSlice = createSlice({
@@ -62,60 +59,15 @@ const channelSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChannel.pending, (state) => {
-        state.channelInfo = null
-        state.subscribedToChannelsList = []
-        state.error = null
-        state.inProgress = true
-      })
       .addCase(fetchChannel.fulfilled, (state, action) => {
-        state.inProgress = false
         if (action.payload?.success) {
           state.channelInfo = action.payload.data
-          // toast({
-          //   title: 'User Channel Fetched!',
-          // })
-        } else {
-          state.error = action.payload?.message || 'server error'
-          toast({
-            variant: 'destructive',
-            title: state.error,
-          })
         }
-      })
-      .addCase(fetchChannel.rejected, (state, action) => {
-        state.inProgress = false
-        state.error = action.payload?.message || 'server error'
-        toast({
-          variant: 'destructive',
-          title: state.error,
-        })
-      })
-      .addCase(fetchUserSubscribedToChannels.pending, (state) => {
-        state.subscribedToChannelsList = []
-        state.error = null
       })
       .addCase(fetchUserSubscribedToChannels.fulfilled, (state, action) => {
         if (action.payload?.success) {
           state.subscribedToChannelsList = action.payload.data
-          // toast({
-          //   title: 'User Subscribed to Channels fetched successfully!',
-          // })
-        } else {
-          state.error = action.payload?.message || 'server error'
-          toast({
-            variant: 'destructive',
-            title: state.error,
-          })
         }
-      })
-      .addCase(fetchUserSubscribedToChannels.rejected, (state, action) => {
-        state.inProgress = false
-        state.error = action.payload?.message || 'server error'
-        toast({
-          variant: 'destructive',
-          title: state.error,
-        })
       })
   },
 })

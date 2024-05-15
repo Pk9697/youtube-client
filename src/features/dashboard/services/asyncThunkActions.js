@@ -1,110 +1,86 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { APIUrls } from '@/utils/apiUrls'
+import createAsyncThunkWithLoadingAndError from '@/app/createAsyncThunkWithLoadingAndError'
 
-const fetchDashboardStats = createAsyncThunk(
+const fetchDashboardStats = createAsyncThunkWithLoadingAndError(
   'dashboard/fetchDashboardStats',
   async ({ accessToken }) => {
-    try {
-      const url = APIUrls.fetchDashboardStats()
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.fetchDashboardStats()
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const fetchDashboardVideos = createAsyncThunk(
+const fetchDashboardVideos = createAsyncThunkWithLoadingAndError(
   'dashboard/fetchDashboardVideos',
   async ({ accessToken, page = 1, limit = 10 }) => {
-    try {
-      const url = APIUrls.fetchDashboardVideos(page, limit)
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.fetchDashboardVideos(page, limit)
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const toggleVideoPublishStatus = createAsyncThunk(
+const toggleVideoPublishStatus = createAsyncThunkWithLoadingAndError(
   'dashboard/toggleVideoPublishStatus',
   async ({ accessToken, videoId }) => {
-    try {
-      const url = APIUrls.toggleVideoPublishStatus(videoId)
-      const response = await axios.patch(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.toggleVideoPublishStatus(videoId)
+    const response = await axios.patch(
+      url,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    return response.data
   }
 )
 
-const deleteVideo = createAsyncThunk(
+const deleteVideo = createAsyncThunkWithLoadingAndError(
   'dashboard/deleteVideo',
   async ({ accessToken, videoId }) => {
-    try {
-      const url = APIUrls.deleteVideo(videoId)
-      const response = await axios.delete(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.deleteVideo(videoId)
+    const response = await axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const uploadVideo = createAsyncThunk(
+const uploadVideo = createAsyncThunkWithLoadingAndError(
   'dashboard/uploadVideo',
   async ({ accessToken, formFields = {} }) => {
-    try {
-      const url = APIUrls.uploadVideo()
-      const response = await axios.post(url, formFields, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.uploadVideo()
+    const response = await axios.post(url, formFields, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const editVideo = createAsyncThunk(
+const editVideo = createAsyncThunkWithLoadingAndError(
   'dashboard/editVideo',
   async ({ accessToken, formFields = {}, videoId }) => {
-    try {
-      const url = APIUrls.editVideo(videoId)
-      const response = await axios.patch(url, formFields, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.editVideo(videoId)
+    const response = await axios.patch(url, formFields, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 

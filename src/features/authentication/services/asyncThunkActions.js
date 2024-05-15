@@ -1,29 +1,28 @@
 import axios from 'axios'
-import { createAsyncThunk } from '@reduxjs/toolkit'
 import { APIUrls } from '@/utils/apiUrls'
+import createAsyncThunkWithLoadingAndError from '@/app/createAsyncThunkWithLoadingAndError'
 
-const login = createAsyncThunk('auth/login', async (formFields) => {
-  try {
+const login = createAsyncThunkWithLoadingAndError(
+  'auth/login',
+  async (formFields) => {
     const url = APIUrls.login()
     const response = await axios.post(url, formFields)
     return response.data
-  } catch (err) {
-    return err.response?.data
   }
-})
+)
 
-const register = createAsyncThunk('auth/register', async (formFields) => {
-  try {
+const register = createAsyncThunkWithLoadingAndError(
+  'auth/register',
+  async (formFields) => {
     const url = APIUrls.register()
     const response = await axios.post(url, formFields)
     return response.data
-  } catch (err) {
-    return err.response?.data
   }
-})
+)
 
-const logout = createAsyncThunk('auth/logout', async ({ accessToken }) => {
-  try {
+const logout = createAsyncThunkWithLoadingAndError(
+  'auth/logout',
+  async ({ accessToken }) => {
     const url = APIUrls.logout()
     const response = await axios.post(
       url,
@@ -35,100 +34,77 @@ const logout = createAsyncThunk('auth/logout', async ({ accessToken }) => {
       }
     )
     return response.data
-  } catch (err) {
-    return err.response?.data
   }
-})
+)
 
-const updateAvatar = createAsyncThunk(
+const updateAvatar = createAsyncThunkWithLoadingAndError(
   'auth/updateAvatar',
   async ({ accessToken, formFields }) => {
-    try {
-      const url = APIUrls.updateAvatar()
-      const response = await axios.patch(url, formFields, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.updateAvatar()
+    const response = await axios.patch(url, formFields, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const updateCoverImage = createAsyncThunk(
+const updateCoverImage = createAsyncThunkWithLoadingAndError(
   'auth/updateCoverImage',
   async ({ accessToken, formFields }) => {
-    try {
-      const url = APIUrls.updateCoverImage()
-      const response = await axios.patch(url, formFields, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.updateCoverImage()
+    const response = await axios.patch(url, formFields, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const updateAccountDetails = createAsyncThunk(
+const updateAccountDetails = createAsyncThunkWithLoadingAndError(
   'auth/updateAccountDetails',
   async ({ accessToken, formFields }) => {
-    try {
-      const url = APIUrls.updateAccountDetails()
-      const response = await axios.patch(url, formFields, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.updateAccountDetails()
+    const response = await axios.patch(url, formFields, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const updatePassword = createAsyncThunk(
+const updatePassword = createAsyncThunkWithLoadingAndError(
   'auth/updatePassword',
   async ({ accessToken, formFields }) => {
-    try {
-      const url = APIUrls.updatePassword()
-      const response = await axios.patch(url, formFields, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.updatePassword()
+    const response = await axios.patch(url, formFields, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const verifyAccessToken = createAsyncThunk(
+const verifyAccessToken = createAsyncThunkWithLoadingAndError(
   'auth/verifyAccessToken',
   async ({ accessToken }) => {
-    try {
-      const url = APIUrls.verifyAccessToken()
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.verifyAccessToken()
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-// const refreshAccessToken = createAsyncThunk(
+// const refreshAccessToken = createAsyncThunkWithLoadingAndError(
 //   'auth/refreshAccessToken',
 //   async ({ refreshToken }) => {
-//     try {
 //       const url = APIUrls.refreshAccessToken()
 //       const response = await axios.post(
 //         url,
@@ -140,9 +116,6 @@ const verifyAccessToken = createAsyncThunk(
 //         }
 //       )
 //       return response.data
-//     } catch (err) {
-//       return err.response?.data
-//     }
 //   }
 // )
 
