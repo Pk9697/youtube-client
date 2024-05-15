@@ -21,20 +21,17 @@ function View() {
   const [searchParams] = useSearchParams()
   const videoId = searchParams.get('videoId')
   const playlistId = searchParams.get('playlistId')
-
-  const { isLoading: isLoadingFetchVideo } = useApp('video/fetchVideo')
-
   const { accessToken } = useSelector((state) => state.auth)
+  const { isLoading: isLoadingFetchVideo } = useApp('video/fetchVideo')
   const { videoDetails, comments, paginate } = useSelector(
     (state) => state.video
   )
-  const { inProgress: inProgressSubscription } = useSelector(
-    (state) => state.subscription
-  )
   const { currentPlaylist } = useSelector((state) => state.playlist)
   const { isSidebarOpen } = useSelector((state) => state.app)
-  const { searchResults, inProgress: inProgressSearchResultsFetching } =
-    useSelector((state) => state.search)
+  const { isLoading: isLoadingFetchVideoComments } = useApp(
+    'search/fetchVideosByQuery'
+  )
+  const { searchResults } = useSelector((state) => state.search)
 
   useEffect(() => {
     dispatch(updateSidebar(false))
@@ -77,7 +74,6 @@ function View() {
         <VideoPlayerContainer
           videoDetails={videoDetails}
           inProgress={isLoadingFetchVideo}
-          inProgressSubscription={inProgressSubscription}
         />
         <VideoCommentsContainer
           videoOwnerId={videoDetails?.owner?._id}
@@ -96,7 +92,7 @@ function View() {
         )}
         <VideoRecommendationsContainer
           videosList={searchResults}
-          inProgress={inProgressSearchResultsFetching}
+          inProgress={isLoadingFetchVideoComments}
         />
       </div>
     </div>

@@ -4,11 +4,15 @@ import {
   VideoSearchResultsContainer,
   fetchLoggedInUserWatchHistory,
 } from '@/features/videos'
+import useApp from '@/app/useApp'
 
 function History() {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
-  const { videosList, inProgress } = useSelector((state) => state.videos)
+  const { isLoading: isLoadingFetchLoggedInUserWatchHistory } = useApp(
+    'videos/fetchLoggedInUserWatchHistory'
+  )
+  const { videosList } = useSelector((state) => state.videos)
 
   useEffect(() => {
     dispatch(fetchLoggedInUserWatchHistory({ accessToken }))
@@ -18,7 +22,7 @@ function History() {
     <div className="p-4">
       <VideoSearchResultsContainer
         videosList={videosList}
-        inProgress={inProgress}
+        inProgress={isLoadingFetchLoggedInUserWatchHistory}
       />
     </div>
   )

@@ -6,10 +6,14 @@ import { getPublicUrl } from '@/utils/getPublicUrl'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import { VideoPlaylistContainer2 } from '@/features/videos'
 import { PlaylistSkeleton, fetchCurrentPlaylist } from '@/features/playlist'
+import useApp from '@/app/useApp'
 
 function WatchLater() {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
+  const { isLoading: isLoadingFetchCurrentPlaylist } = useApp(
+    'playlist/fetchCurrentPlaylist'
+  )
   const {
     currentPlaylist: {
       _id,
@@ -20,7 +24,6 @@ function WatchLater() {
       createdAt,
     } = {},
     watchLaterPlaylistId,
-    inProgress,
     loggedInUserPlaylists,
   } = useSelector((state) => state.playlist)
 
@@ -34,7 +37,7 @@ function WatchLater() {
 
   return (
     <div className="grid w-full items-start gap-4 p-4 sm:grid-cols-[1fr_2fr]">
-      {inProgress ? (
+      {isLoadingFetchCurrentPlaylist ? (
         <PlaylistSkeleton />
       ) : (
         <Playlist>
@@ -64,7 +67,10 @@ function WatchLater() {
           </Playlist.Details>
         </Playlist>
       )}
-      <VideoPlaylistContainer2 videosList={videos} inProgress={inProgress} />
+      <VideoPlaylistContainer2
+        videosList={videos}
+        inProgress={isLoadingFetchCurrentPlaylist}
+      />
     </div>
   )
 }

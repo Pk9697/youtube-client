@@ -9,6 +9,7 @@ function PlaylistCreateContainer() {
     handleChange,
     handleSubmit,
     handleSelectChange,
+    isLoadingCreatePlaylist,
   } = useCreatePlaylist()
 
   return (
@@ -57,7 +58,11 @@ function PlaylistCreateContainer() {
         </Playlist.Select>
       </Playlist.InputContainer>
 
-      <Playlist.Button type="submit" className="mt-4">
+      <Playlist.Button
+        disabled={isLoadingCreatePlaylist}
+        type="submit"
+        className="mt-4"
+      >
         Create
       </Playlist.Button>
     </Playlist.Form>

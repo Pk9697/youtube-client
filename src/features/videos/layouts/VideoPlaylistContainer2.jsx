@@ -1,23 +1,13 @@
-import { ClockIcon, EllipsisVerticalIcon, ListPlusIcon } from 'lucide-react'
 import Video from '../components/Video'
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import { formatDuration } from '@/utils/formatDuration'
 import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
-import {
-  PlaylistDialogContainer,
-  useWatchLaterPlaylist,
-} from '@/features/playlist'
 import VideoPlaylistSkeletonContainer2 from '../skeletons/VideoPlaylistSkeletonContainer2'
+import VideoDropdownMenuContainer from './VideoDropdownMenuContainer'
 
 function VideoPlaylistContainer2({ videosList = [], inProgress = false }) {
-  const {
-    isVideoSavedInWatchLaterPlaylist,
-    handleAddVideoToWatchLaterPlaylist,
-    handleRemoveVideoFromWatchLaterPlaylist,
-  } = useWatchLaterPlaylist()
-
   return inProgress ? (
     <VideoPlaylistSkeletonContainer2 />
   ) : (
@@ -55,46 +45,7 @@ function VideoPlaylistContainer2({ videosList = [], inProgress = false }) {
                 </Video.Text>
               </Video.Meta>
               <Video.Row className="ml-auto items-start">
-                <PlaylistDialogContainer videoId={videoId}>
-                  <Video.DropdownMenu>
-                    <Video.DropdownMenuTrigger asChild>
-                      <Video.Button
-                        aria-haspopup="true"
-                        size="icon"
-                        variant="ghost"
-                      >
-                        <EllipsisVerticalIcon className="h-4 w-4" />
-                      </Video.Button>
-                    </Video.DropdownMenuTrigger>
-                    <Video.DropdownMenuContent>
-                      <PlaylistDialogContainer.DialogTrigger asChild>
-                        <Video.DropdownMenuItem>
-                          <ListPlusIcon className="h-4 w-4" />
-                          Save to playlist
-                        </Video.DropdownMenuItem>
-                      </PlaylistDialogContainer.DialogTrigger>
-                      {isVideoSavedInWatchLaterPlaylist(videoId) ? (
-                        <Video.DropdownMenuItem
-                          onClick={() =>
-                            handleRemoveVideoFromWatchLaterPlaylist(videoId)
-                          }
-                        >
-                          <ClockIcon className="h-4 w-4" />
-                          Remove from Watch Later
-                        </Video.DropdownMenuItem>
-                      ) : (
-                        <Video.DropdownMenuItem
-                          onClick={() =>
-                            handleAddVideoToWatchLaterPlaylist(videoId)
-                          }
-                        >
-                          <ClockIcon className="h-4 w-4" />
-                          Save to Watch Later
-                        </Video.DropdownMenuItem>
-                      )}
-                    </Video.DropdownMenuContent>
-                  </Video.DropdownMenu>
-                </PlaylistDialogContainer>
+                <VideoDropdownMenuContainer videoId={videoId} />
               </Video.Row>
             </Video.Details>
           </Video>

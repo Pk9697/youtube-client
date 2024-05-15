@@ -6,10 +6,14 @@ import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import { VideoPlaylistContainer2 } from '@/features/videos'
+import useApp from '@/app/useApp'
 
 function LikedVideos() {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
+  const { isLoading: isLoadingFetchCurrentPlaylist } = useApp(
+    'playlist/fetchCurrentPlaylist'
+  )
   const {
     currentPlaylist: {
       _id,
@@ -20,7 +24,6 @@ function LikedVideos() {
       createdAt,
     } = {},
     likedVideosPlaylistId,
-    inProgress,
     loggedInUserPlaylists,
   } = useSelector((state) => state.playlist)
 
@@ -34,7 +37,7 @@ function LikedVideos() {
 
   return (
     <div className="grid w-full items-start gap-4 p-4 sm:grid-cols-[1fr_2fr]">
-      {inProgress ? (
+      {isLoadingFetchCurrentPlaylist ? (
         <PlaylistSkeleton />
       ) : (
         <Playlist>
@@ -64,7 +67,10 @@ function LikedVideos() {
           </Playlist.Details>
         </Playlist>
       )}
-      <VideoPlaylistContainer2 videosList={videos} inProgress={inProgress} />
+      <VideoPlaylistContainer2
+        videosList={videos}
+        inProgress={isLoadingFetchCurrentPlaylist}
+      />
     </div>
   )
 }

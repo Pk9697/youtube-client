@@ -1,15 +1,16 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { VideoContainer, fetchVideos } from '@/features/videos'
+import useApp from '@/app/useApp'
 
 function Home() {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
-  const {
-    videosList: allVideos,
-    inProgress,
-    paginate,
-  } = useSelector((state) => state.videos)
+  const { videosList: allVideos, paginate } = useSelector(
+    (state) => state.videos
+  )
+
+  const { isLoading: isLoadingFetchVideos } = useApp('videos/fetchVideos')
 
   useEffect(() => {
     dispatch(fetchVideos({ accessToken }))
@@ -23,7 +24,7 @@ function Home() {
     <div className="p-4">
       <VideoContainer
         videosList={allVideos}
-        inProgress={inProgress}
+        inProgress={isLoadingFetchVideos}
         paginate={paginate}
         handleChangePage={handleChangePage}
       />

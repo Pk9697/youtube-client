@@ -1,11 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  ThumbsDownIcon,
-  ThumbsUpIcon,
-  ClockIcon,
-  ListPlusIcon,
-  EllipsisVerticalIcon,
-} from 'lucide-react'
+import { ThumbsDownIcon, ThumbsUpIcon } from 'lucide-react'
 import Video from '../components/Video'
 import { formatViews } from '@/utils/formatViews'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
@@ -17,18 +11,11 @@ import {
 import { ROUTES } from '@/data/constants'
 import { toggleSubscription } from '@/features/subscription'
 import { getPublicUrl } from '@/utils/getPublicUrl'
-import {
-  PlaylistDialogContainer,
-  useWatchLaterPlaylist,
-} from '@/features/playlist'
 import VideoPlayerSkeletonContainer from '../skeletons/VideoPlayerSkeletonContainer'
 import useApp from '@/app/useApp'
+import VideoDropdownMenuContainer from './VideoDropdownMenuContainer'
 
-function VideoPlayerContainer({
-  videoDetails = {},
-  inProgress = false,
-  inProgressSubscription = false,
-}) {
+function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
   const dispatch = useDispatch()
   const { isLoading: isLoadingToggleLikeVideo } = useApp(
     'video/toggleLikeVideo'
@@ -36,13 +23,11 @@ function VideoPlayerContainer({
   const { isLoading: isLoadingToggleDislikeVideo } = useApp(
     'video/toggleDislikeVideo'
   )
+  const { isLoading: isLoadingToggleSubscription } = useApp(
+    'subscription/toggleSubscription'
+  )
 
   const { accessToken } = useSelector((state) => state.auth)
-  const {
-    isVideoSavedInWatchLaterPlaylist,
-    handleAddVideoToWatchLaterPlaylist,
-    handleRemoveVideoFromWatchLaterPlaylist,
-  } = useWatchLaterPlaylist()
 
   const {
     _id: videoId,
@@ -92,7 +77,7 @@ function VideoPlayerContainer({
           </Video.Meta>
           {isSubscribed ? (
             <Video.Button
-              disabled={inProgressSubscription}
+              disabled={isLoadingToggleSubscription}
               onClick={handleToggleSubscription}
               variant="destructive"
             >
@@ -100,7 +85,7 @@ function VideoPlayerContainer({
             </Video.Button>
           ) : (
             <Video.Button
-              disabled={inProgressSubscription}
+              disabled={isLoadingToggleSubscription}
               onClick={handleToggleSubscription}
             >
               Subscribe
@@ -132,40 +117,7 @@ function VideoPlayerContainer({
             )}
             {formatViews(dislikesCount)}
           </Video.Button>
-          <PlaylistDialogContainer videoId={videoId}>
-            <Video.DropdownMenu>
-              <Video.DropdownMenuTrigger asChild>
-                <Video.Button aria-haspopup="true" size="icon" variant="ghost">
-                  <EllipsisVerticalIcon className="size-4" />
-                </Video.Button>
-              </Video.DropdownMenuTrigger>
-              <Video.DropdownMenuContent>
-                <PlaylistDialogContainer.DialogTrigger asChild>
-                  <Video.DropdownMenuItem>
-                    <ListPlusIcon className="size-4" />
-                    Save to playlist
-                  </Video.DropdownMenuItem>
-                </PlaylistDialogContainer.DialogTrigger>
-                {isVideoSavedInWatchLaterPlaylist(videoId) ? (
-                  <Video.DropdownMenuItem
-                    onClick={() =>
-                      handleRemoveVideoFromWatchLaterPlaylist(videoId)
-                    }
-                  >
-                    <ClockIcon className="size-4" />
-                    Remove from Watch Later
-                  </Video.DropdownMenuItem>
-                ) : (
-                  <Video.DropdownMenuItem
-                    onClick={() => handleAddVideoToWatchLaterPlaylist(videoId)}
-                  >
-                    <ClockIcon className="size-4" />
-                    Save to Watch Later
-                  </Video.DropdownMenuItem>
-                )}
-              </Video.DropdownMenuContent>
-            </Video.DropdownMenu>
-          </PlaylistDialogContainer>
+          <VideoDropdownMenuContainer videoId={videoId} />
         </Video.Row>
       </Video.Details>
       <Video.Card>

@@ -5,6 +5,7 @@ import {
   addVideoToPlaylist,
   removeVideoFromPlaylist,
 } from '../services/playlistSlice'
+import useApp from '@/app/useApp'
 
 function PlaylistCheckboxContainer({
   _id: playlistId,
@@ -17,6 +18,13 @@ function PlaylistCheckboxContainer({
   const { accessToken } = useSelector((state) => state.auth)
   const isChecked = videos.some((video) => video._id === videoId)
 
+  const { isLoading: isLoadingRemoveVideoFromPlaylist } = useApp(
+    'playlist/removeVideoFromPlaylist'
+  )
+  const { isLoading: isLoadingAddVideoToPlaylist } = useApp(
+    'playlist/addVideoToPlaylist'
+  )
+
   const handleCheckboxClick = () => {
     if (isChecked) {
       dispatch(removeVideoFromPlaylist({ accessToken, playlistId, videoId }))
@@ -28,6 +36,9 @@ function PlaylistCheckboxContainer({
   return (
     <Playlist.Row key={playlistId}>
       <Playlist.Checkbox
+        disabled={
+          isLoadingRemoveVideoFromPlaylist || isLoadingAddVideoToPlaylist
+        }
         onClick={handleCheckboxClick}
         checked={isChecked}
         id={playlistId}
