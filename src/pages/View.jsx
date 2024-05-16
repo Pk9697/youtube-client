@@ -23,12 +23,15 @@ function View() {
   const playlistId = searchParams.get('playlistId')
   const { accessToken } = useSelector((state) => state.auth)
   const { isLoading: isLoadingFetchVideo } = useApp('video/fetchVideo')
+  const { isLoading: isLoadingFetchVideoComments } = useApp(
+    'video/fetchVideoComments'
+  )
   const { videoDetails, comments, paginate } = useSelector(
     (state) => state.video
   )
   const { currentPlaylist } = useSelector((state) => state.playlist)
   const { isSidebarOpen } = useSelector((state) => state.app)
-  const { isLoading: isLoadingFetchVideoComments } = useApp(
+  const { isLoading: isLoadingFetchVideosByQuery } = useApp(
     'search/fetchVideosByQuery'
   )
   const { searchResults } = useSelector((state) => state.search)
@@ -81,6 +84,7 @@ function View() {
           comments={comments}
           paginate={paginate}
           handleChangePage={handleChangePage}
+          inProgress={isLoadingFetchVideoComments}
         />
       </div>
       <div className="flex flex-col gap-4">
@@ -92,7 +96,7 @@ function View() {
         )}
         <VideoRecommendationsContainer
           videosList={searchResults}
-          inProgress={isLoadingFetchVideoComments}
+          inProgress={isLoadingFetchVideosByQuery}
         />
       </div>
     </div>

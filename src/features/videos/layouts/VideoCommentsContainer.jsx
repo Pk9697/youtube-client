@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid'
 import { MessageSquarePlusIcon } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import Comment from '@/components/Comment'
@@ -6,6 +7,8 @@ import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import VideoCommentContainer from './VideoCommentContainer'
 import PaginateContainer from '@/layouts/PaginateContainer'
+import { Skeleton } from '@/components/ui/skeleton'
+import VideoCommentSkeletonContainer from '../skeletons/VideoCommentSkeletonContainer'
 
 function VideoCommentsContainer({
   videoOwnerId,
@@ -13,6 +16,7 @@ function VideoCommentsContainer({
   comments = [],
   paginate,
   handleChangePage,
+  inProgress = false,
 }) {
   const {
     accessToken,
@@ -26,7 +30,13 @@ function VideoCommentsContainer({
 
   return (
     <Comment.Group>
-      <Comment.Title>{comments.length} comments</Comment.Title>
+      {inProgress ? (
+        <Skeleton className="h-7 w-28" />
+      ) : (
+        <Comment.Title>
+          {comments.length} comment{comments.length > 1 && 's'}
+        </Comment.Title>
+      )}
       <Comment.Form onSubmit={handleSubmit}>
         <Comment.AvatarLink
           src={getPublicUrl(loggedInUserAvatar)}
@@ -43,13 +53,18 @@ function VideoCommentsContainer({
         </Comment.Button>
       </Comment.Form>
 
-      {comments.map((comment) => (
-        <VideoCommentContainer
-          videoOwnerId={videoOwnerId}
-          key={comment._id}
-          {...comment}
-        />
-      ))}
+      {inProgress
+        ? 'abcdefghij'
+            .split('')
+            .map(() => <VideoCommentSkeletonContainer key={uuid()} />)
+        : comments.map((comment) => (
+            <VideoCommentContainer
+              inProgress={inProgress}
+              videoOwnerId={videoOwnerId}
+              key={comment._id}
+              {...comment}
+            />
+          ))}
 
       <PaginateContainer
         paginate={paginate}
