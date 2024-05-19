@@ -4,8 +4,13 @@ import Video from '../components/Video'
 import { formatDuration } from '@/utils/formatDuration'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import VideoDropdownMenuContainer from './VideoDropdownMenuContainer'
+import VideoPlaylistSkeletonContainer from '../skeletons/VideoPlaylistSkeletonContainer'
 
-function VideoPlaylistContainer({ currentPlaylist = {}, currentVideoId }) {
+function VideoPlaylistContainer({
+  currentPlaylist = {},
+  currentVideoId,
+  inProgress = false,
+}) {
   const {
     _id: playlistId,
     name,
@@ -17,7 +22,9 @@ function VideoPlaylistContainer({ currentPlaylist = {}, currentVideoId }) {
     } = {},
   } = currentPlaylist
 
-  return (
+  return inProgress ? (
+    <VideoPlaylistSkeletonContainer />
+  ) : (
     <Video.Card>
       <Video.CardHeader>
         <Video.CardTitle className="text-xl font-bold">{name}</Video.CardTitle>
@@ -43,7 +50,7 @@ function VideoPlaylistContainer({ currentPlaylist = {}, currentVideoId }) {
                 key={videoId}
                 className={twMerge(
                   'grid-cols-[2fr_7fr] lg:grid-cols-[2fr_3fr]',
-                  currentVideoId === videoId ? 'bg-muted' : ''
+                  currentVideoId === videoId ? 'rounded-xl bg-muted' : ''
                 )}
               >
                 <Video.ImageContainerLink

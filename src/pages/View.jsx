@@ -29,6 +29,9 @@ function View() {
   const { videoDetails, comments, paginate } = useSelector(
     (state) => state.video
   )
+  const { isLoading: isLoadingFetchCurrentPlaylist } = useApp(
+    'playlist/fetchCurrentPlaylist'
+  )
   const { currentPlaylist } = useSelector((state) => state.playlist)
   const { isSidebarOpen } = useSelector((state) => state.app)
   const { isLoading: isLoadingFetchVideosByQuery } = useApp(
@@ -92,6 +95,7 @@ function View() {
           <VideoPlaylistContainer
             currentPlaylist={currentPlaylist}
             currentVideoId={videoId}
+            inProgress={isLoadingFetchCurrentPlaylist}
           />
         )}
         <VideoRecommendationsContainer
