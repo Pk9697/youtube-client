@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid'
 import { UserRoundMinusIcon, UserRoundPlusIcon } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
@@ -7,8 +8,13 @@ import { formatViews } from '@/utils/formatViews'
 import { toggleSubscriptionFromChannelList } from '@/features/channel'
 import { toggleSubscription } from '@/features/subscription'
 import { getPublicUrl } from '@/utils/getPublicUrl'
+import useApp from '@/app/useApp'
+import UserSkeleton from '@/skeletons/UserSkeleton'
 
-function UserContainer({ usersList = [], inProgressSubscription = false }) {
+function UserContainer({ usersList = [], inProgress = false }) {
+  const { isLoading: isLoadingToggleSubscription } = useApp(
+    'subscription/toggleSubscription'
+  )
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   const [query, setQuery] = useState('')
@@ -35,50 +41,58 @@ function UserContainer({ usersList = [], inProgressSubscription = false }) {
         onChange={handleSearchInputChange}
         name="query"
         value={query}
+        disabled={inProgress}
       />
-      {!filteredUsersList.length && <User.Title>0 users</User.Title>}
-      {filteredUsersList.map(
-        ({
-          _id: userId,
-          userName,
-          avatar,
-          fullName,
-          subscribersCount = 0,
-          isSubscribed = false,
-        }) => (
-          <User key={userId}>
-            <User.AvatarLink
-              src={getPublicUrl(avatar)}
-              to={`${ROUTES.PROFILE}/${userName}`}
-            />
-            <User.Meta>
-              <User.TextLink>{fullName}</User.TextLink>
-              <User.TextSmall>
-                {formatViews(subscribersCount)} subscribers
-              </User.TextSmall>
-            </User.Meta>
-            {isSubscribed ? (
-              <User.Button
-                disabled={inProgressSubscription}
-                variant="destructive"
-                className="ml-auto"
-                onClick={() => handleToggleSubscription(userId)}
-              >
-                <UserRoundMinusIcon className="size-5" />
-                Unsubscribe
-              </User.Button>
-            ) : (
-              <User.Button
-                disabled={inProgressSubscription}
-                className="ml-auto"
-                onClick={() => handleToggleSubscription(userId)}
-              >
-                <UserRoundPlusIcon className="size-5" />
-                Subscribe
-              </User.Button>
-            )}
-          </User>
-        )
+
+      {inProgress ? (
+        'abcdefghi'.split('').map(() => <UserSkeleton key={uuid()} />)
+      ) : (
+        <>
+          {!filteredUsersList.length && <User.Title>0 user</User.Title>}
+          {filteredUsersList.map(
+            ({
+              _id: userId,
+              userName,
+              avatar,
+              fullName,
+              subscribersCount = 0,
+              isSubscribed = false,
+            }) => (
+              <User key={userId}>
+                <User.AvatarLink
+                  src={getPublicUrl(avatar)}
+                  to={`${ROUTES.PROFILE}/${userName}`}
+                />
+                <User.Meta>
+                  <User.TextLink>{fullName}</User.TextLink>
+                  <User.TextSmall>
+                    {formatViews(subscribersCount)} subscribers
+                  </User.TextSmall>
+                </User.Meta>
+                {isSubscribed ? (
+                  <User.Button
+                    disabled={isLoadingToggleSubscription}
+                    variant="destructive"
+                    className="ml-auto"
+                    onClick={() => handleToggleSubscription(userId)}
+                  >
+                    <UserRoundMinusIcon className="size-5" />
+                    Unsubscribe
+                  </User.Button>
+                ) : (
+                  <User.Button
+                    disabled={isLoadingToggleSubscription}
+                    className="ml-auto"
+                    onClick={() => handleToggleSubscription(userId)}
+                  >
+                    <UserRoundPlusIcon className="size-5" />
+                    Subscribe
+                  </User.Button>
+                )}
+              </User>
+            )
+          )}
+        </>
       )}
     </User.Group>
   )

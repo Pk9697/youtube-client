@@ -3,14 +3,16 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { VideoSearchResultsContainer } from '@/features/videos'
 import { fetchVideosByQuery } from '@/features/search'
+import useApp from '@/app/useApp'
 
 function SearchResults() {
   const { query } = useParams()
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
-  const { searchResults, paginate, inProgress } = useSelector(
-    (state) => state.search
+  const { isLoading: isLoadingFetchVideosByQuery } = useApp(
+    'search/fetchVideosByQuery'
   )
+  const { searchResults, paginate } = useSelector((state) => state.search)
 
   useEffect(() => {
     dispatch(fetchVideosByQuery({ accessToken, query }))
@@ -26,7 +28,7 @@ function SearchResults() {
         videosList={searchResults}
         paginate={paginate}
         handleChangePage={handleChangePage}
-        inProgress={inProgress}
+        inProgress={isLoadingFetchVideosByQuery}
       />
     </div>
   )

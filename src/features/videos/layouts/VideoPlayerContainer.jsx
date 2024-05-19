@@ -94,7 +94,7 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
         </Video.Row>
         <Video.Row className="ml-auto">
           <Video.Button
-            disabled={isLoadingToggleLikeVideo}
+            disabled={isLoadingToggleLikeVideo || isLoadingToggleDislikeVideo}
             onClick={() => dispatch(toggleLikeVideo({ accessToken, videoId }))}
           >
             {isLiked ? (
@@ -105,7 +105,7 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
             {formatViews(likesCount)}
           </Video.Button>
           <Video.Button
-            disabled={isLoadingToggleDislikeVideo}
+            disabled={isLoadingToggleLikeVideo || isLoadingToggleDislikeVideo}
             onClick={() =>
               dispatch(toggleDislikeVideo({ accessToken, videoId }))
             }

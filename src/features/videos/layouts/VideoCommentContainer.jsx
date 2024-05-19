@@ -18,6 +18,7 @@ import {
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import useEditComment from '../hooks/useEditComment'
+import useApp from '@/app/useApp'
 
 function VideoCommentContainer({
   videoOwnerId,
@@ -34,12 +35,22 @@ function VideoCommentContainer({
   const { accessToken, user: { _id: loggedInUserId } = {} } = useSelector(
     (state) => state.auth
   )
+
+  const { isLoading: isLoadingToggleLikeComment } = useApp(
+    'video/toggleLikeComment'
+  )
+  const { isLoading: isLoadingToggleDislikeComment } = useApp(
+    'video/toggleDislikeComment'
+  )
+  const { isLoading: isLoadingDeleteComment } = useApp('video/deleteComment')
+
   const {
     inEditMode,
     toggleEditMode,
     content: commentInput,
     handleChange,
     handleSubmit,
+    isLoadingEditComment,
   } = useEditComment({ accessToken, commentContent, commentId })
 
   return (
@@ -60,6 +71,9 @@ function VideoCommentContainer({
             <Comment.Text>{commentContent}</Comment.Text>
             <Comment.Row>
               <Comment.Button
+                disabled={
+                  isLoadingToggleLikeComment || isLoadingToggleDislikeComment
+                }
                 onClick={() =>
                   dispatch(toggleLikeComment({ accessToken, commentId }))
                 }
@@ -73,6 +87,9 @@ function VideoCommentContainer({
                 {likesCount}
               </Comment.Button>
               <Comment.Button
+                disabled={
+                  isLoadingToggleLikeComment || isLoadingToggleDislikeComment
+                }
                 onClick={() =>
                   dispatch(toggleDislikeComment({ accessToken, commentId }))
                 }
@@ -98,7 +115,9 @@ function VideoCommentContainer({
               required
             />
             <Comment.Button
-              disabled={commentInput?.trim() === commentContent}
+              disabled={
+                commentInput?.trim() === commentContent || isLoadingEditComment
+              }
               type="submit"
               size="icon"
             >
@@ -128,6 +147,7 @@ function VideoCommentContainer({
             {(loggedInUserId === videoOwnerId ||
               loggedInUserId === commentOwnerId) && (
               <Comment.DropdownMenuItem
+                disabled={isLoadingDeleteComment}
                 onClick={() =>
                   dispatch(deleteComment({ accessToken, commentId }))
                 }

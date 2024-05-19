@@ -1,38 +1,30 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { APIUrls } from '@/utils/apiUrls'
+import createAsyncThunkWithLoadingAndError from '@/app/createAsyncThunkWithLoadingAndError'
 
-const fetchChannel = createAsyncThunk(
+const fetchChannel = createAsyncThunkWithLoadingAndError(
   'channel/fetchChannel',
   async ({ accessToken, userName }) => {
-    try {
-      const url = APIUrls.fetchChannel(userName)
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.fetchChannel(userName)
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 
-const fetchUserSubscribedToChannels = createAsyncThunk(
+const fetchUserSubscribedToChannels = createAsyncThunkWithLoadingAndError(
   'channel/fetchUserSubscribedToChannels',
   async ({ accessToken, userName }) => {
-    try {
-      const url = APIUrls.fetchUserSubscribedToChannels(userName)
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      return response.data
-    } catch (err) {
-      return err.response?.data
-    }
+    const url = APIUrls.fetchUserSubscribedToChannels(userName)
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
   }
 )
 

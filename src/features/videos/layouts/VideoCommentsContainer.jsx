@@ -9,6 +9,7 @@ import VideoCommentContainer from './VideoCommentContainer'
 import PaginateContainer from '@/layouts/PaginateContainer'
 import { Skeleton } from '@/components/ui/skeleton'
 import VideoCommentSkeletonContainer from '../skeletons/VideoCommentSkeletonContainer'
+import useApp from '@/app/useApp'
 
 function VideoCommentsContainer({
   videoOwnerId,
@@ -28,13 +29,15 @@ function VideoCommentsContainer({
     handleSubmit,
   } = useComment({ videoId, accessToken })
 
+  const { isLoading: isLoadingAddComment } = useApp('video/addComment')
+
   return (
     <Comment.Group>
       {inProgress ? (
         <Skeleton className="h-7 w-28" />
       ) : (
         <Comment.Title>
-          {comments.length} comment{comments.length > 1 && 's'}
+          {paginate?.totalDocs} comment{paginate?.totalDocs > 1 && 's'}
         </Comment.Title>
       )}
       <Comment.Form onSubmit={handleSubmit}>
@@ -48,7 +51,11 @@ function VideoCommentsContainer({
           value={commentInput}
           required
         />
-        <Comment.Button type="submit" size="icon">
+        <Comment.Button
+          disabled={isLoadingAddComment || !commentInput.trim()}
+          type="submit"
+          size="icon"
+        >
           <MessageSquarePlusIcon />
         </Comment.Button>
       </Comment.Form>

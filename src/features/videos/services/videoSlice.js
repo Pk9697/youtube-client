@@ -65,6 +65,7 @@ const videoSlice = createSlice({
         if (action.payload?.success) {
           // state.comments = [action.payload.data, ...state.comments]
           state.comments.unshift(action.payload.data)
+          state.paginate.totalDocs += 1
           toast({
             title: 'Video comment added!',
           })
@@ -106,6 +107,7 @@ const videoSlice = createSlice({
           state.comments = state.comments.filter(
             (comment) => comment._id !== commentId
           )
+          state.paginate.totalDocs -= 1
           toast({
             title: 'Deleted Video Comment!',
           })

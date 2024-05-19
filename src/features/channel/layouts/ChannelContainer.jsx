@@ -5,8 +5,13 @@ import { formatViews } from '@/utils/formatViews'
 import { toggleSubscriptionFromChannelProfile } from '../services/channelSlice'
 import { toggleSubscription } from '@/features/subscription'
 import { getPublicUrl } from '@/utils/getPublicUrl'
+import useApp from '@/app/useApp'
+import ChannelSkeletonContainer from '../skeletons/ChannelSkeletonContainer'
 
-function ChannelContainer({ channelInfo, inProgressSubscription = false }) {
+function ChannelContainer({ channelInfo, inProgress = false }) {
+  const { isLoading: isLoadingToggleSubscription } = useApp(
+    'subscription/toggleSubscription'
+  )
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
 
@@ -28,7 +33,9 @@ function ChannelContainer({ channelInfo, inProgressSubscription = false }) {
     dispatch(toggleSubscription({ accessToken, userId }))
   }
 
-  return (
+  return inProgress ? (
+    <ChannelSkeletonContainer />
+  ) : (
     <Channel>
       <Channel.CoverImage src={getPublicUrl(coverImage)} />
       <Channel.Details>
@@ -44,7 +51,7 @@ function ChannelContainer({ channelInfo, inProgressSubscription = false }) {
 
         {isSubscribed ? (
           <Channel.Button
-            disabled={inProgressSubscription}
+            disabled={isLoadingToggleSubscription}
             variant="destructive"
             className="sm:ml-auto"
             onClick={handleToggleSubscription}
@@ -54,7 +61,7 @@ function ChannelContainer({ channelInfo, inProgressSubscription = false }) {
           </Channel.Button>
         ) : (
           <Channel.Button
-            disabled={inProgressSubscription}
+            disabled={isLoadingToggleSubscription}
             className="sm:ml-auto"
             onClick={handleToggleSubscription}
           >

@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { editComment } from '../services/asyncThunkActions'
+import useApp from '@/app/useApp'
 
 function useEditComment({ commentId, accessToken, commentContent = '' }) {
+  const { isLoading: isLoadingEditComment } = useApp('video/editComment')
   const dispatch = useDispatch()
   const [inEditMode, setInEditMode] = useState(false)
   const [formFields, setFormFields] = useState({
@@ -49,6 +51,7 @@ function useEditComment({ commentId, accessToken, commentContent = '' }) {
     toggleEditMode,
     handleChange,
     handleSubmit,
+    isLoadingEditComment,
   }
 }
 

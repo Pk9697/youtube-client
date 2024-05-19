@@ -8,29 +8,34 @@ import {
 } from '@/features/channel'
 import Channel from '@/features/channel/components/Channel'
 import { VideoContainer, fetchChannelVideos } from '@/features/videos'
-import Loader from '@/components/Loader'
 import { TweetsContainer, fetchChannelTweets } from '@/features/tweets'
 import UserContainer from '@/layouts/UserContainer'
 import { PlaylistContainer, fetchChannelPlaylists } from '@/features/playlist'
+import useApp from '@/app/useApp'
 
 function Profile() {
   const dispatch = useDispatch()
   const { userName } = useParams()
   const { accessToken } = useSelector((state) => state.auth)
-  const {
-    channelInfo,
-    inProgress: inProgressChannelFetching,
-    subscribedToChannelsList,
-  } = useSelector((state) => state.channel)
-  const {
-    videosList: channelVideos,
-    inProgress: inProgressVideosFetching,
-    paginate,
-  } = useSelector((state) => state.videos)
-  const { tweetsList: channelTweets, inProgress: inProgressTweetsFetching } =
-    useSelector((state) => state.tweets)
-  const { inProgress: inProgressSubscription } = useSelector(
-    (state) => state.subscription
+  const { isLoading: isLoadingFetchChannel } = useApp('channel/fetchChannel')
+  const { isLoading: isLoadingFetchUserSubscribedToChannels } = useApp(
+    'channel/fetchUserSubscribedToChannels'
+  )
+  const { channelInfo, subscribedToChannelsList } = useSelector(
+    (state) => state.channel
+  )
+  const { isLoading: isLoadingFetchChannelVideos } = useApp(
+    'videos/fetchChannelVideos'
+  )
+  const { videosList: channelVideos, paginate } = useSelector(
+    (state) => state.videos
+  )
+  const { isLoading: isLoadingFetchChannelTweets } = useApp(
+    'tweets/fetchChannelTweets'
+  )
+  const { tweetsList: channelTweets } = useSelector((state) => state.tweets)
+  const { isLoading: isLoadingFetchChannelPlaylist } = useApp(
+    'playlist/fetchChannelPlaylists'
   )
   const { channelPlaylists } = useSelector((state) => state.playlist)
 
@@ -47,48 +52,49 @@ function Profile() {
   }
 
   return (
-    <Loader inProgress={inProgressChannelFetching}>
-      <div className="flex flex-col gap-4">
-        <ChannelContainer channelInfo={channelInfo} />
-        <Channel.Tabs defaultValue="videos">
-          <Channel.TabsList>
-            <Channel.TabsTrigger value="videos">Videos</Channel.TabsTrigger>
-            <Channel.TabsTrigger value="playlists">
-              Playlists
-            </Channel.TabsTrigger>
-            <Channel.TabsTrigger value="tweets">Tweets</Channel.TabsTrigger>
-            <Channel.TabsTrigger value="subscribedTo">
-              Subscribed To
-            </Channel.TabsTrigger>
-          </Channel.TabsList>
-          <Channel.TabsContent value="videos" className="mt-4">
-            <VideoContainer
-              videosList={channelVideos}
-              inProgress={inProgressVideosFetching}
-              paginate={paginate}
-              handleChangePage={handleChangePage}
-            />
-          </Channel.TabsContent>
-          <Channel.TabsContent value="playlists">
-            <PlaylistContainer playlists={channelPlaylists} />
-          </Channel.TabsContent>
-          <Channel.TabsContent value="tweets" className="mt-4">
-            <Loader inProgress={inProgressTweetsFetching}>
-              <TweetsContainer
-                currentProfileUserName={userName}
-                tweetsList={channelTweets}
-              />
-            </Loader>
-          </Channel.TabsContent>
-          <Channel.TabsContent value="subscribedTo">
-            <UserContainer
-              usersList={subscribedToChannelsList}
-              inProgressSubscription={inProgressSubscription}
-            />
-          </Channel.TabsContent>
-        </Channel.Tabs>
-      </div>
-    </Loader>
+    <div className="flex flex-col gap-4">
+      <ChannelContainer
+        channelInfo={channelInfo}
+        inProgress={isLoadingFetchChannel}
+      />
+      <Channel.Tabs defaultValue="videos">
+        <Channel.TabsList>
+          <Channel.TabsTrigger value="videos">Videos</Channel.TabsTrigger>
+          <Channel.TabsTrigger value="playlists">Playlists</Channel.TabsTrigger>
+          <Channel.TabsTrigger value="tweets">Tweets</Channel.TabsTrigger>
+          <Channel.TabsTrigger value="subscribedTo">
+            Subscribed To
+          </Channel.TabsTrigger>
+        </Channel.TabsList>
+        <Channel.TabsContent value="videos" className="mt-4">
+          <VideoContainer
+            videosList={channelVideos}
+            inProgress={isLoadingFetchChannelVideos}
+            paginate={paginate}
+            handleChangePage={handleChangePage}
+          />
+        </Channel.TabsContent>
+        <Channel.TabsContent value="playlists">
+          <PlaylistContainer
+            inProgress={isLoadingFetchChannelPlaylist}
+            playlists={channelPlaylists}
+          />
+        </Channel.TabsContent>
+        <Channel.TabsContent value="tweets" className="mt-4">
+          <TweetsContainer
+            currentProfileUserName={userName}
+            tweetsList={channelTweets}
+            inProgress={isLoadingFetchChannelTweets}
+          />
+        </Channel.TabsContent>
+        <Channel.TabsContent value="subscribedTo">
+          <UserContainer
+            inProgress={isLoadingFetchUserSubscribedToChannels}
+            usersList={subscribedToChannelsList}
+          />
+        </Channel.TabsContent>
+      </Channel.Tabs>
+    </div>
   )
 }
 
