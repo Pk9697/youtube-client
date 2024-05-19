@@ -9,11 +9,15 @@ import {
   fetchLoggedInUserPlaylists,
   fetchLoggedInUserWatchLaterPlaylistIdByName,
 } from '@/features/playlist'
+import useApp from '@/app/useApp'
 
 function Layout() {
   const dispatch = useDispatch()
   const { accessToken, user: { userName } = {} } = useSelector(
     (state) => state.auth
+  )
+  const { isLoading: isLoadingFetchLoggedInUserSubscribedToChannels } = useApp(
+    'subscription/fetchLoggedInUserSubscribedToChannels'
   )
   const { subscribedToChannelsList } = useSelector(
     (state) => state.subscription
@@ -34,11 +38,17 @@ function Layout() {
       <div
         className={`sticky top-0 z-10 hidden max-h-screen overflow-auto border-r bg-muted dark:bg-slate-900 ${isSidebarOpen ? 'md:block' : ''}`}
       >
-        <SidebarContainer usersList={subscribedToChannelsList} />
+        <SidebarContainer
+          inProgress={isLoadingFetchLoggedInUserSubscribedToChannels}
+          usersList={subscribedToChannelsList}
+        />
       </div>
       <div>
         <div className="sticky top-0 z-10">
-          <NavbarContainer usersList={subscribedToChannelsList} />
+          <NavbarContainer
+            inProgress={isLoadingFetchLoggedInUserSubscribedToChannels}
+            usersList={subscribedToChannelsList}
+          />
         </div>
         <Outlet />
       </div>

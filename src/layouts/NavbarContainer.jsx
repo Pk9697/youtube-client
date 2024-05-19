@@ -8,7 +8,7 @@ import { logout } from '@/features/authentication'
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 
-function NavbarContainer({ usersList }) {
+function NavbarContainer({ usersList, inProgress = false }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { accessToken, user: { fullName, avatar } = {} } = useSelector(
@@ -31,7 +31,7 @@ function NavbarContainer({ usersList }) {
     <Navbar>
       <Navbar.SidebarTriggerMenu onClick={() => dispatch(toggleSidebar())} />
       <Navbar.SidebarContent>
-        <SidebarContainer usersList={usersList} />
+        <SidebarContainer usersList={usersList} inProgress={inProgress} />
       </Navbar.SidebarContent>
       <Navbar.SearchInput
         onSubmit={handleSearchSubmit}

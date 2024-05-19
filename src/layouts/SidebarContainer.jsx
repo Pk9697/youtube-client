@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid'
 import {
   HistoryIcon,
   HomeIcon,
@@ -14,8 +15,9 @@ import { useSelector } from 'react-redux'
 import Sidebar from './Sidebar'
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
+import { Skeleton } from '@/components/ui/skeleton'
 
-function SidebarContainer({ usersList = [] }) {
+function SidebarContainer({ usersList = [], inProgress = false }) {
   const { user: { userName: loggedInUserName } = {} } = useSelector(
     (state) => state.auth
   )
@@ -88,12 +90,19 @@ function SidebarContainer({ usersList = [] }) {
       <Sidebar.Nav>
         <Sidebar.NavTitle>Subscriptions</Sidebar.NavTitle>
 
-        {usersList.map(({ _id, avatar, userName, fullName }) => (
-          <Sidebar.NavLink key={_id} to={`${ROUTES.PROFILE}/${userName}`}>
-            <Sidebar.Avatar src={getPublicUrl(avatar)} />
-            <Sidebar.Text>{fullName}</Sidebar.Text>
-          </Sidebar.NavLink>
-        ))}
+        {inProgress
+          ? 'abcde'.split('').map(() => (
+              <div key={uuid()} className="flex items-center gap-3 px-3 py-2">
+                <Skeleton className="size-8 rounded-full" />
+                <Skeleton className="h-5 w-24" />
+              </div>
+            ))
+          : usersList.map(({ _id, avatar, userName, fullName }) => (
+              <Sidebar.NavLink key={_id} to={`${ROUTES.PROFILE}/${userName}`}>
+                <Sidebar.Avatar src={getPublicUrl(avatar)} />
+                <Sidebar.Text>{fullName}</Sidebar.Text>
+              </Sidebar.NavLink>
+            ))}
       </Sidebar.Nav>
 
       <Sidebar.Nav className="mt-auto">
