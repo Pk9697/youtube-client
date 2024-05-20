@@ -9,7 +9,7 @@ function PlaylistEditDetailsContainer({ playlist = {} }) {
     handleChange,
     handleSelectChange,
     handleSubmit,
-    inProgress,
+    isLoadingEditPlaylistDetails,
   } = useEditPlaylistDetails({ playlist })
 
   return (
@@ -56,7 +56,16 @@ function PlaylistEditDetailsContainer({ playlist = {} }) {
         </Playlist.Select>
       </Playlist.InputContainer>
 
-      <Playlist.Button disabled={inProgress} type="submit" className="mt-4">
+      <Playlist.Button
+        disabled={
+          isLoadingEditPlaylistDetails ||
+          (playlist.name === name &&
+            playlist.description === description &&
+            playlist.visibility === visibility)
+        }
+        type="submit"
+        className="mt-4"
+      >
         Save
       </Playlist.Button>
     </Playlist.Form>

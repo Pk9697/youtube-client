@@ -11,8 +11,12 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { removeVideoFromPlaylist } from '@/features/playlist'
+import useApp from '@/app/useApp'
 
 function VideoPlaylistTableRowContainer({ video = {}, playlistId }) {
+  const { isLoading: isLoadingRemoveVideoFromPlaylist } = useApp(
+    'playlist/removeVideoFromPlaylist'
+  )
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   const { _id: videoId, thumbnail, title, views, createdAt } = video
@@ -30,6 +34,7 @@ function VideoPlaylistTableRowContainer({ video = {}, playlistId }) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Video.Button
+                disabled={isLoadingRemoveVideoFromPlaylist}
                 variant="destructive"
                 size="icon"
                 onClick={() =>

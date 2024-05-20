@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { CirclePlusIcon, ListFilterIcon } from 'lucide-react'
@@ -6,8 +7,11 @@ import { sortVideos } from '@/features/dashboard'
 import VideoUploadDialogContainer from './VideoUploadDialogContainer'
 import VideoTableRowContainer from './VideoTableRowContainer'
 import PaginateContainer from '@/layouts/PaginateContainer'
+import VideoTableRowSkeletonContainer from '../skeletons/VideoTableRowSkeletonContainer'
+import { Skeleton } from '@/components/ui/skeleton'
 
 function VideoDashboardContainer({
+  inProgress = false,
   videosList = [],
   paginate,
   handleChangePage,
@@ -33,11 +37,17 @@ function VideoDashboardContainer({
         <Video.CardDetails>
           <Video.CardTitle>Videos</Video.CardTitle>
           <Video.CardDescription className="text-xs text-muted-foreground">
-            Showing{' '}
-            <strong>
-              {lowerLimit}-{upperLimit}
-            </strong>{' '}
-            of <strong>{paginate.totalDocs}</strong> videos
+            {inProgress ? (
+              <Skeleton className="mt-0.5 h-4 w-36" />
+            ) : (
+              <>
+                Showing{' '}
+                <strong>
+                  {lowerLimit}-{upperLimit}
+                </strong>{' '}
+                of <strong>{paginate.totalDocs}</strong> videos
+              </>
+            )}
           </Video.CardDescription>
         </Video.CardDetails>
 
@@ -117,9 +127,13 @@ function VideoDashboardContainer({
           </Video.TableHeader>
 
           <Video.TableBody>
-            {videosList.map((video) => (
-              <VideoTableRowContainer key={video._id} video={video} />
-            ))}
+            {inProgress
+              ? 'abcdefghij'
+                  .split('')
+                  .map(() => <VideoTableRowSkeletonContainer key={uuid()} />)
+              : videosList.map((video) => (
+                  <VideoTableRowContainer key={video._id} video={video} />
+                ))}
           </Video.TableBody>
         </Video.Table>
       </Video.CardContent>

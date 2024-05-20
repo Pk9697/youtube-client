@@ -14,6 +14,7 @@ import { formatDate } from '@/utils/formatDate'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import PlaylistDialogContentContainer from '@/features/playlist/layouts/PlaylistDialogContentContainer'
 import VideoEditDialogContentContainer from './VideoEditDialogContentContainer'
+import useApp from '@/app/useApp'
 
 function VideoTableRowContainer({ video = {} }) {
   const {
@@ -31,6 +32,7 @@ function VideoTableRowContainer({ video = {} }) {
     editVideo: 'editVideo',
     saveVideoToPlaylist: 'saveVideoToPlaylist',
   })
+  const { isLoading: isLoadingDeleteVideo } = useApp('dashboard/deleteVideo')
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   const [dialog, setDialog] = useState()
@@ -38,7 +40,7 @@ function VideoTableRowContainer({ video = {} }) {
   return (
     <Video.TableRow>
       <Video.TableCell>
-        <Video.Image src={getPublicUrl(thumbnail)} />
+        <Video.Image className="aspect-video" src={getPublicUrl(thumbnail)} />
       </Video.TableCell>
       <Video.TableCell className="font-medium">{title}</Video.TableCell>
       <Video.TableCell>
@@ -97,6 +99,7 @@ function VideoTableRowContainer({ video = {} }) {
                 </Video.DropdownMenuItem>
               </DialogTrigger>
               <Video.DropdownMenuItem
+                disabled={isLoadingDeleteVideo}
                 className="bg-destructive"
                 onClick={() => dispatch(deleteVideo({ accessToken, videoId }))}
               >

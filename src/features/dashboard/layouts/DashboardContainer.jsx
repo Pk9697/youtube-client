@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { HeartIcon, UserRoundCheckIcon, ViewIcon } from 'lucide-react'
 import Dashboard from '../components/Dashboard'
 import { formatViews } from '@/utils/formatViews'
+import { Skeleton } from '@/components/ui/skeleton'
 
 function DashboardContainer({
   children,
@@ -10,6 +11,7 @@ function DashboardContainer({
     totalSubscribers = 0,
     totalVideosLikes = 0,
   } = {},
+  inProgress = false,
 }) {
   const { user: { fullName } = {} } = useSelector((state) => state.auth)
 
@@ -29,9 +31,13 @@ function DashboardContainer({
             <ViewIcon className="size-4 text-muted-foreground" />
           </Dashboard.CardHeader>
           <Dashboard.CardContent>
-            <Dashboard.TitleBig>
-              {formatViews(totalVideosViews)}
-            </Dashboard.TitleBig>
+            {inProgress ? (
+              <Skeleton className="h-7 w-28" />
+            ) : (
+              <Dashboard.TitleBig>
+                {formatViews(totalVideosViews)}
+              </Dashboard.TitleBig>
+            )}
           </Dashboard.CardContent>
         </Dashboard.Card>
         <Dashboard.Card>
@@ -40,9 +46,13 @@ function DashboardContainer({
             <UserRoundCheckIcon className="size-4 text-muted-foreground" />
           </Dashboard.CardHeader>
           <Dashboard.CardContent>
-            <Dashboard.TitleBig>
-              {formatViews(totalSubscribers)}
-            </Dashboard.TitleBig>
+            {inProgress ? (
+              <Skeleton className="h-7 w-28" />
+            ) : (
+              <Dashboard.TitleBig>
+                {formatViews(totalSubscribers)}
+              </Dashboard.TitleBig>
+            )}
           </Dashboard.CardContent>
         </Dashboard.Card>
         <Dashboard.Card>
@@ -51,9 +61,13 @@ function DashboardContainer({
             <HeartIcon className="size-4 text-muted-foreground" />
           </Dashboard.CardHeader>
           <Dashboard.CardContent>
-            <Dashboard.TitleBig>
-              {formatViews(totalVideosLikes)}
-            </Dashboard.TitleBig>
+            {inProgress ? (
+              <Skeleton className="h-7 w-28" />
+            ) : (
+              <Dashboard.TitleBig>
+                {formatViews(totalVideosLikes)}
+              </Dashboard.TitleBig>
+            )}
           </Dashboard.CardContent>
         </Dashboard.Card>
       </Dashboard.CardGrid>

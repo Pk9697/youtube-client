@@ -8,12 +8,23 @@ import {
 } from '@/features/dashboard'
 import { VideoDashboardContainer } from '@/features/videos'
 import { PlaylistDashboardContainer } from '@/features/playlist'
+import useApp from '@/app/useApp'
 
 function DashboardPage() {
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
+  const { isLoading: isLoadingFetchDashboardStats } = useApp(
+    'dashboard/fetchDashboardStats'
+  )
+
+  const { isLoading: isLoadingFetchDashboardVideos } = useApp(
+    'dashboard/fetchDashboardVideos'
+  )
   const { dashboardStats, dashboardVideos, paginate } = useSelector(
     (state) => state.dashboard
+  )
+  const { isLoading: isLoadingFetchLoggedInUserPlaylists } = useApp(
+    'playlist/fetchLoggedInUserPlaylists'
   )
   const { loggedInUserPlaylists } = useSelector((state) => state.playlist)
 
@@ -27,7 +38,10 @@ function DashboardPage() {
   }
 
   return (
-    <DashboardContainer dashboardStats={dashboardStats}>
+    <DashboardContainer
+      inProgress={isLoadingFetchDashboardStats}
+      dashboardStats={dashboardStats}
+    >
       <Dashboard.Tabs defaultValue="videos">
         <Dashboard.TabsList>
           <Dashboard.TabsTrigger value="videos">Videos</Dashboard.TabsTrigger>
@@ -38,13 +52,17 @@ function DashboardPage() {
 
         <Dashboard.TabsContent value="videos">
           <VideoDashboardContainer
+            inProgress={isLoadingFetchDashboardVideos}
             videosList={dashboardVideos}
             paginate={paginate}
             handleChangePage={handleChangePage}
           />
         </Dashboard.TabsContent>
         <Dashboard.TabsContent value="playlists">
-          <PlaylistDashboardContainer playlists={loggedInUserPlaylists} />
+          <PlaylistDashboardContainer
+            inProgress={isLoadingFetchLoggedInUserPlaylists}
+            playlists={loggedInUserPlaylists}
+          />
         </Dashboard.TabsContent>
       </Dashboard.Tabs>
     </DashboardContainer>

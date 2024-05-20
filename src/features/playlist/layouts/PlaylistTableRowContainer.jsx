@@ -12,8 +12,12 @@ import { formatDate } from '@/utils/formatDate'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import { deletePlaylist } from '../services/asyncThunkActions'
 import PlaylistEditContainer from './PlaylistEditContainer'
+import useApp from '@/app/useApp'
 
 function PlaylistTableRowContainer({ playlist = {} }) {
+  const { isLoading: isLoadingDeletePlaylist } = useApp(
+    'playlist/deletePlaylist'
+  )
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   const { _id: playlistId, name, visibility, videos = [], updatedAt } = playlist
@@ -23,7 +27,7 @@ function PlaylistTableRowContainer({ playlist = {} }) {
         <Playlist.Image src={getPublicUrl(videos[0]?.thumbnail)} />
       </Playlist.TableCell>
       <Playlist.TableCell className="font-medium">{name}</Playlist.TableCell>
-      <Playlist.TableCell>
+      <Playlist.TableCell className="hidden md:table-cell">
         <Playlist.TextSmall className="flex items-center gap-1">
           {visibility}
           {visibility === 'private' ? (
@@ -59,6 +63,7 @@ function PlaylistTableRowContainer({ playlist = {} }) {
                 </Playlist.DropdownMenuItem>
               </Playlist.DialogTrigger>
               <Playlist.DropdownMenuItem
+                disabled={isLoadingDeletePlaylist}
                 className="bg-destructive"
                 onClick={() =>
                   dispatch(deletePlaylist({ accessToken, playlistId }))

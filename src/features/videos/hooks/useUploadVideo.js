@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { uploadVideo } from '@/features/dashboard'
+import useApp from '@/app/useApp'
 
 function useUploadVideo() {
+  const { isLoading: isLoadingUploadVideo } = useApp('dashboard/uploadVideo')
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   const [formFields, setFormFields] = useState({
@@ -55,7 +57,13 @@ function useUploadVideo() {
     })
   }
 
-  return { ...formFields, handleChange, handleIsPublishedChange, handleSubmit }
+  return {
+    ...formFields,
+    handleChange,
+    handleIsPublishedChange,
+    handleSubmit,
+    isLoadingUploadVideo,
+  }
 }
 
 export default useUploadVideo

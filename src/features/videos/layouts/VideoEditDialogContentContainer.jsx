@@ -1,10 +1,8 @@
-import { useSelector } from 'react-redux'
 import Video from '../components/Video'
 import { Form } from '@/features/authentication'
 import useEditVideo from '../hooks/useEditVideo'
 
 function VideoEditDialogContentContainer({ video }) {
-  const { inProgress } = useSelector((state) => state.dashboard)
   const {
     title,
     description,
@@ -12,6 +10,7 @@ function VideoEditDialogContentContainer({ video }) {
     handleChange,
     handleIsPublishedChange,
     handleSubmit,
+    isLoadingEditVideo,
   } = useEditVideo({ video })
   return (
     <Video.DialogContent>
@@ -66,7 +65,7 @@ function VideoEditDialogContentContainer({ video }) {
             <Form.Label htmlFor="isPublished">Publish</Form.Label>
           </Form.InputContainer>
 
-          <Form.Button disabled={inProgress} type="submit">
+          <Form.Button disabled={isLoadingEditVideo} type="submit">
             Save
           </Form.Button>
         </Form.GridGroup>

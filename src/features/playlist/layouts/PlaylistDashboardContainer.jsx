@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { v4 as uuid } from 'uuid'
 import { CirclePlusIcon, ListFilterIcon } from 'lucide-react'
 import Playlist from '../components/Playlist'
 import PlaylistTableRowContainer from './PlaylistTableRowContainer'
 import { sortLoggedInUserPlaylists } from '../services/playlistSlice'
 import PlaylistCreateContainer from './PlaylistCreateContainer'
+import { Skeleton } from '@/components/ui/skeleton'
+import PlaylistTableRowSkeletonContainer from '../skeletons/PlaylistTableRowSkeletonContainer'
 
-function PlaylistDashboardContainer({ playlists = [] }) {
+function PlaylistDashboardContainer({ playlists = [], inProgress = false }) {
   const dispatch = useDispatch()
 
   // TODO : Move below code in custom hook named useSort
@@ -87,7 +90,9 @@ function PlaylistDashboardContainer({ playlists = [] }) {
                 <span className="sr-only">Image</span>
               </Playlist.TableHead>
               <Playlist.TableHead>Name</Playlist.TableHead>
-              <Playlist.TableHead>Visibility</Playlist.TableHead>
+              <Playlist.TableHead className="hidden md:table-cell">
+                Visibility
+              </Playlist.TableHead>
               <Playlist.TableHead>Video count</Playlist.TableHead>
               <Playlist.TableHead className="hidden md:table-cell">
                 Updated at
@@ -99,20 +104,30 @@ function PlaylistDashboardContainer({ playlists = [] }) {
           </Playlist.TableHeader>
 
           <Playlist.TableBody>
-            {playlists.map((playlist) => (
-              <PlaylistTableRowContainer
-                key={playlist._id}
-                playlist={playlist}
-              />
-            ))}
+            {inProgress
+              ? 'abcdefghij'
+                  .split('')
+                  .map(() => <PlaylistTableRowSkeletonContainer key={uuid()} />)
+              : playlists.map((playlist) => (
+                  <PlaylistTableRowContainer
+                    key={playlist._id}
+                    playlist={playlist}
+                  />
+                ))}
           </Playlist.TableBody>
         </Playlist.Table>
       </Playlist.CardContent>
 
       <Playlist.CardFooter>
         <Playlist.TextSmall>
-          Showing <strong>1-10</strong> of <strong>{playlists?.length}</strong>{' '}
-          playlists
+          {inProgress ? (
+            <Skeleton className="mt-0.5 h-4 w-36" />
+          ) : (
+            <>
+              Showing <strong>1-10</strong> of{' '}
+              <strong>{playlists?.length}</strong> playlists
+            </>
+          )}
         </Playlist.TextSmall>
       </Playlist.CardFooter>
     </Playlist.Card>

@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editPlaylist } from '../services/asyncThunkActions'
+import useApp from '@/app/useApp'
 
 function useEditPlaylistDetails({ playlist = {} }) {
+  const { isLoading: isLoadingEditPlaylistDetails } = useApp(
+    'playlist/editPlaylist'
+  )
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
-  const { inProgress } = useSelector((state) => state.playlist)
   const [formFields, setFormFields] = useState({
     name: playlist.name,
     description: playlist.description,
@@ -43,7 +46,7 @@ function useEditPlaylistDetails({ playlist = {} }) {
     handleChange,
     handleSelectChange,
     handleSubmit,
-    inProgress,
+    isLoadingEditPlaylistDetails,
   }
 }
 

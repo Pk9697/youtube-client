@@ -76,6 +76,8 @@ const dashboardSlice = createSlice({
             (video) => video._id !== videoId
           )
 
+          state.paginate.totalDocs -= 1
+
           toast({
             title: 'Video Deleted successfully!',
           })
@@ -86,6 +88,7 @@ const dashboardSlice = createSlice({
           if (action.payload.data?._id) {
             state.dashboardVideos.unshift(action.payload.data)
           }
+          state.paginate.totalDocs += 1
 
           toast({
             title: 'Video Uploaded successfully!',

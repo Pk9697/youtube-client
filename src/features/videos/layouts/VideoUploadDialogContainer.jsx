@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux'
 import { twMerge } from 'tailwind-merge'
 import Video from '../components/Video'
 import { Form } from '@/features/authentication'
@@ -12,9 +11,8 @@ function VideoUploadDialogContainer({ children }) {
     handleChange,
     handleIsPublishedChange,
     handleSubmit,
+    isLoadingUploadVideo,
   } = useUploadVideo()
-
-  const { inProgress } = useSelector((state) => state.dashboard)
 
   return (
     <Video.Dialog>
@@ -86,7 +84,7 @@ function VideoUploadDialogContainer({ children }) {
               <Form.Label htmlFor="isPublished">Publish</Form.Label>
             </Form.InputContainer>
 
-            <Form.Button disabled={inProgress} type="submit">
+            <Form.Button disabled={isLoadingUploadVideo} type="submit">
               Save
             </Form.Button>
           </Form.GridGroup>

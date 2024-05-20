@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editVideo } from '@/features/dashboard'
+import useApp from '@/app/useApp'
 
 function useEditVideo({ video = {} }) {
+  const { isLoading: isLoadingEditVideo } = useApp('dashboard/editVideo')
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   const [formFields, setFormFields] = useState({
@@ -54,7 +56,13 @@ function useEditVideo({ video = {} }) {
     // })
   }
 
-  return { ...formFields, handleChange, handleIsPublishedChange, handleSubmit }
+  return {
+    ...formFields,
+    handleChange,
+    handleIsPublishedChange,
+    handleSubmit,
+    isLoadingEditVideo,
+  }
 }
 
 export default useEditVideo
