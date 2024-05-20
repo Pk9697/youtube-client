@@ -1,31 +1,30 @@
+import { useDispatch, useSelector } from 'react-redux'
 import {
+  CircleXIcon,
   FlagIcon,
   PencilIcon,
+  SaveIcon,
   ThumbsDownIcon,
   ThumbsUpIcon,
   Trash2Icon,
-  SaveIcon,
-  CircleXIcon,
 } from 'lucide-react'
-import { useDispatch, useSelector } from 'react-redux'
-import Comment from '@/components/Comment'
-import { formatTimeAgo } from '@/utils/formatTimeAgo'
-import {
-  deleteComment,
-  toggleDislikeComment,
-  toggleLikeComment,
-} from '../services/asyncThunkActions'
-import { ROUTES } from '@/data/constants'
-import { getPublicUrl } from '@/utils/getPublicUrl'
-import useEditComment from '../hooks/useEditComment'
 import useApp from '@/app/useApp'
+import Comment from '@/components/Comment'
+import { ROUTES } from '@/data/constants'
+import { formatTimeAgo } from '@/utils/formatTimeAgo'
+import { getPublicUrl } from '@/utils/getPublicUrl'
+import {
+  deleteTweet,
+  toggleDislikeTweet,
+  toggleLikeTweet,
+} from '../services/asyncThunkActions'
+import useEditTweet from '../hooks/useEditTweet'
 
-function VideoCommentContainer({
-  videoOwnerId,
-  _id: commentId,
-  content: commentContent,
+function TweetContainer({
+  _id: tweetId,
+  content: tweetContent,
   createdAt,
-  owner: { _id: commentOwnerId, userName: commentOwnerUserName, avatar } = {},
+  owner: { _id: tweetOwnerId, userName: tweetOwnerUserName, avatar },
   likesCount = 0,
   isLiked = false,
   dislikesCount = 0,
@@ -35,47 +34,46 @@ function VideoCommentContainer({
   const { accessToken, user: { _id: loggedInUserId } = {} } = useSelector(
     (state) => state.auth
   )
-
-  const { isLoading: isLoadingToggleLikeComment } = useApp(
-    'video/toggleLikeComment'
+  const { isLoading: isLoadingToggleLikeTweet } = useApp(
+    'tweets/toggleLikeTweet'
   )
-  const { isLoading: isLoadingToggleDislikeComment } = useApp(
-    'video/toggleDislikeComment'
+  const { isLoading: isLoadingToggleDislikeTweet } = useApp(
+    'tweets/toggleDislikeTweet'
   )
-  const { isLoading: isLoadingDeleteComment } = useApp('video/deleteComment')
+  const { isLoading: isLoadingDeleteTweet } = useApp('tweets/deleteTweet')
 
   const {
     inEditMode,
     toggleEditMode,
-    content: commentInput,
+    content: tweetInput,
     handleChange,
     handleSubmit,
-    isLoadingEditComment,
-  } = useEditComment({ commentContent, commentId })
+    isLoadingEditTweet,
+  } = useEditTweet({ tweetContent, tweetId })
 
   return (
-    <Comment key={commentId}>
+    <Comment key={tweetId}>
       <Comment.AvatarLink
         src={getPublicUrl(avatar)}
-        to={`${ROUTES.PROFILE}/${commentOwnerUserName}`}
+        to={`${ROUTES.PROFILE}/${tweetOwnerUserName}`}
       />
       <Comment.Meta className="w-full">
         <Comment.Row>
-          <Comment.TextLink to={`${ROUTES.PROFILE}/${commentOwnerUserName}`}>
-            @{commentOwnerUserName}
+          <Comment.TextLink to={`${ROUTES.PROFILE}/${tweetOwnerUserName}`}>
+            @{tweetOwnerUserName}
           </Comment.TextLink>
           <Comment.TextSmall>{formatTimeAgo(createdAt)}</Comment.TextSmall>
         </Comment.Row>
         {!inEditMode ? (
           <>
-            <Comment.Text>{commentContent}</Comment.Text>
+            <Comment.Text>{tweetContent}</Comment.Text>
             <Comment.Row>
               <Comment.Button
                 disabled={
-                  isLoadingToggleLikeComment || isLoadingToggleDislikeComment
+                  isLoadingToggleLikeTweet || isLoadingToggleDislikeTweet
                 }
                 onClick={() =>
-                  dispatch(toggleLikeComment({ accessToken, commentId }))
+                  dispatch(toggleLikeTweet({ accessToken, tweetId }))
                 }
                 size="sm"
               >
@@ -88,10 +86,10 @@ function VideoCommentContainer({
               </Comment.Button>
               <Comment.Button
                 disabled={
-                  isLoadingToggleLikeComment || isLoadingToggleDislikeComment
+                  isLoadingToggleLikeTweet || isLoadingToggleDislikeTweet
                 }
                 onClick={() =>
-                  dispatch(toggleDislikeComment({ accessToken, commentId }))
+                  dispatch(toggleDislikeTweet({ accessToken, tweetId }))
                 }
                 size="sm"
               >
@@ -111,12 +109,12 @@ function VideoCommentContainer({
               rows={1}
               onChange={handleChange}
               name="content"
-              value={commentInput}
+              value={tweetInput}
               required
             />
             <Comment.Button
               disabled={
-                commentInput?.trim() === commentContent || isLoadingEditComment
+                tweetInput?.trim() === tweetContent || isLoadingEditTweet
               }
               type="submit"
               size="icon"
@@ -138,24 +136,24 @@ function VideoCommentContainer({
       {!inEditMode && (
         <Comment.DropdownMenu>
           <Comment.DropdownMenuContent>
-            {loggedInUserId === commentOwnerId && (
-              <Comment.DropdownMenuItem onClick={toggleEditMode}>
-                <PencilIcon className="size-4" />
-                Edit
-              </Comment.DropdownMenuItem>
+            {loggedInUserId === tweetOwnerId && (
+              <>
+                <Comment.DropdownMenuItem onClick={toggleEditMode}>
+                  <PencilIcon className="size-4" />
+                  Edit
+                </Comment.DropdownMenuItem>
+                <Comment.DropdownMenuItem
+                  disabled={isLoadingDeleteTweet}
+                  onClick={() =>
+                    dispatch(deleteTweet({ accessToken, tweetId }))
+                  }
+                >
+                  <Trash2Icon className="size-4" />
+                  Delete
+                </Comment.DropdownMenuItem>
+              </>
             )}
-            {(loggedInUserId === videoOwnerId ||
-              loggedInUserId === commentOwnerId) && (
-              <Comment.DropdownMenuItem
-                disabled={isLoadingDeleteComment}
-                onClick={() =>
-                  dispatch(deleteComment({ accessToken, commentId }))
-                }
-              >
-                <Trash2Icon className="size-4" />
-                Delete
-              </Comment.DropdownMenuItem>
-            )}
+
             <Comment.DropdownMenuItem>
               <FlagIcon className="size-4" />
               Report
@@ -167,4 +165,4 @@ function VideoCommentContainer({
   )
 }
 
-export default VideoCommentContainer
+export default TweetContainer

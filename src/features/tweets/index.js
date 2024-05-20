@@ -4,6 +4,7 @@ import tweetsReducer, {
   addTweet,
   toggleLikeTweet,
   toggleDislikeTweet,
+  editTweet,
 } from './services/tweetsSlice'
 
 export {
@@ -13,4 +14,5 @@ export {
   addTweet,
   toggleLikeTweet,
   toggleDislikeTweet,
+  editTweet,
 }

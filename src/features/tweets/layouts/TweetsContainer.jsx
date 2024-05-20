@@ -1,48 +1,24 @@
 import { v4 as uuid } from 'uuid'
-import {
-  FlagIcon,
-  MessageSquarePlusIcon,
-  PencilIcon,
-  ThumbsDownIcon,
-  ThumbsUpIcon,
-  Trash2Icon,
-} from 'lucide-react'
-import { useDispatch, useSelector } from 'react-redux'
+import { MessageSquarePlusIcon } from 'lucide-react'
+import { useSelector } from 'react-redux'
 import Comment from '@/components/Comment'
 import { ROUTES } from '@/data/constants'
-import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import useTweet from '../hooks/useTweet'
-import {
-  deleteTweet,
-  toggleDislikeTweet,
-  toggleLikeTweet,
-} from '../services/asyncThunkActions'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import VideoCommentSkeletonContainer from '@/features/videos/skeletons/VideoCommentSkeletonContainer'
 import useApp from '@/app/useApp'
+import TweetContainer from './TweetContainer'
 
 function TweetsContainer({
   currentProfileUserName,
   tweetsList = [],
   inProgress = false,
 }) {
-  const dispatch = useDispatch()
   const {
     accessToken,
-    user: {
-      avatar: loggedInUserAvatar,
-      _id: loggedInUserId,
-      userName: loggedInUserName,
-    } = {},
+    user: { avatar: loggedInUserAvatar, userName: loggedInUserName } = {},
   } = useSelector((state) => state.auth)
 
-  const { isLoading: isLoadingToggleLikeTweet } = useApp(
-    'tweets/toggleLikeTweet'
-  )
-  const { isLoading: isLoadingToggleDislikeTweet } = useApp(
-    'tweets/toggleDislikeTweet'
-  )
-  const { isLoading: isLoadingDeleteTweet } = useApp('tweets/deleteTweet')
   const { isLoading: isLoadingAddTweet } = useApp('tweets/addTweet')
 
   const {
@@ -80,102 +56,9 @@ function TweetsContainer({
         ? 'abcdefghij'
             .split('')
             .map(() => <VideoCommentSkeletonContainer key={uuid()} />)
-        : tweetsList.map(
-            ({
-              _id: tweetId,
-              content,
-              createdAt,
-              owner: {
-                _id: tweetOwnerId,
-                userName: tweetOwnerUserName,
-                avatar,
-              },
-              likesCount = 0,
-              isLiked = false,
-              dislikesCount = 0,
-              isDisliked = false,
-            }) => (
-              <Comment key={tweetId}>
-                <Comment.AvatarLink
-                  src={getPublicUrl(avatar)}
-                  to={`${ROUTES.PROFILE}/${tweetOwnerUserName}`}
-                />
-                <Comment.Meta>
-                  <Comment.Row>
-                    <Comment.TextLink
-                      to={`${ROUTES.PROFILE}/${tweetOwnerUserName}`}
-                    >
-                      @{tweetOwnerUserName}
-                    </Comment.TextLink>
-                    <Comment.TextSmall>
-                      {formatTimeAgo(createdAt)}
-                    </Comment.TextSmall>
-                  </Comment.Row>
-                  <Comment.Text>{content}</Comment.Text>
-                  <Comment.Row>
-                    <Comment.Button
-                      disabled={
-                        isLoadingToggleLikeTweet || isLoadingToggleDislikeTweet
-                      }
-                      onClick={() =>
-                        dispatch(toggleLikeTweet({ accessToken, tweetId }))
-                      }
-                      size="sm"
-                    >
-                      {isLiked ? (
-                        <ThumbsUpIcon fill="skyblue" className="mr-2 size-4" />
-                      ) : (
-                        <ThumbsUpIcon className="mr-2 size-4" />
-                      )}
-                      {likesCount}
-                    </Comment.Button>
-                    <Comment.Button
-                      disabled={
-                        isLoadingToggleLikeTweet || isLoadingToggleDislikeTweet
-                      }
-                      onClick={() =>
-                        dispatch(toggleDislikeTweet({ accessToken, tweetId }))
-                      }
-                      size="sm"
-                    >
-                      {isDisliked ? (
-                        <ThumbsDownIcon fill="red" className="mr-2 size-4" />
-                      ) : (
-                        <ThumbsDownIcon className="mr-2 size-4" />
-                      )}
-                      {dislikesCount}
-                    </Comment.Button>
-                  </Comment.Row>
-                </Comment.Meta>
-                <Comment.DropdownMenu>
-                  <Comment.DropdownMenuContent>
-                    {loggedInUserId === tweetOwnerId && (
-                      <>
-                        <Comment.DropdownMenuItem>
-                          <PencilIcon className="size-4" />
-                          Edit
-                        </Comment.DropdownMenuItem>
-                        <Comment.DropdownMenuItem
-                          disabled={isLoadingDeleteTweet}
-                          onClick={() =>
-                            dispatch(deleteTweet({ accessToken, tweetId }))
-                          }
-                        >
-                          <Trash2Icon className="size-4" />
-                          Delete
-                        </Comment.DropdownMenuItem>
-                      </>
-                    )}
-
-                    <Comment.DropdownMenuItem>
-                      <FlagIcon className="size-4" />
-                      Report
-                    </Comment.DropdownMenuItem>
-                  </Comment.DropdownMenuContent>
-                </Comment.DropdownMenu>
-              </Comment>
-            )
-          )}
+        : tweetsList.map((tweet) => (
+            <TweetContainer key={tweet._id} {...tweet} />
+          ))}
     </Comment.Group>
   )
 }

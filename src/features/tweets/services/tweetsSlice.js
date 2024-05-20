@@ -4,6 +4,7 @@ import { toast } from '@/components/ui/use-toast'
 import {
   addTweet,
   deleteTweet,
+  editTweet,
   fetchChannelTweets,
   toggleDislikeTweet,
   toggleLikeTweet,
@@ -68,6 +69,19 @@ const tweetsSlice = createSlice({
           })
         }
       })
+      .addCase(editTweet.fulfilled, (state, action) => {
+        if (action.payload?.success) {
+          const { tweetId, formFields: { content } = {} } = action.meta.arg
+          const idx = state.tweetsList.findIndex(
+            (tweet) => tweet._id === tweetId
+          )
+          state.tweetsList[idx].content = content
+
+          toast({
+            title: 'Tweet edited!',
+          })
+        }
+      })
   },
 })
 
@@ -77,6 +91,7 @@ export {
   toggleLikeTweet,
   toggleDislikeTweet,
   deleteTweet,
+  editTweet,
 }
 
 export default tweetsSlice.reducer

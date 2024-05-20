@@ -75,10 +75,24 @@ const deleteTweet = createAsyncThunkWithLoadingAndError(
   }
 )
 
+const editTweet = createAsyncThunkWithLoadingAndError(
+  'tweets/editTweet',
+  async ({ accessToken, formFields, tweetId }) => {
+    const url = APIUrls.editTweet(tweetId)
+    const response = await axios.patch(url, formFields, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    return response.data
+  }
+)
+
 export {
   fetchChannelTweets,
   addTweet,
   toggleLikeTweet,
   toggleDislikeTweet,
   deleteTweet,
+  editTweet,
 }

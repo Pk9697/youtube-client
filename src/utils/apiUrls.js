@@ -67,4 +67,5 @@ export const APIUrls = {
   updatePassword: () => `${API_ROOT}/users/update-password`,
   verifyAccessToken: () => `${API_ROOT}/users/verify-access-token`,
   // refreshAccessToken: () => `${API_ROOT}/users/refresh-token`,
+  editTweet: (tweetId) => `${API_ROOT}/tweets/update/${tweetId}`,
 }

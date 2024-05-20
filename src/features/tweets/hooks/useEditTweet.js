@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { editComment } from '../services/asyncThunkActions'
 import useApp from '@/app/useApp'
+import { editTweet } from '../services/asyncThunkActions'
 
-function useEditComment({ commentId, commentContent = '' }) {
-  const { isLoading: isLoadingEditComment } = useApp('video/editComment')
+function useEditTweet({ tweetId, tweetContent = '' }) {
+  const { isLoading: isLoadingEditTweet } = useApp('tweets/editTweet')
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   const [inEditMode, setInEditMode] = useState(false)
   const [formFields, setFormFields] = useState({
-    content: commentContent,
+    content: tweetContent,
   })
 
   useEffect(() => {
     setFormFields(() => {
       return {
-        content: commentContent,
+        content: tweetContent,
       }
     })
-  }, [commentContent])
+  }, [tweetContent])
 
   function toggleEditMode() {
     setInEditMode((prev) => !prev)
@@ -36,10 +36,10 @@ function useEditComment({ commentId, commentContent = '' }) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    dispatch(editComment({ accessToken, formFields, commentId }))
+    dispatch(editTweet({ accessToken, formFields, tweetId }))
     setFormFields(() => {
       return {
-        content: commentContent,
+        content: tweetContent,
       }
     })
 
@@ -52,8 +52,8 @@ function useEditComment({ commentId, commentContent = '' }) {
     toggleEditMode,
     handleChange,
     handleSubmit,
-    isLoadingEditComment,
+    isLoadingEditTweet,
   }
 }
 
-export default useEditComment
+export default useEditTweet
