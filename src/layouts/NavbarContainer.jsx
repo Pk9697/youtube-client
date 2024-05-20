@@ -7,10 +7,12 @@ import { toggleSidebar } from '@/app/appSlice'
 import { logout } from '@/features/authentication'
 import { ROUTES } from '@/data/constants'
 import { getPublicUrl } from '@/utils/getPublicUrl'
+import useApp from '@/app/useApp'
 
 function NavbarContainer({ usersList, inProgress = false }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { isLoading: isLoadingLogout } = useApp('auth/logout')
   const { accessToken, user: { fullName, avatar } = {} } = useSelector(
     (state) => state.auth
   )
@@ -50,6 +52,7 @@ function NavbarContainer({ usersList, inProgress = false }) {
           </Navbar.DropdownMenuItem>
           <Navbar.DropdownMenuSeparator />
           <Navbar.DropdownMenuItem
+            disabled={isLoadingLogout}
             onClick={() => dispatch(logout({ accessToken }))}
           >
             Logout
