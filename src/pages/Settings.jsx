@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { twMerge } from 'tailwind-merge'
 import { CloudUploadIcon } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -6,8 +7,13 @@ import Channel from '@/features/channel/components/Channel'
 import { getPublicUrl } from '@/utils/getPublicUrl'
 import { Form, updateAvatar, updateCoverImage } from '@/features/authentication'
 import { useUpdateAccountDetails, useUpdatePassword } from '@/features/settings'
+import useApp from '@/app/useApp'
 
 function Settings() {
+  const { isLoading: isLoadingUpdateAvatar } = useApp('auth/updateAvatar')
+  const { isLoading: isLoadingUpdateCoverImage } = useApp(
+    'auth/updateCoverImage'
+  )
   const dispatch = useDispatch()
   const { accessToken } = useSelector((state) => state.auth)
   const { user } = useSelector((state) => state.auth)
@@ -34,6 +40,7 @@ function Settings() {
     email,
     handleUpdateAccountDetailsChange,
     handleUpdateAccountDetailsSubmit,
+    isLoadingUpdateAccountDetails,
   } = useUpdateAccountDetails({ user })
 
   const {
@@ -47,13 +54,20 @@ function Settings() {
 
   return (
     <Channel>
-      <Label htmlFor="coverImage" className="relative cursor-pointer">
+      <Label
+        htmlFor="coverImage"
+        className={twMerge(
+          'relative cursor-pointer',
+          `${isLoadingUpdateCoverImage && 'cursor-not-allowed opacity-50'} `
+        )}
+      >
         <Channel.CoverImage src={getPublicUrl(user.coverImage)} />
         <div className="absolute bottom-2 right-2 rounded bg-secondary/50 p-1">
           <CloudUploadIcon className="size-5" />
         </div>
       </Label>
       <Input
+        disabled={isLoadingUpdateCoverImage}
         onChange={handleCoverImageChange}
         type="file"
         id="coverImage"
@@ -61,13 +75,20 @@ function Settings() {
         accept="image/*"
       />
       <Channel.Details>
-        <Label htmlFor="avatar" className="relative cursor-pointer">
+        <Label
+          htmlFor="avatar"
+          className={twMerge(
+            'relative cursor-pointer',
+            `${isLoadingUpdateAvatar && 'cursor-not-allowed opacity-50'} `
+          )}
+        >
           <Channel.Avatar src={getPublicUrl(user.avatar)} />
           <div className="absolute bottom-3 right-3 rounded bg-secondary/50 p-1">
             <CloudUploadIcon className="size-5" />
           </div>
         </Label>
         <Input
+          disabled={isLoadingUpdateAvatar}
           onChange={handleAvatarChange}
           type="file"
           id="avatar"
@@ -118,7 +139,10 @@ function Settings() {
                 />
               </Form.InputContainer>
               <Form.Button
-                disabled={fullName === user?.fullName && email === user?.email}
+                disabled={
+                  (fullName === user?.fullName && email === user?.email) ||
+                  isLoadingUpdateAccountDetails
+                }
                 type="submit"
               >
                 Save
