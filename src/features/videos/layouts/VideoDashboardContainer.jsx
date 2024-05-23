@@ -36,19 +36,17 @@ function VideoDashboardContainer({
       <Video.CardHeader className="flex flex-row items-center space-y-0">
         <Video.CardDetails>
           <Video.CardTitle>Videos</Video.CardTitle>
-          <Video.CardDescription className="text-xs text-muted-foreground">
-            {inProgress ? (
-              <Skeleton className="mt-0.5 h-4 w-36" />
-            ) : (
-              <>
-                Showing{' '}
-                <strong>
-                  {lowerLimit}-{upperLimit}
-                </strong>{' '}
-                of <strong>{paginate.totalDocs}</strong> videos
-              </>
-            )}
-          </Video.CardDescription>
+          {inProgress ? (
+            <Skeleton className="mt-0.5 h-4 w-36" />
+          ) : (
+            <Video.CardDescription className="text-xs text-muted-foreground">
+              Showing{' '}
+              <strong>
+                {lowerLimit}-{upperLimit}
+              </strong>{' '}
+              of <strong>{paginate.totalDocs}</strong> videos
+            </Video.CardDescription>
+          )}
         </Video.CardDetails>
 
         <Video.CardActions>

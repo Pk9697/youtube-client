@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThumbsDownIcon, ThumbsUpIcon } from 'lucide-react'
 import Video from '../components/Video'
@@ -16,6 +17,7 @@ import useApp from '@/app/useApp'
 import VideoDropdownMenuContainer from './VideoDropdownMenuContainer'
 
 function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
+  const ref = useRef(null)
   const dispatch = useDispatch()
   const { isLoading: isLoadingToggleLikeVideo } = useApp(
     'video/toggleLikeVideo'
@@ -28,6 +30,14 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
   )
 
   const { accessToken } = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    ref?.current?.scrollIntoView({
+      block: 'end',
+      behavior: 'smooth',
+      inline: 'nearest',
+    })
+  }, [videoDetails])
 
   const {
     _id: videoId,
@@ -55,80 +65,92 @@ function VideoPlayerContainer({ videoDetails = {}, inProgress = false }) {
     dispatch(toggleSubscription({ accessToken, userId }))
   }
 
-  return inProgress ? (
-    <VideoPlayerSkeletonContainer />
-  ) : (
-    <Video.PlayerContainer>
-      <Video.Player src={getPublicUrl(videoFile)}>
-        Your browser does not support the video tag.
-      </Video.Player>
-      <Video.Title>{title}</Video.Title>
-      <Video.Details className="flex-wrap">
-        <Video.Row>
-          <Video.AvatarLink
-            src={getPublicUrl(avatar)}
-            to={`${ROUTES.PROFILE}/${userName}`}
-          />
-          <Video.Meta>
-            <Video.TitleLink to={`${ROUTES.PROFILE}/${userName}`}>
-              {fullName}
-            </Video.TitleLink>
-            <Video.Text>{formatViews(subscribersCount)} Subscribers</Video.Text>
-          </Video.Meta>
-          {isSubscribed ? (
-            <Video.Button
-              disabled={isLoadingToggleSubscription}
-              onClick={handleToggleSubscription}
-              variant="destructive"
-            >
-              Unsubscribe
-            </Video.Button>
-          ) : (
-            <Video.Button
-              disabled={isLoadingToggleSubscription}
-              onClick={handleToggleSubscription}
-            >
-              Subscribe
-            </Video.Button>
-          )}
-        </Video.Row>
-        <Video.Row className="ml-auto">
-          <Video.Button
-            disabled={isLoadingToggleLikeVideo || isLoadingToggleDislikeVideo}
-            onClick={() => dispatch(toggleLikeVideo({ accessToken, videoId }))}
-          >
-            {isLiked ? (
-              <ThumbsUpIcon className="mr-2 size-5" fill="skyblue" />
-            ) : (
-              <ThumbsUpIcon className="mr-2 size-5" />
-            )}
-            {formatViews(likesCount)}
-          </Video.Button>
-          <Video.Button
-            disabled={isLoadingToggleLikeVideo || isLoadingToggleDislikeVideo}
-            onClick={() =>
-              dispatch(toggleDislikeVideo({ accessToken, videoId }))
-            }
-          >
-            {isDisliked ? (
-              <ThumbsDownIcon className="mr-2 size-5" fill="red" />
-            ) : (
-              <ThumbsDownIcon className="mr-2 size-5" />
-            )}
-            {formatViews(dislikesCount)}
-          </Video.Button>
-          <VideoDropdownMenuContainer videoId={videoId} />
-        </Video.Row>
-      </Video.Details>
-      <Video.Card>
-        <Video.CardHeader>
-          <Video.CardTitle className="text-sm">
-            {formatViews(views)} views • {formatTimeAgo(createdAt)}
-          </Video.CardTitle>
-          <Video.CardDescription>{description}</Video.CardDescription>
-        </Video.CardHeader>
-      </Video.Card>
-    </Video.PlayerContainer>
+  return (
+    <div ref={ref}>
+      {inProgress ? (
+        <VideoPlayerSkeletonContainer />
+      ) : (
+        <Video.PlayerContainer>
+          <Video.Player src={getPublicUrl(videoFile, 'video')}>
+            Your browser does not support the video tag.
+          </Video.Player>
+          <Video.Title>{title}</Video.Title>
+          <Video.Details className="flex-wrap">
+            <Video.Row>
+              <Video.AvatarLink
+                src={getPublicUrl(avatar)}
+                to={`${ROUTES.PROFILE}/${userName}`}
+              />
+              <Video.Meta>
+                <Video.TitleLink to={`${ROUTES.PROFILE}/${userName}`}>
+                  {fullName}
+                </Video.TitleLink>
+                <Video.Text>
+                  {formatViews(subscribersCount)} Subscribers
+                </Video.Text>
+              </Video.Meta>
+              {isSubscribed ? (
+                <Video.Button
+                  disabled={isLoadingToggleSubscription}
+                  onClick={handleToggleSubscription}
+                  variant="destructive"
+                >
+                  Unsubscribe
+                </Video.Button>
+              ) : (
+                <Video.Button
+                  disabled={isLoadingToggleSubscription}
+                  onClick={handleToggleSubscription}
+                >
+                  Subscribe
+                </Video.Button>
+              )}
+            </Video.Row>
+            <Video.Row className="ml-auto">
+              <Video.Button
+                disabled={
+                  isLoadingToggleLikeVideo || isLoadingToggleDislikeVideo
+                }
+                onClick={() =>
+                  dispatch(toggleLikeVideo({ accessToken, videoId }))
+                }
+              >
+                {isLiked ? (
+                  <ThumbsUpIcon className="mr-2 size-5" fill="skyblue" />
+                ) : (
+                  <ThumbsUpIcon className="mr-2 size-5" />
+                )}
+                {formatViews(likesCount)}
+              </Video.Button>
+              <Video.Button
+                disabled={
+                  isLoadingToggleLikeVideo || isLoadingToggleDislikeVideo
+                }
+                onClick={() =>
+                  dispatch(toggleDislikeVideo({ accessToken, videoId }))
+                }
+              >
+                {isDisliked ? (
+                  <ThumbsDownIcon className="mr-2 size-5" fill="red" />
+                ) : (
+                  <ThumbsDownIcon className="mr-2 size-5" />
+                )}
+                {formatViews(dislikesCount)}
+              </Video.Button>
+              <VideoDropdownMenuContainer videoId={videoId} />
+            </Video.Row>
+          </Video.Details>
+          <Video.Card>
+            <Video.CardHeader>
+              <Video.CardTitle className="text-sm">
+                {formatViews(views)} views • {formatTimeAgo(createdAt)}
+              </Video.CardTitle>
+              <Video.CardDescription>{description}</Video.CardDescription>
+            </Video.CardHeader>
+          </Video.Card>
+        </Video.PlayerContainer>
+      )}
+    </div>
   )
 }
 

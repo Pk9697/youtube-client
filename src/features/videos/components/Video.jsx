@@ -335,22 +335,63 @@ Video.PlayerContainer = function VideoPlayerContainer({
     </div>
   )
 }
+// Video.Player = function VideoPlayer({
+//   src = 'https://docs.material-tailwind.com/demo.mp4',
+//   children,
+//   className,
+//   ...restProps
+// }) {
+//   // console.log({ src })
+//   const publicId = src?.split('/').slice(-1)[0].split('.')[0]
+//   console.log({ publicId })
+//   const cloudinaryRef = useRef()
+//   const videoRef = useRef()
+
+//   useEffect(() => {
+//     if (cloudinaryRef.current) return
+//     cloudinaryRef.current = window.cloudinary
+//     cloudinaryRef.current.videoPlayer(videoRef.current, {
+//       cloud_name: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+//       autoplay: false,
+//       controls: true,
+//       showJumpControls: true,
+//       pictureInPictureToggle: true,
+//       showLogo: false,
+//       fluid: true,
+//     })
+//   }, [])
+
+//   return (
+//     <video
+//       ref={videoRef}
+//       data-cld-public-id={publicId}
+//       // data-cld-source={`{"publicId": "${publicId}", "transformation": {"streaming_profile": "auto"}}`}
+//       data-cld-source-types='["hls"]'
+//       className={twMerge('aspect-video w-full rounded-lg', className)}
+//       {...restProps}
+//     >
+//       {/* <source src={src} type="video/mp4" /> */}
+//       {children}
+//     </video>
+//   )
+// }
 Video.Player = function VideoPlayer({
-  src = 'https://docs.material-tailwind.com/demo.mp4',
+  src,
   children,
   className,
   ...restProps
 }) {
+  const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+  const publicId = src?.split('/').slice(-1)[0].split('.')[0]
   return (
-    <video
-      controls
-      autoPlay
+    <iframe
+      title="video"
+      src={`https://player.cloudinary.com/embed/?public_id=${publicId}&cloud_name=${CLOUD_NAME}&player[autoplay]=true&player[controls]=true&player[showJumpControls]=true&player[pictureInPictureToggle]=true&player[showLogo]=false&player[fluid]=true&source[sourceTypes][0]=hls`}
+      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+      allowFullScreen
       className={twMerge('aspect-video w-full rounded-lg', className)}
       {...restProps}
-    >
-      <source src={src} type="video/mp4" />
-      {children}
-    </video>
+    />
   )
 }
 

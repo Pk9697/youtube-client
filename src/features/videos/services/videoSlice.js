@@ -33,6 +33,9 @@ const videoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchVideo.pending, (state) => {
+        state.videoDetails = null
+      })
       .addCase(fetchVideo.fulfilled, (state, action) => {
         if (action.payload?.success) {
           state.videoDetails = action.payload.data

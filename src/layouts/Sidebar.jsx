@@ -21,7 +21,7 @@ Sidebar.Header = function SidebarHeader({ className, children, ...restProps }) {
   return (
     <div
       className={twMerge(
-        'sticky top-0 z-10 flex h-14 items-center bg-muted px-4 py-4 opacity-100 dark:bg-slate-900 lg:h-[60px] lg:px-6',
+        'sticky top-0 z-10 flex h-14 items-center bg-popover px-4 py-4 opacity-100 md:bg-muted md:dark:bg-slate-900 lg:h-[60px] lg:px-6',
         className
       )}
       {...restProps}
