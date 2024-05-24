@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { APIUrls } from '@/utils/apiUrls'
 import createAsyncThunkWithLoadingAndError from '@/app/createAsyncThunkWithLoadingAndError'
+import { setProgress } from '@/app/appSlice'
 
 const fetchDashboardStats = createAsyncThunkWithLoadingAndError(
   'dashboard/fetchDashboardStats',
@@ -60,11 +61,17 @@ const deleteVideo = createAsyncThunkWithLoadingAndError(
 
 const uploadVideo = createAsyncThunkWithLoadingAndError(
   'dashboard/uploadVideo',
-  async ({ accessToken, formFields = {} }) => {
+  async ({ accessToken, formFields = {} }, { dispatch }) => {
     const url = APIUrls.uploadVideo()
     const response = await axios.post(url, formFields, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
+      },
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        )
+        dispatch(setProgress(percentCompleted))
       },
     })
     return response.data

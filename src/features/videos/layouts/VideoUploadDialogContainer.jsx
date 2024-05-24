@@ -1,9 +1,12 @@
+import { useSelector } from 'react-redux'
 import { twMerge } from 'tailwind-merge'
 import Video from '../components/Video'
 import { Form } from '@/features/authentication'
+import { Progress } from '@/components/ui/progress'
 import useUploadVideo from '../hooks/useUploadVideo'
 
 function VideoUploadDialogContainer({ children }) {
+  const { progress } = useSelector((state) => state.app)
   const {
     title,
     description,
@@ -26,6 +29,7 @@ function VideoUploadDialogContainer({ children }) {
             </Video.DialogDescription>
           </Video.DialogHeader>
           <Form.GridGroup className="mt-8">
+            {progress && <Progress value={progress} />}
             <Form.InputContainer>
               <Form.Label htmlFor="videoFile">Video</Form.Label>
               <Form.Input

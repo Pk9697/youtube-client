@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isSidebarOpen: true,
+  progress: 0,
 }
 
 const generateStateKey = (baseType, suffix) => `${baseType}/${suffix}`
@@ -25,10 +26,18 @@ const appSlice = createSlice({
       const { baseType, error } = action.payload
       state[generateStateKey(baseType, 'error')] = error
     },
+    setProgress: (state, action) => {
+      state.progress = action.payload
+    },
   },
 })
 
-export const { toggleSidebar, updateSidebar, setLoading, setError } =
-  appSlice.actions
+export const {
+  toggleSidebar,
+  updateSidebar,
+  setLoading,
+  setError,
+  setProgress,
+} = appSlice.actions
 
 export default appSlice.reducer

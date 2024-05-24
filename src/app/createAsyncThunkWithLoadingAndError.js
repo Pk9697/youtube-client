@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { setLoading, setError } from './appSlice.js'
+import { setLoading, setError, setProgress } from './appSlice.js'
 import { toast } from '@/components/ui/use-toast.js'
 
 const createAsyncThunkWithLoadingAndError = (typePrefix, apiCall) => {
@@ -7,15 +7,18 @@ const createAsyncThunkWithLoadingAndError = (typePrefix, apiCall) => {
     const baseType = typePrefix
     dispatch(setLoading({ baseType, isLoading: true }))
     dispatch(setError({ baseType, error: null }))
+    dispatch(setProgress(null))
 
     try {
-      const response = await apiCall(args)
+      const response = await apiCall(args, { dispatch })
       dispatch(setLoading({ baseType, isLoading: false }))
+      dispatch(setProgress(null))
       return response
     } catch (error) {
       dispatch(setLoading({ baseType, isLoading: false }))
       dispatch(setError({ baseType, error: error.response?.data?.message }))
       // throw error
+      dispatch(setProgress(null))
       toast({
         variant: 'destructive',
         title: error.response?.data?.message || 'server error',
