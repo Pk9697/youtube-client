@@ -5,8 +5,8 @@ import { login } from '../services/authSlice'
 function useLogin() {
   const dispatch = useDispatch()
   const [formFields, setFormFields] = useState({
-    email: '',
-    password: '',
+    email: 'demo.user@gmail.com',
+    password: '123456',
   })
 
   function handleChange(e) {
@@ -24,8 +24,8 @@ function useLogin() {
     dispatch(login(formFields))
     setFormFields(() => {
       return {
-        email: '',
-        password: '',
+        email: 'demo.user@gmail.com',
+        password: '123456',
       }
     })
   }
